@@ -14,7 +14,7 @@
 
     var config = {
         appErrorPrefix: '[epopBackendClient Error] ',
-        appTitle: 'epopBackendClient'
+        appTitle: 'EPOP Backend Client'
     };
 
     core.value('config', config);

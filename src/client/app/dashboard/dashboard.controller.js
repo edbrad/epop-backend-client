@@ -2,25 +2,45 @@
     'use strict';
 
     angular
-        .module('app.dashboard')
+        .module('app.dashboard', ['lbServices'])
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$q', 'dataservice', 'logger'];
+    DashboardController.$inject = ['$q', 'dataservice', 'MailOwner', 'CRID', 'Permit', 'MailerID', 'logger'];
     /* @ngInject */
-    function DashboardController($q, dataservice, logger) {
+    function DashboardController($q, dataservice, MailOwner, CRID, Permit, MailerID, logger) {
         var vm = this;
         vm.news = {
-            title: 'epopBackendClient',
-            description: 'Hot Towel Angular is a SPA template for Angular developers.'
+            title: 'EPOP Backend Client',
+            description: 'Manage EPOP Backend Data.'
         };
         vm.messageCount = 0;
         vm.people = [];
         vm.title = 'Dashboard';
+        
+        vm.mailOwners = [];
+        vm.mailOwnerCount = [];
+        
+        vm.CRIDs = [];
+        vm.CRIDCount = [];
+        
+        vm.permits = [];
+        vm.permitCount = [];
+        
+        vm.mailerIDs = [];
+        vm.mailerIDCount = [];
 
         activate();
-
+        
         function activate() {
-            var promises = [getMessageCount(), getPeople()];
+            var promises = [
+                getMessageCount(), 
+                getPeople(), 
+                getMailOwners(), 
+                getMailOwnerCount(), 
+                getCRIDCount(), 
+                getPermitCount(),
+                getMailerIDCount()
+            ];
             return $q.all(promises).then(function() {
                 logger.info('Activated Dashboard View');
             });
@@ -38,6 +58,48 @@
                 vm.people = data;
                 return vm.people;
             });
+        }
+        
+        //function getMailOwners() {
+        //    return MailOwner.CRIDs.findById("5669cffbdf2132fe28368102").then(function (data) {
+        //        vm.mailOwners = data;
+        //        return vm.mailOwners;
+        //    });
+        // }
+        
+        function getMailOwners() {
+            MailOwner.find(
+                function (result) {
+                    vm.mailOwners = result;
+                });
+        }
+        
+        function getMailOwnerCount() {
+            MailOwner.count(
+                function (result) {
+                    vm.mailOwnerCount = result;
+                });
+        }
+        
+        function getCRIDCount() {
+            CRID.count(
+                function (result) {
+                    vm.CRIDCount = result;
+                });
+        }
+        
+        function getPermitCount() {
+            Permit.count(
+                function (result) {
+                    vm.PermitCount = result;
+                });
+        }
+        
+        function getMailerIDCount() {
+            MailerID.count(
+                function (result) {
+                    vm.MailerIDCount = result;
+                });
         }
     }
 })();

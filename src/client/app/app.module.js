@@ -7,6 +7,7 @@
         'app.admin',
         'app.dashboard',
         'app.mailOwners',
+        'app.CRIDs',
         'app.layout'
     ]);
 

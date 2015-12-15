@@ -8,6 +8,7 @@
         'app.dashboard',
         'app.mailOwners',
         'app.CRIDs',
+        'app.permits',
         'app.layout'
     ]);
 

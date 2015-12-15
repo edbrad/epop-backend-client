@@ -1,45 +1,67 @@
 <section id="dashboard-view" class="mainbar">
-    <section class="matter"> 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="today-datas">
+    <section class="matter">
+    <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>Mail Owners</h3>
 
-                        <li class="borange">
-                            <div class="pull-left"><i class="fa fa-envelope"></i></div>
-                            <div class="datas-text pull-right">
-                                <span class="bold">{{vm.mailOwnerCount.count}}</span> Mail Owners
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-                        
-                        <li class="borange">
-                            <div class="pull-left"><i class="fa fa-envelope"></i></div>
-                            <div class="datas-text pull-right">
-                                <span class="bold">{{vm.CRIDCount.count}}</span> CRIDs
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-                        
-                        <li class="borange">
-                            <div class="pull-left"><i class="fa fa-envelope"></i></div>
-                            <div class="datas-text pull-right">
-                                <span class="bold">{{vm.PermitCount.count}}</span> Permits
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-                        
-                        <li class="borange">
-                            <div class="pull-left"><i class="fa fa-envelope"></i></div>
-                            <div class="datas-text pull-right">
-                                <span class="bold">{{vm.MailerIDCount.count}}</span> Mailer IDs
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>   
+              <p><b>{{vm.mailOwnerCount.count}} </b>Active Mail Owners</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-list"></i>
+            </div>
+            <a href="/mailowners" class="small-box-footer">Mail Owner List <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
         </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>CRID&#39s</h3>
+
+              <p><b>{{vm.CRIDCount.count}} </b>Active CRID&#39s</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-list"></i>
+            </div>
+            <a href="#" class="small-box-footer">CRID List <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>Permits</h3>
+
+              <p><b>{{vm.PermitCount.count}} </b>Active Permits</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-list"></i>
+            </div>
+            <a href="#" class="small-box-footer">Permit List <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>Mailer ID&#39s</h3>
+
+              <p><b>{{vm.MailerIDCount.count}} </b>Active Mailer ID&#39s</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-list"></i>
+            </div>
+            <a href="#" class="small-box-footer">Mailer ID List <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
     </section>
 </section>

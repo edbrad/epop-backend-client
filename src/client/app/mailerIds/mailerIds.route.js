@@ -23,7 +23,7 @@
                     title: 'Mailer Ids',
                     settings: {
                         nav: 5,
-                        content: '<i class="fa fa-database"></i> Mailer Ids'
+                        content: '<i class="fa fa-database"></i> Mailer ID&#39s'
                     }
                 }
             }

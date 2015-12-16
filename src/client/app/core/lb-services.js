@@ -1,3 +1,4 @@
+/* jshint -W109, -W101, -W064, -W064, -W116, -W033 */
 (function(window, angular, undefined) {'use strict';
 
 // var urlBase = "/api";

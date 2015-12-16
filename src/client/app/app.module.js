@@ -9,6 +9,7 @@
         'app.mailOwners',
         'app.CRIDs',
         'app.permits',
+        'app.mailerIds',
         'app.layout'
     ]);
 

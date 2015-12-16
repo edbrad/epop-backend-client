@@ -23,7 +23,7 @@
                     title: 'Mail Owners',
                     settings: {
                         nav: 2,
-                        content: '<i class="fa fa-lock"></i> Mail Owners'
+                        content: '<i class="fa fa-database"></i> Mail Owners'
                     }
                 }
             }

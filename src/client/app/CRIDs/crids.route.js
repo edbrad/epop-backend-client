@@ -23,7 +23,7 @@
                     title: 'CRIDs',
                     settings: {
                         nav: 3,
-                        content: '<i class="fa fa-lock"></i> CRIDs'
+                        content: '<i class="fa fa-database"></i> CRIDs'
                     }
                 }
             }

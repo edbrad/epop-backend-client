@@ -9,11 +9,12 @@
     /* @ngInject */
     function CRIDsController($q, CRID, logger) {
         var vm = this;
+        
         vm.title = 'CRIDs';
         vm.CRIDs = [];
         
         activate();
-            
+        
         function activate() {
             var promises = [getCRIDs()];
             return $q.all(promises).then(function() {

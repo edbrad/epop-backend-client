@@ -13,8 +13,7 @@
             title: 'EPOP Backend Client',
             description: 'Manage EPOP Backend Data.'
         };
-        vm.messageCount = 0;
-        vm.people = [];
+        
         vm.title = 'Dashboard';
         
         vm.mailOwners = [];
@@ -59,13 +58,6 @@
                 return vm.people;
             });
         }
-        
-        //function getMailOwners() {
-        //    return MailOwner.CRIDs.findById("5669cffbdf2132fe28368102").then(function (data) {
-        //        vm.mailOwners = data;
-        //        return vm.mailOwners;
-        //    });
-        // }
         
         function getMailOwners() {
             MailOwner.find(

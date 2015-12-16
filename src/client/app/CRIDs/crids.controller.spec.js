@@ -4,7 +4,7 @@ describe('CRIDsController', function() {
 
     beforeEach(function() {
         bard.appModule('app.CRIDs');
-        bard.inject('$controller', '$log', '$rootScope');
+        bard.inject('$controller', '$log', '$rootScope', 'CRID');
     });
 
     beforeEach(function () {

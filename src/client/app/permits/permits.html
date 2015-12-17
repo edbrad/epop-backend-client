@@ -11,14 +11,16 @@
                                 <thead>
                                     <tr>
                                         <th>Permit #</th>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <th>Zip</th>
+                                        <th>Permit Holder / Mail Owner</th>
+                                        <th>Permit City</th>
+                                        <th>Permit State</th>
+                                        <th>Permit Zip</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="p in vm.Permits">
                                         <td>{{p.PermitNumber}}</td>
+                                        <td>{{vm.getMailOwnerName(p.mailOwnerId)}}</td>
                                         <td>{{p.PermitCity}}</td>
                                         <td>{{p.PermitState}}</td>
                                         <td>{{p.PermitZip5}}</td>

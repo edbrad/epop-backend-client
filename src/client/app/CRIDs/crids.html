@@ -10,14 +10,14 @@
                             <table class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Mail Owner</th>
                                         <th>CRID</th>
-                                        <th>Mail Owner(ID)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="c in vm.CRIDs">
+                                        <td>{{vm.getMailOwnerName(c.mailOwnerId)}}</td>
                                         <td>{{c.CRID}}</td>
-                                        <td>{{c.mailOwnerId}}</td>
                                 </tbody>
                             </table>
                         </div>

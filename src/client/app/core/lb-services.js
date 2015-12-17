@@ -1141,7 +1141,7 @@ module.factory(
           url: urlBase + "/MailOwners/:id/CRIDs/:fk",
           method: "GET"
         },
-
+        
         // INTERNAL. Use MailOwner.CRIDs.destroyById() instead.
         "prototype$__destroyById__CRIDs": {
           params: {

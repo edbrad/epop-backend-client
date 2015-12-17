@@ -10,16 +10,16 @@
                             <table class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Mailer Id</th>
+                                        <th>Mailer ID</th>
                                         <th>Mailer Name</th>
-                                        <th>Mailer Owner (ID)</th>
+                                        <th>Mailer Owner</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="m in vm.MailerIds">
                                         <td>{{m.MailerID}}</td>
                                         <td>{{m.MailerName}}</td>
-                                        <td>{{m.mailOwnerId}}</td>
+                                        <td>{{vm.getMailOwnerName(m.mailOwnerId)}}</td>
                                 </tbody>
                             </table>
                         </div>

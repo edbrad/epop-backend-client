@@ -1,7 +1,7 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter"> 
         <div class="container">
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-12">
                     <div class="widget wlightblue">
                         <div ht-widget-header title="Mail Owners"
@@ -31,6 +31,18 @@
                         </div>
                     </div>
                 </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget wlightblue">
+                    <div ht-widget-header title="Mail Owners" allow-collapse="true"></div>
+                        <div class="widget-content text-left text-info">
+                            <p><strong>USPS Registered Mail Owners</strong></p>
+                            <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns class="grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </section>

@@ -1,7 +1,7 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter"> 
         <div class="container">
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-12">
                     <div class="widget wred">
                         <div ht-widget-header title="Mailer ID&#39s"
@@ -25,6 +25,17 @@
                         </div>
                         <div class="widget-foot">
                             <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget wred">
+                    <div ht-widget-header title="Mailer ID&#39s" allow-collapse="true"></div>
+                        <div class="widget-content text-left text-info">
+                            <p><strong>USPS Registered Mailer ID&#39s</strong></p>
+                            <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns external-scopes="states" class="grid"></div>
                         </div>
                     </div>
                 </div>

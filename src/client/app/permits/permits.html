@@ -1,7 +1,7 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter"> 
         <div class="container">
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-12">
                     <div class="widget worange">
                         <div ht-widget-header title="Permits"
@@ -29,6 +29,17 @@
                         </div>
                         <div class="widget-foot">
                             <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget worange">
+                    <div ht-widget-header title="Permits" allow-collapse="true"></div>
+                        <div class="widget-content text-left text-info">
+                            <p><strong>USPS Registered Permits</strong></p>
+                            <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns external-scopes="states" class="grid"></div>
                         </div>
                     </div>
                 </div>

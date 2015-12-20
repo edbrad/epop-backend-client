@@ -1,7 +1,7 @@
 {
-  "name": "epopBackendClient",
+  "name": "epop-backend-client",
   "version": "0.0.1",
-  "description": "epopBackendClient",
+  "description": "Back-End EPOP data management GUI",
   "authors": [],
   "license": "MIT",
   "ignore": [

@@ -1,4 +1,4 @@
-# epopBackendClient
+# EPOP Backend Client
 
 **Generated from HotTowel Angular**
 

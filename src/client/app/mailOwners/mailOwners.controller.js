@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.mailOwners', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.exporter'])
+        .module('app.mailOwners', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
         .controller('MailOwnersController', MailOwnersController);
 
     MailOwnersController.$inject = ['$q', 'MailOwner', 'logger', '$scope'];
@@ -18,6 +18,7 @@
         $scope.gridOptions = {
             paginationPageSizes: [10, 30, 100],
             columnDefs:[
+                {name: 'id', displayName: 'ID', visible: false },
                 {name: 'Name', displayName: 'Owner Name'},
                 {name: 'Address1', displayName: 'Address 1'},
                 {name: 'Address2', displayName: 'Address 2'},
@@ -39,7 +40,7 @@
             exporterPdfDefaultStyle: {fontSize: 9},
             exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
             exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: { text: "EMS EPOP Backend Client - USPS Registered Mail Owners", style: 'headerStyle', alignment: 'center' },
+            exporterPdfHeader: { text: "EMS EPOP Backend Client - USPS Registered Mail Owners", style: 'headerStyle', alignment: 'center', margin: [2, 12] },
             exporterPdfFooter: function ( currentPage, pageCount ) {
                 return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle', alignment: 'center' };
             },
@@ -50,7 +51,7 @@
             },
             exporterPdfOrientation: 'landscape',
             exporterPdfPageSize: 'LETTER',
-            exporterPdfMaxGridWidth: 500,
+            exporterPdfMaxGridWidth: 620,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
                 onRegisterApi: function(gridApi){
                 $scope.gridApi = gridApi;

@@ -26,6 +26,16 @@
                         content: '<i class="fa fa-database"></i> Mail Owners'
                     }
                 }
+            },
+            {
+                state: 'mailOwnerDetail',
+                config: {
+                    url: '/mailowners/:id',
+                    templateUrl: 'app/mailOwners/mailOwnerDetail.html',
+                    controller: 'MailOwnerDetailController',
+                    controllerAs: 'vm',
+                    title: 'Mail Owner Detail',
+                }
             }
         ];
     }

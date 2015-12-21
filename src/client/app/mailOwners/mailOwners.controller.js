@@ -19,7 +19,7 @@
             paginationPageSizes: [10, 30, 100],
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {name: 'Name', displayName: 'Owner Name'},
+                {field: 'Name', displayName: 'Owner Name', cellTemplate: '<div style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.id })">{{ row.entity.Name }}</a></div>'},
                 {name: 'Address1', displayName: 'Address 1'},
                 {name: 'Address2', displayName: 'Address 2'},
                 {name: 'City', displayName: 'City' },

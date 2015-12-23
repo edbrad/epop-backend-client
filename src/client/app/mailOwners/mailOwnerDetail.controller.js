@@ -2,21 +2,25 @@
     'use strict';
 
     angular
-        .module('app.mailOwners', ['lbServices', 'dialogsService', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
+        .module('app.mailOwnerDetail', ['lbServices', 'app.dialogsService', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
         .controller('MailOwnerDetailController', MailOwnerDetailController);
 
-    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'dialogsService', 'logger', '$scope', '$stateParams'];
+    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams', 'dialogsService'];
     /* @ngInject */
-    function MailOwnerDetailController($q, MailOwner, dialogs, logger, $scope, $stateParams) {
+    function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams, dialog) {
         var vm = this;
         vm.title = 'Mail Owner Detail';
         vm.mailOwner = [];
         
         vm.click = function(){
-            dialogs.confirm('Are you sure about what you are doing?', 'Click?', ['OK', 'CANCEL'])
+            dialog.confirm('Are you sure about what you are doing?', 'Confirm?', ['OK', 'CANCEL'])
             .then(function(){
-                console.log("modal test");
+                logger.info("modal complete!");
             });
+        };
+        
+        vm.formatCityStateZip = function(city, state, zip5, zip4){
+            return city + ', ' + state + ' ' + zip5;
         };
         
         activate();

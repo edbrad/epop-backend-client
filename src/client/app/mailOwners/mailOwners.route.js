@@ -34,7 +34,7 @@
                     templateUrl: 'app/mailOwners/mailOwnerDetail.html',
                     controller: 'MailOwnerDetailController',
                     controllerAs: 'vm',
-                    title: 'Mail Owner Detail',
+                    title: 'Mail Owner Detail'
                 }
             }
         ];

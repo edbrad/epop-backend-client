@@ -3,6 +3,10 @@
         <div class="container">
             <b>Mail Owner Details</b>
             <h2>{{vm.mailOwner.Name}}</h2>
+            <h3>{{vm.mailOwner.Address1}}</h3>
+            <h3>{{vm.mailOwner.Address2}}</h3>
+            <h3>{{vm.formatCityStateZip(vm.mailOwner.City, vm.mailOwner.State, vm.mailOwner.Zip5)}}</h3>
+            
             <button class="btn btn-primary" ng-click="vm.click()">MODAL</button>
         </div>
     </section>

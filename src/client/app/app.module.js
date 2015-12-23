@@ -7,10 +7,12 @@
         'app.admin',
         'app.dashboard',
         'app.mailOwners',
+        'app.mailOwnerDetail',
         'app.CRIDs',
         'app.permits',
         'app.mailerIds',
-        'app.layout'
+        'app.layout',
+        'app.confirmModal'
     ]);
 
 })();

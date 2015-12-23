@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.core')
+        .module('app.dialogsService',['ui.bootstrap'])
         .factory('dialogsService', dialogsService);
 
     dialogsService.$inject = ['$modal'];
@@ -28,7 +28,7 @@
 						};	
 					}
 				},
-				size: 'sm'
+				size: 'md'
 			 });
 			 
 			 return modalInstance.result;

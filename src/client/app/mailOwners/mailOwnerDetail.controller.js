@@ -2,15 +2,22 @@
     'use strict';
 
     angular
-        .module('app.mailOwnerDetail', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
+        .module('app.mailOwners', ['lbServices', 'dialogsService', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
         .controller('MailOwnerDetailController', MailOwnerDetailController);
 
-    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams'];
+    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'dialogsService', 'logger', '$scope', '$stateParams'];
     /* @ngInject */
-    function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams) {
+    function MailOwnerDetailController($q, MailOwner, dialogs, logger, $scope, $stateParams) {
         var vm = this;
         vm.title = 'Mail Owner Detail';
         vm.mailOwner = [];
+        
+        vm.click = function(){
+            dialogs.confirm('Are you sure about what you are doing?', 'Click?', ['OK', 'CANCEL'])
+            .then(function(){
+                console.log("modal test");
+            });
+        };
         
         activate();
         

@@ -12,6 +12,7 @@
         vm.title = 'Mail Owners';
         
         vm.mailOwners = [];
+        var promises = void[]; // asynchronous functions array
         
         var currentDate = new Date();
         
@@ -61,7 +62,7 @@
         activate();
         
         function activate() {
-            var promises = [getMailOwners()];
+            promises = [getMailOwners()];
             return $q.all(promises).then(function() {
                 logger.info('Activated Mail Owners View');
             });

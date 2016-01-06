@@ -12,7 +12,8 @@
         'app.permits',
         'app.mailerIds',
         'app.layout',
-        'app.confirmModal'
+        'app.confirmModal',
+        'app.MailOwnerAddModal'
     ]);
 
 })();

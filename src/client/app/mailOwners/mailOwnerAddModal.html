@@ -1,0 +1,61 @@
+<div class="modal-header">
+	<h2>{{vm.properties.title}}</h2>	
+</div>
+
+<div class='modal-body container'>
+	<form name="addMailOwnerForm" class="form-horizontal" role="form">
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.Name.$invalid }">
+			<label class="col-sm-12" for="Name">Mail Owner Name:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="Name" ng-model="MailOwner.Name" placeholder="Enter Mail Owner/Company Name" required>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.ContactName.$invalid }">
+			<label class="col-sm-12" for="ContactName">Contact Name:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="ContactName" ng-model="MailOwner.ContactName" placeholder="Enter Contact Name" required>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.Address1.$invalid }">
+			<label class="col-sm-12" for="Address1">Address 1:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="Address1" ng-model="MailOwner.Address1" placeholder="Enter Primary Address Line" required>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.Address2.$invalid }">
+			<label class="col-sm-12" for="Address2">Address 2:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="Address2" ng-model="MailOwner.Address2" placeholder="Enter Secondary Address Line" required>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.City.$invalid }">
+			<label class="col-sm-12" for="City">City:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="City" ng-model="MailOwner.City" placeholder="Enter City Name" required>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.State.$invalid }">
+			<label class="col-sm-12" for="State">State:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="State" ng-model="MailOwner.State" placeholder="Enter 2-Character State abbreviation" required>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.Zip5.$invalid }">
+			<label class="col-sm-12" for="Zip5">Zip Code:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="Zip5" ng-model="MailOwner.Zip5" placeholder="Enter 5-Digit Zip Code" required>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': addMailOwnerForm.ZipPlus4.$invalid }">
+			<label class="col-sm-12" for="ZipPlus4">Zip Plus 4:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="ZipPlus4" ng-model="MailOwner.ZipPlus4" placeholder="Enter 4-Digit Plus4 Code" required>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class='modal-footer'>
+	<button class="btn btn-primary" ng-click="vm.add()">{{vm.properties.buttons[0]}}</button>
+	<button class="btn btn-default" ng-click="vm.cancel()">{{vm.properties.buttons[1]}}</button>
+</div>

@@ -2,16 +2,18 @@
     'use strict';
 
     angular
-        .module('app.mailOwners', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
+        .module('app.mailOwners', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'app.dialogsService'])
         .controller('MailOwnersController', MailOwnersController);
 
-    MailOwnersController.$inject = ['$q', 'MailOwner', 'logger', '$scope'];
+    MailOwnersController.$inject = ['$q', 'MailOwner', 'logger', '$scope', 'dialogsService'];
     /* @ngInject */
-    function MailOwnersController($q, MailOwner, logger, $scope) {
+    function MailOwnersController($q, MailOwner, logger, $scope, dialog) {
         var vm = this;
         vm.title = 'Mail Owners';
         
         vm.mailOwners = [];
+        
+        var promises = void[];
         
         var currentDate = new Date();
         
@@ -61,7 +63,7 @@
         activate();
         
         function activate() {
-            var promises = [getMailOwners()];
+            promises = [getMailOwners()];
             return $q.all(promises).then(function() {
                 logger.info('Activated Mail Owners View');
             });
@@ -74,5 +76,12 @@
                     $scope.gridOptions.data = result;
                 });
         }
+        
+        vm.addMailOwner = function(){
+            dialog.addMailOwner('Add New Mail Owner', ['ADD', 'CANCEL'])
+            .then(function(){
+                logger.info("Add Mail Owner modal complete!");
+            });
+        };
     }
 })();

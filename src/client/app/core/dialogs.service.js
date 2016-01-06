@@ -9,7 +9,8 @@
     /* @ngInject */
     function dialogsService($modal) {
         var service = {
-			confirm: confirm
+			confirm: confirm,
+			addMailOwner: addMailOwner
 		};
         
         return service;
@@ -23,6 +24,25 @@
 					data: function(){
 						return {
 							message: message,
+							title: title,
+							buttons: buttons
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 function addMailOwner(title, buttons){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/mailOwners/mailOwnerAddModal.html',
+				controller: 'MailOwnerAddModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
 							title: title,
 							buttons: buttons
 						};	

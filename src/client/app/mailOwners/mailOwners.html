@@ -1,37 +1,6 @@
-<section id="dashboard-view" class="mainbar">
+<section id="mailOwners-view" class="mainbar">
     <section class="matter"> 
         <div class="container">
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="widget wlightblue">
-                        <div ht-widget-header title="Mail Owners"
-                             allow-collapse="true"></div>
-                        <div class="widget-content text-center text-info">
-                            <table class="table table-condensed table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Address1</th>
-                                        <th>Address2</th>
-                                        <th>City</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="m in vm.mailOwners">
-                                        <td>{{m.Name}}</td>
-                                        <td>{{m.Address1}}</td>
-                                        <td>{{m.Address2}}</td>
-                                        <td>{{m.City}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="widget-foot">
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget wlightblue">
@@ -41,6 +10,11 @@
                             <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter class="grid"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                <button class="btn btn-success" ng-click="vm.addMailOwner()">ADD NEW MAIL OWNER</button>
                 </div>
             </div>
             </div>

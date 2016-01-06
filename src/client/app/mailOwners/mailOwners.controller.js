@@ -83,5 +83,12 @@
                 logger.info("Add Mail Owner modal complete!");
             });
         };
+        
+        vm.removeMailOwners = function(){
+            dialog.confirm('Are You Sure You Want To DELETE The Selected Mail Owner(s)?','Delete Mail Owner(s)?', ['YES', 'CANCEL'])
+            .then(function(){
+                logger.info("Delete Mail Owner(s) modal complete!");
+            });
+        };
     }
 })();

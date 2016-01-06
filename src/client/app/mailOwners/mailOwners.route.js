@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('app.mailOwners',['uiGmapgoogle-maps'])
+        .module('app.mailOwners')
         .run(appRun);
 
-    appRun.$inject = ['routerHelper', 'uiGmapGoogleMapApi']
+    appRun.$inject = ['routerHelper'];
     /* @ngInject */
-    function appRun(routerHelper, uiGmapGoogleMapApi) {
+    function appRun(routerHelper) {
         routerHelper.configureStates(getStates());
     }
 
@@ -34,12 +34,7 @@
                     templateUrl: 'app/mailOwners/mailOwnerDetail.html',
                     controller: 'MailOwnerDetailController',
                     controllerAs: 'vm',
-                    title: 'Mail Owner Detail',
-                    resolve: {
-                        maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
-                            return uiGmapGoogleMapApi;
-                        }]
-                    }
+                    title: 'Mail Owner Detail'
                 }
             }
         ];

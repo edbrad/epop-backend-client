@@ -80,6 +80,7 @@
         vm.addMailOwner = function(){
             dialog.addMailOwner('Add New Mail Owner', ['ADD', 'CANCEL'])
             .then(function(){
+                getMailOwners();
                 logger.info("Add Mail Owner modal complete!");
             });
         };

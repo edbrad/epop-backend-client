@@ -9,17 +9,10 @@
                             <p><i class="fa fa-database"></i><strong> USPS Registered Mail Owners</strong></p>
                             <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter class="grid"></div>
                         </div>
+                        
                     </div>
+                    <button class="btn btn-success" ng-click="vm.addMailOwner()"><i class="fa fa-plus"></i> <b>ADD NEW MAIL OWNER</b> </button>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                <button class="btn btn-success" ng-click="vm.addMailOwner()"><i class="fa fa-plus"></i> ADD NEW MAIL OWNER </button>
-                </div>
-                <div class="col-md-3">
-                <button class="btn btn-danger" ng-click="vm.removeMailOwners()"><i class="fa fa-minus"></i> REMOVE SELECTED MAIL OWNER(s) </button>
-                </div>
-            </div>
             </div>
         </div>
     </section>

@@ -2,27 +2,35 @@
     'use strict';
 
     angular
-        .module('app.MailOwnerAddModal',[])
+        .module('app.MailOwnerAddModal',['lbServices'])
         .controller('MailOwnerAddModalController', MailOwnerAddModalController);
 
-    MailOwnerAddModalController.$inject = ['$modalInstance', 'logger', 'data'];
+    MailOwnerAddModalController.$inject = ['$scope','$modalInstance', 'logger', 'data', 'MailOwner'];
     /* @ngInject */
-    function MailOwnerAddModalController($modalInstance, logger, data) {
+    function MailOwnerAddModalController($scope, $modalInstance, logger, data, MailOwner) {
         var vm = this;
         
-        vm.cancel = cancel;
-        vm.add = add;
         vm.properties = data;
+        vm.newMailOwner = {};
+        vm.submitted = false;
         
-        function cancel(){
+        vm.cancel = function(){
             logger.warning('Mail Owner Add Modal: cancel/dismiss');
             $modalInstance.dismiss();
-        }
+        };
         
-        function add(){
-            logger.success('Mail Owner Add Modal: close/ok');
-            $modalInstance.close();
-        }
+        vm.add = function(){
+            vm.submitted = true;
+            if ($scope.addMailOwnerForm.$valid){
+                console.log("New Mail Owner: " + JSON.stringify(vm.newMailOwner));
+                MailOwner.create(vm.newMailOwner).$promise.then(function(){         
+                    logger.success('Mail Owner Add Modal: close/ok');
+                    $modalInstance.close()
+                });
+            
+            }
+                
+        };
         
     }
 })();

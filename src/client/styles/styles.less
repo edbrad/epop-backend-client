@@ -2959,8 +2959,13 @@ a {
  */
  .grid{
      width: 100%;
-     height: 430px;
+     height: 446px;
  }
+ .ui-grid-cell {
+  overflow: visible;
+  z-index: 99999;
+  font-size: 14px;
+}
  /*
  * Component: Angular-Google-Maps
  * ------------------------------
@@ -2968,5 +2973,6 @@ a {
  .angular-google-map-container{
  
      height: 400px;
-     width: 100%
+     width: 100%;
+     
  }

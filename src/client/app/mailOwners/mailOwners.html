@@ -7,11 +7,10 @@
                         <div ht-widget-header title="Mail Owners" allow-collapse="true"></div>
                         <div class="widget-content text-left text-info">
                             <p><i class="fa fa-database"></i><strong> USPS Registered Mail Owners</strong></p>
-                            <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter class="grid"></div>
+                            <div ui-grid="gridOptions" external-scopes="gridModel" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter class="grid"></div>
                         </div>
-                        
                     </div>
-                    <button class="btn btn-success" ng-click="vm.addMailOwner()"><i class="fa fa-plus"></i> <b>ADD NEW MAIL OWNER</b> </button>
+                    <button class="btn btn-success" ng-click="vm.addMailOwner()"><i class="fa fa-plus-square"></i> <b>ADD NEW MAIL OWNER</b> </button>
                 </div>
             </div>
         </div>

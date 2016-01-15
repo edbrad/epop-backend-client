@@ -17,8 +17,22 @@
         
         var currentDate = new Date();
         
+        $scope.test = function(){
+            logger.info('Clicked a Edit/Delete button!');
+        };
+        
+        $scope.deleteMailOwner = function(id){
+            dialog.confirm('Are You Sure You Want To DELETE The Selected Mail Owner?','Delete Mail Owner?', ['YES', 'CANCEL'])
+            .then(function(){
+                console.log("Deleting Mail Owner w/ id: " + id);
+                getMailOwners();
+                logger.success("Delete Mail Owner(s) modal complete!");
+            });
+        };
+                                                 
         $scope.gridOptions = {
-            paginationPageSizes: [10, 30, 100],
+            paginationPageSizes: [8, 32, 96],
+            rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
                 {field: 'Name', displayName: 'Owner Name', cellTemplate: '<div style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.id })">{{ row.entity.Name }}</a></div>'},
@@ -26,7 +40,8 @@
                 {name: 'Address2', displayName: 'Address 2'},
                 {name: 'City', displayName: 'City' },
                 {name: 'State', displayName: 'State'},
-                {name: 'Zip5', displayName: 'Zip Code' }
+                {name: 'Zip5', displayName: 'Zip Code' },
+                {field: '*', displayname: '*', cellTemplate: 'app/mailOwners/mailOwnerActionCellTemplate.html', width: 173}
             ],
             enableGridMenu: true,
             enableFiltering: true,
@@ -83,13 +98,6 @@
                 getMailOwners();
                 logger.info("Add Mail Owner modal complete!");
             });
-        };
-        
-        vm.removeMailOwners = function(){
-            dialog.confirm('Are You Sure You Want To DELETE The Selected Mail Owner(s)?','Delete Mail Owner(s)?', ['YES', 'CANCEL'])
-            .then(function(){
-                logger.info("Delete Mail Owner(s) modal complete!");
-            });
-        };
+        };       
     }
 })();

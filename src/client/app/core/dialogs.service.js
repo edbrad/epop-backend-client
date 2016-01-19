@@ -10,7 +10,8 @@
     function dialogsService($modal) {
         var service = {
 			confirm: confirm,
-			addMailOwner: addMailOwner
+			addMailOwner: addMailOwner,
+			deleteMailOwner: deleteMailOwner
 		};
         
         return service;
@@ -45,6 +46,27 @@
 						return {
 							title: title,
 							buttons: buttons
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 function deleteMailOwner(title, message, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/mailOwners/mailOwnerDeleteModal.html',
+				controller: 'MailOwnerDeleteModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							message: message,
+							buttons: buttons,
+							id: id
 						};	
 					}
 				},

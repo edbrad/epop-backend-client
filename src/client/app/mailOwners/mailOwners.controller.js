@@ -8,56 +8,22 @@
     MailOwnersController.$inject = ['$q', 'MailOwner', 'logger', '$scope', 'dialogsService', '$state', '$stateParams', '$timeout'];
     /* @ngInject */
     function MailOwnersController($q, MailOwner, logger, $scope, dialog, $state, $stateParams, $timeout) {
+        // establish View Model
         var vm = this;
+        
+        // set View title
         vm.title = 'Mail Owners';
         
+        // storage for Mail Owner data
         vm.mailOwners = [];
         
+        // asyncronous function array storage 
         var promises = void[];
         
+        // store current date for grid export
         var currentDate = new Date();
-        
-        
-        
-        $scope.test = function(){
-            logger.info('Clicked a Edit/Delete button!');
-        };
-        
-        $scope.deleteMailOwner = function(id){
-            dialog.confirm('Are You Sure You Want To DELETE The Selected Mail Owner?','Delete Mail Owner?', ['YES', 'CANCEL'])
-            .then(function(){
-                console.log("Deleting Mail Owner w/ id: " + id);
-                 
-                console.log("Deleting related CRIDs");
-                MailOwner.CRIDs.destroyAll({id: id});
-                
-                console.log("Deleting related Permits");
-                MailOwner.Permits.destroyAll({id: id});
-                
-                console.log("Deleting related Mailer IDs");
-                MailOwner.MailerIDs.destroyAll({id: id})
-                
-                console.log("...Finaly, Deleting MailOwner");
-                MailOwner.deleteById({id: id})
-                
-                logger.success("Mail Owner Deleted!");
-                
-                // refresh view
-                /*$state.transitionTo($state.current, $stateParams, {
-                    reload: true,
-                    inherit: false,
-                    notify: true
-                });
-                */
-                var refresh = function() {
-                        $scope.refresh = true;
-                        $timeout(function() {
-                        $scope.refresh = false;
-                    }, 0);
-                };
-            });
-        };
-                                                 
+                    
+        // initialize UI Grid layout/formatting options                            
         $scope.gridOptions = {
             paginationPageSizes: [8, 32, 96],
             rowHeight: 40,
@@ -69,7 +35,17 @@
                 {name: 'City', displayName: 'City' },
                 {name: 'State', displayName: 'State'},
                 {name: 'Zip5', displayName: 'Zip Code' },
-                {field: '*', displayname: '*', cellTemplate: 'app/mailOwners/mailOwnerActionCellTemplate.html', width: 173}
+                // append Edit & Delete buttons
+                {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
+                                                                       '  <button class="btn btn-warning" style="margin-top: 3px;" ng-click="grid.appScope.test()">' +
+                                                                       '	    <i class="fa fa-edit"></i>Edit' +
+                                                                       '  </button>' +
+                                                                       '</span>' +
+                                                                       '<span>'+
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteMailOwner(row.entity.id)">' +
+                                                                       '		<i class="fa fa-trash"></i>Delete' +
+                                                                       '	</button>' +
+                                                                       '</span>', width: 173}
             ],
             enableGridMenu: true,
             enableFiltering: true,
@@ -102,7 +78,8 @@
                 $scope.gridApi = gridApi;
             }
         };
-        
+              
+        // activate/initialize view
         activate();
         
         function activate() {
@@ -112,6 +89,7 @@
             });
         }
         
+        // collect Mail Owners from database
         function getMailOwners() {
             MailOwner.find(
                 function (result) {
@@ -120,6 +98,7 @@
                 });
         }
         
+        // invoke modal dialog w/form to add new Mail Owner
         vm.addMailOwner = function(){
             dialog.addMailOwner('Add New Mail Owner', ['ADD', 'CANCEL'])
             .then(function(){
@@ -128,22 +107,14 @@
             });
         };
         
-        function deleteRelatedCRIDs(id) {
-            MailOwner.CRIDs.destroyAll({id: id}, function(result){
-                console.log("Related CRIDs Deleted");
-            });  
-        }
+        // invoke modal dialog to delete current Mail Owner, and update the grid
+        $scope.deleteMailOwner = function(id){
+            dialog.deleteMailOwner('Delete Mail Owner?', 'WARNING: This will also delete all associated CRIDs, MIDs, Permits and Mailer IDs for this Mail Owner!', ['DELETE', 'CANCEL'], id)
+            .then(function(){
+                getMailOwners();
+                logger.info("Delete Mail Owner modal complete!");
+            });
+        };
         
-        function deleteRelatedPermits(id) {
-            MailOwner.Permits.destroyAll({id: id}, function(result){
-                console.log("Related Permits Deleted");
-            });  
-        }       
-        
-        function deleteRelatedMailerIDs(id) {
-            MailOwner.MailerIDs.destroyAll({id: id}, function(result){
-                console.log("Related Mailer IDs Deleted");
-            });  
-        }              
     }
 })();

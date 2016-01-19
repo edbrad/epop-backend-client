@@ -13,7 +13,8 @@
         'app.mailerIds',
         'app.layout',
         'app.confirmModal',
-        'app.MailOwnerAddModal'
+        'app.MailOwnerAddModal',
+        'app.MailOwnerDeleteModal'
     ]);
 
 })();

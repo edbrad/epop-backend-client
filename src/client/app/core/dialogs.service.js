@@ -13,7 +13,8 @@
 			confirm: confirm,
 			addMailOwner: addMailOwner,
 			deleteMailOwner: deleteMailOwner,
-			editMailOwner: editMailOwner
+			editMailOwner: editMailOwner,
+			addCRID: addCRID
 		};
         
         return service;
@@ -93,6 +94,26 @@
 							title: title,
 							buttons: buttons,
 							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // add CRID Modal Window
+		 function addCRID(title, buttons){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/CRIDs/cridAddModal.html',
+				controller: 'CRIDAddModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons
 						};	
 					}
 				},

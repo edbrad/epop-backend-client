@@ -1,32 +1,6 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter"> 
         <div class="container">
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="widget wgreen">
-                        <div ht-widget-header title="CRID&#39s"
-                             allow-collapse="true"></div>
-                        <div class="widget-content text-center text-info">
-                            <table class="table table-condensed table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Mail Owner</th>
-                                        <th>CRID</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="c in vm.CRIDs">
-                                        <td>{{vm.getMailOwnerName(c.mailOwnerId)}}</td>
-                                        <td>{{c.CRID}}</td>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="widget-foot">
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget wgreen">
@@ -36,6 +10,7 @@
                             <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter class="grid"></div>
                         </div>
                     </div>
+                    <button class="btn btn-success" ng-click="vm.addCRID()"><i class="fa fa-plus-square"></i> <b>ADD NEW CRID</b> </button>
                 </div>
             </div>
         </div>

@@ -2,26 +2,46 @@
     'use strict';
 
     angular
-        .module('app.CRIDs', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
+        .module('app.CRIDs', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter','app.dialogsService'])
         .controller('CRIDsController', CRIDsController);
 
-    CRIDsController.$inject = ['$q', 'CRID', 'MailOwner', 'logger', '$scope'];
+    CRIDsController.$inject = ['$q', 'CRID', 'MailOwner', 'logger', '$scope', 'dialogsService'];
     /* @ngInject */
-    function CRIDsController($q, CRID, MailOwner, logger, $scope) {
+    function CRIDsController($q, CRID, MailOwner, logger, $scope, dialog) {
+        // establish View Model
         var vm = this;
         
+        // View title
         vm.title = 'CRIDs';
+        
+        // storage for CRID's
         vm.CRIDs = [];
+        
+        // storage for available Mail Owners
         vm.MailOwners = [];
         
+        // date used in Reports and Excel/CSV exporting
         var currentDate = new Date();
         
+        // CRID display grid options
         $scope.gridOptions = {
-            paginationPageSizes: [10, 30, 100],
+            paginationPageSizes: [8, 32, 96],
+            rowHeight: 40,
             columnDefs:[
                 {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Mail Owner Name',
                  cellTemplate: '<div style="padding: 5px;">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</div>'},
                 {name: 'CRID', displayName: 'CRID'},
+                // append Edit & Delete buttons
+                {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editCRID(row.entity.id)">' +
+                                                                       '	    <i class="fa fa-edit"></i>Edit' +
+                                                                       '  </button>' +
+                                                                       '</span>' +
+                                                                       '<span>'+
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteCRID(row.entity.id)">' +
+                                                                       '		<i class="fa fa-trash"></i>Delete' +
+                                                                       '	</button>' +
+                                                                       '</span>', width: 173}
             ],
             enableGridMenu: true,
             enableFiltering: true,
@@ -55,6 +75,7 @@
             }
         };
         
+        // initialize the view
         activate();
         
         function activate() {
@@ -64,6 +85,7 @@
             });
         }
         
+        // get all available CRIDs
         function getCRIDs() {
             CRID.find(
                 function (result) {
@@ -72,6 +94,7 @@
                 });
         }
         
+        // get all available Mail Owners
         function getMailOwners() {
             MailOwner.find(
                 function (result) {
@@ -79,15 +102,7 @@
                 });
         }
         
-        /*vm.getMailOwnerName = function(id){
-            for(var i = 0 ; i < vm.MailOwners.length; i++){
-                var obj = vm.MailOwners[i];
-                if (obj.id == id){
-                    return obj.Name;
-                }
-            }
-        };*/
-        
+        // get the Mail Owner name from  it's Id
         $scope.getMailOwnerName = function(id){
             for(var i = 0 ; i < vm.MailOwners.length; i++){
                 var obj = vm.MailOwners[i];
@@ -96,6 +111,34 @@
                 }
             }
         };
+        
+        // invoke modal dialog w/form to add new CRID
+        vm.addCRID = function(){
+            dialog.addCRID('Add New CRID', ['ADD', 'CANCEL'])
+            .then(function(){
+                getCRIDs();
+                logger.success("New CRID Added!");
+            });
+        };
+        
+        // invoke modal dialog to delete current CRID, and update the grid
+        $scope.deleteCRID = function(id){
+            dialog.deleteCRID('Delete CRID?', 'Are You Sure You Want to Delete this CRID?', ['DELETE', 'CANCEL'], id)
+            .then(function(){
+                getCRIDs();
+                logger.success("CRID Deleted!");
+            });
+        };
+        
+        // invoke modal dialog w/form to edit selected CRID
+        $scope.editCRID = function(id){
+            dialog.editCRID('Edit CRID', ['UPDATE', 'CANCEL'], id)
+            .then(function(){
+                getCRIDs();
+                logger.success("CRID Updated!");
+            });
+        };
+        
          
     }
 })();

@@ -37,7 +37,7 @@
                 {name: 'Zip5', displayName: 'Zip Code' },
                 // append Edit & Delete buttons
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
-                                                                       '  <button class="btn btn-warning" style="margin-top: 3px;" ng-click="grid.appScope.test()">' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.test()">' +
                                                                        '	    <i class="fa fa-edit"></i>Edit' +
                                                                        '  </button>' +
                                                                        '</span>' +
@@ -103,7 +103,7 @@
             dialog.addMailOwner('Add New Mail Owner', ['ADD', 'CANCEL'])
             .then(function(){
                 getMailOwners();
-                logger.info("Add Mail Owner modal complete!");
+                logger.success("Mail Owner Added!");
             });
         };
         
@@ -112,7 +112,7 @@
             dialog.deleteMailOwner('Delete Mail Owner?', 'WARNING: This will also delete all associated CRIDs, MIDs, Permits and Mailer IDs for this Mail Owner!', ['DELETE', 'CANCEL'], id)
             .then(function(){
                 getMailOwners();
-                logger.info("Delete Mail Owner modal complete!");
+                logger.success("Mail Owner Deleted!");
             });
         };
         

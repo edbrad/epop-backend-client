@@ -8,17 +8,25 @@
     MailOwnerAddModalController.$inject = ['$scope','$modalInstance', 'logger', 'data', 'MailOwner'];
     /* @ngInject */
     function MailOwnerAddModalController($scope, $modalInstance, logger, data, MailOwner) {
+        // establish View Model
         var vm = this;
         
+        // get passed-in information from the Mail Owner View, which invoked this dialog
         vm.properties = data;
+        
+        // storage for a new Mail Owner to be added
         vm.newMailOwner = {};
+        
+        // error checking flag
         vm.submitted = false;
         
+        // perform 'CANCEL' processing (dismiss the Modal)
         vm.cancel = function(){
             logger.warning('Mail Owner Add Modal: cancel/dismiss');
             $modalInstance.dismiss();
         };
         
+        // perform 'DELETE' processing (remove Mail Owner and associated data from database, then close the dialog)       
         vm.add = function(){
             vm.submitted = true;
             if ($scope.addMailOwnerForm.$valid){

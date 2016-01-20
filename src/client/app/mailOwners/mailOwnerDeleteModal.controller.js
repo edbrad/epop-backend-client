@@ -23,18 +23,23 @@
         // perform 'DELETE' processing (remove Mail Owner and associated data from database, then close the dialog)
         vm.delete = function(id){
             console.log('Deleting Mail Owner w/ id: ' + id);
+            
+            // delete related CRID's
             MailOwner.CRIDs.destroyAll({id: id}).$promise.then(function(){         
                 console.log('Deleted All Related CRIDs');
             });
             
+            // delete related Permits
             MailOwner.Permits.destroyAll({id: id}).$promise.then(function(){         
                 console.log('Deleted All Related Permits');
             });
             
+            // delete related Mailer Id's
             MailOwner.MailerIDs.destroyAll({id: id}).$promise.then(function(){         
                 console.log('Deleted All Related MailerIDs');
             });
             
+            // delete the Mail Owner
             MailOwner.deleteById({id: id}).$promise.then(function(){         
                 console.log('Deleted Mail Owner');
                 $modalInstance.close()

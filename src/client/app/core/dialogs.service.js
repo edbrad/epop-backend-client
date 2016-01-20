@@ -8,6 +8,7 @@
     dialogsService.$inject = ['$modal'];
     /* @ngInject */
     function dialogsService($modal) {
+		// exposed service methods
         var service = {
 			confirm: confirm,
 			addMailOwner: addMailOwner,
@@ -15,7 +16,8 @@
 		};
         
         return service;
-     
+     	
+		// generic confirm Modal Window
 	 	function confirm(message, title, buttons){
 			 var modalInstance = $modal.open({
 				templateUrl: 'app/core/confirmModal.html',
@@ -36,6 +38,7 @@
 			 return modalInstance.result;
 		 }
 		 
+		 // add Mail Owner Modal Window
 		 function addMailOwner(title, buttons){
 			 var modalInstance = $modal.open({
 				templateUrl: 'app/mailOwners/mailOwnerAddModal.html',
@@ -55,6 +58,7 @@
 			 return modalInstance.result;
 		 }
 		 
+		 // delete Mail Owner Modal Window
 		 function deleteMailOwner(title, message, buttons, id){
 			 var modalInstance = $modal.open({
 				templateUrl: 'app/mailOwners/mailOwnerDeleteModal.html',

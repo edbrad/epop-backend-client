@@ -8,18 +8,26 @@
     MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams', 'dialogsService'];
     /* @ngInject */
     function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams, dialog) {
+        // establish View Model
         var vm = this;
+        
+        // assign View Title
         vm.title = 'Mail Owner Detail';
+        
+        // storage for the selected Mail Owner
         vm.mailOwner = [];
         
-        var promises = void[]; // asynchronous functions array
+        // asynchronous functions array storage
+        var promises = void[]; 
         
+        // initialize UI Grid layout/formatting options for displaying related CRIDs
         $scope.cridsGridOptions = {
             columnDefs:[
                 {name: 'CRID', displayName: 'CRID'}
             ]
         };
         
+        // initialize UI Grid layout/formatting options for displaying related Permits
         $scope.permitsGridOptions = {
             columnDefs:[
                 {name: 'PermitNumber', displayName: '#'},
@@ -29,6 +37,7 @@
             ]
         };
         
+        // initialize UI Grid layout/formatting options for displaying related Mailer Id's
         $scope.mailerIdsGridOptions = {
             columnDefs:[
                 {name: 'MailerID', displayName: 'Mailer ID'},
@@ -36,11 +45,12 @@
             ]
         };
         
-        
+        // format the Mail Owner City/State/Zip line for display
         vm.formatCityStateZip = function(city, state, zip5, zip4){
             return city + ', ' + state + ' ' + zip5;
         };
         
+        // activate/initialize view
         activate();
         
         function activate() {
@@ -50,6 +60,7 @@
             });
         }
         
+        // collect selected Mail Owner from database
         function getMailOwner() {
             MailOwner.findById({id: $stateParams.id},
                 function (result) {
@@ -57,6 +68,7 @@
                 });
         }
         
+        // collect related CRID's for the Mail Owner from the database
         function getCRIDs() {
             MailOwner.CRIDs({id: $stateParams.id},
                 function (result) {
@@ -64,6 +76,7 @@
                 });
         }
         
+        // collect related Permits for the Mail Owner from the database
         function getPermits() {
             MailOwner.Permits({id: $stateParams.id},
                 function (result) {
@@ -71,6 +84,7 @@
                 });
         }
         
+        // collect related Mailer Id's for the Mail Owner from the database
         function getMailerIDs() {
             MailOwner.MailerIDs({id: $stateParams.id},
                 function (result) {

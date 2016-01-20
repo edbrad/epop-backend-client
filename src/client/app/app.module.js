@@ -14,7 +14,8 @@
         'app.layout',
         'app.confirmModal',
         'app.MailOwnerAddModal',
-        'app.MailOwnerDeleteModal'
+        'app.MailOwnerDeleteModal',
+        'app.MailOwnerEditModal'
     ]);
 
 })();

@@ -37,7 +37,7 @@
                 {name: 'Zip5', displayName: 'Zip Code' },
                 // append Edit & Delete buttons
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
-                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.test()">' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailOwner(row.entity.id)">' +
                                                                        '	    <i class="fa fa-edit"></i>Edit' +
                                                                        '  </button>' +
                                                                        '</span>' +
@@ -113,6 +113,15 @@
             .then(function(){
                 getMailOwners();
                 logger.success("Mail Owner Deleted!");
+            });
+        };
+        
+        // invoke modal dialog w/form to edit selected Mail Owner
+        $scope.editMailOwner = function(id){
+            dialog.editMailOwner('Edit Mail Owner', ['UPDATE', 'CANCEL'], id)
+            .then(function(){
+                getMailOwners();
+                logger.success("Mail Owner Updated!");
             });
         };
         

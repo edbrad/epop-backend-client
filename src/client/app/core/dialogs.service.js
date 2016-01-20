@@ -12,7 +12,8 @@
         var service = {
 			confirm: confirm,
 			addMailOwner: addMailOwner,
-			deleteMailOwner: deleteMailOwner
+			deleteMailOwner: deleteMailOwner,
+			editMailOwner: editMailOwner
 		};
         
         return service;
@@ -69,6 +70,27 @@
 						return {
 							title: title,
 							message: message,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // edit Mail Owner Modal Window
+		 function editMailOwner(title, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/mailOwners/mailOwnerEditModal.html',
+				controller: 'MailOwnerEditModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
 							buttons: buttons,
 							id: id
 						};	

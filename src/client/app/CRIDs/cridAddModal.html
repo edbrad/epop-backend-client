@@ -7,8 +7,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : addCRIDForm.MailOwner.$invalid }">
 			<label class="col-sm-12" for="MailOwner">Mail Owner:*</label>
 			<div class="col-sm-12">
-				<select class="form-control" name="MailOwner" required ng-model="vm.mailOwner" ng-options="o.Name for o in vm.mailOwners" value="mailOwner.id" placeholder="Select Mail Owner">
-					
+				<select class="form-control" name="MailOwner" required ng-model="vm.mailOwner" ng-options="o.Name for o in vm.mailOwners">
 				</select>
 				<span class="help-block" ng-show="addCRIDForm.MailOwner.$error.required && vm.submitted">Mail Owner is Required!</span>
 			</div>

@@ -2,46 +2,31 @@
     'use strict';
 
     angular
-        .module('app.MailOwnerDeleteModal',['lbServices'])
-        .controller('MailOwnerDeleteModalController', MailOwnerDeleteModalController);
+        .module('app.CRIDDeleteModal',['lbServices'])
+        .controller('CRIDDeleteModalController', CRIDDeleteModalController);
 
-    MailOwnerDeleteModalController.$inject = ['$scope','$modalInstance', 'logger', 'data', 'MailOwner'];
+    CRIDDeleteModalController.$inject = ['$scope','$modalInstance', 'logger', 'data', 'CRID'];
     /* @ngInject */
-    function MailOwnerDeleteModalController($scope, $modalInstance, logger, data, MailOwner) {
+    function CRIDDeleteModalController($scope, $modalInstance, logger, data, CRID) {
         // establish View Model
         var vm = this;
         
-        // get passed-in information from the Mail Owner View, which invoked this dialog
+        // get passed-in information from the CRID View, which invoked this dialog
         vm.properties = data;
         
         // perform 'CANCEL' processing (dismiss the Modal)
         vm.cancel = function(){
-            logger.warning('Mail Owner delete Modal: cancel/dismiss');
+            logger.warning('CRID delete Modal: cancel/dismiss');
             $modalInstance.dismiss();
         };
         
-        // perform 'DELETE' processing (remove Mail Owner and associated data from database, then close the dialog)
+        // perform 'DELETE' processing (remove CRID, then close the dialog)
         vm.delete = function(id){
-            console.log('Deleting Mail Owner w/ id: ' + id);
+            console.log('Deleting CRID w/ id: ' + id);
             
-            // delete related CRID's
-            MailOwner.CRIDs.destroyAll({id: id}).$promise.then(function(){         
-                console.log('Deleted All Related CRIDs');
-            });
-            
-            // delete related Permits
-            MailOwner.Permits.destroyAll({id: id}).$promise.then(function(){         
-                console.log('Deleted All Related Permits');
-            });
-            
-            // delete related Mailer Id's
-            MailOwner.MailerIDs.destroyAll({id: id}).$promise.then(function(){         
-                console.log('Deleted All Related MailerIDs');
-            });
-            
-            // delete the Mail Owner
-            MailOwner.deleteById({id: id}).$promise.then(function(){         
-                console.log('Deleted Mail Owner');
+            // delete the CRID
+            CRID.deleteById({id: id}).$promise.then(function(){         
+                console.log('Deleted CRID');
                 $modalInstance.close()
             });
             

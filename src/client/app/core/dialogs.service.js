@@ -14,7 +14,9 @@
 			addMailOwner: addMailOwner,
 			deleteMailOwner: deleteMailOwner,
 			editMailOwner: editMailOwner,
-			addCRID: addCRID
+			addCRID: addCRID,
+			deleteCRID: deleteCRID,
+			editCRID: editCRID
 		};
         
         return service;
@@ -114,6 +116,49 @@
 						return {
 							title: title,
 							buttons: buttons
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // delete CRID Modal Window
+		 function deleteCRID(title, message, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/CRIDs/cridDeleteModal.html',
+				controller: 'CRIDDeleteModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							message: message,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // edit CRID Modal Window
+		 function editCRID(title, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/CRIDs/cridEditModal.html',
+				controller: 'CRIDEditModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons,
+							id: id
 						};	
 					}
 				},

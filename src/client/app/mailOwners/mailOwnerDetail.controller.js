@@ -22,8 +22,20 @@
         
         // initialize UI Grid layout/formatting options for displaying related CRIDs
         $scope.cridsGridOptions = {
+            rowHeight: 40,
             columnDefs:[
-                {name: 'CRID', displayName: 'CRID'}
+                {name: 'CRID', displayName: 'CRID'},
+                // append Edit & Delete buttons
+                {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailOwner(row.entity.id)">' +
+                                                                       '	    <i class="fa fa-edit"></i>Edit' +
+                                                                       '  </button>' +
+                                                                       '</span>' +
+                                                                       '<span>'+
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteMailOwner(row.entity.id)">' +
+                                                                       '		<i class="fa fa-trash"></i>Delete' +
+                                                                       '	</button>' +
+                                                                       '</span>', width: 173}
             ]
         };
         

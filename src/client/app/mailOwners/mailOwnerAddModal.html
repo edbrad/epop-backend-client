@@ -45,7 +45,6 @@
 			<label class="col-sm-12" for="State">State:*</label>
 			<div class="col-sm-4">
 				<select class="form-control" name="State" required ng-model="vm.newMailOwner.State">
-					<option value="ST" disabled selected>ST</option>
 					<option value="AL">AL</option>
 					<option value="AK">AK</option>
 					<option value="AZ">AZ</option>
@@ -116,6 +115,12 @@
 				<input type="text" class ="form-control" name="ZipPlus4" ng-minlength="4" ng-maxlength="4" ng-model="vm.newMailOwner.ZipPlus4" placeholder="Enter 4-Digit Plus4 Code" />
 				<span class="help-block" ng-show="addMailOwnerForm.ZipPlus4.$error.minlength && vm.submitted">Zip Plus 4 Code is too short (must be 4 digits)!.</span>
 				<span class="help-block" ng-show="addMailOwnerForm.ZipPlus4.$error.maxlength && vm.submitted">Zip Plus 4 Code is too long (must be 4 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailOwnerForm.Phone.$invalid }">
+			<label class="col-sm-12" for="Phone">Phone:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="Phone" ng-model="vm.newMailOwner.Phone" placeholder="Enter a Phone Number" />
 			</div>
 		</div>
 		<p><small>* = Required</small></p>

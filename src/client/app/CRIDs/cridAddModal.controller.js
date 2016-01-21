@@ -38,7 +38,7 @@
         vm.add = function(){
             vm.submitted = true;
             if ($scope.addCRIDForm.$valid){
-                // assign the Mail Owner id
+                // assign the Mail Owner id from the selected Mail Owner
                 vm.newCRID.mailOwnerId = vm.mailOwner.id;
                 console.log("New CRID: " + JSON.stringify(vm.newCRID));
                 CRID.create(vm.newCRID).$promise.then(function(){         
@@ -59,6 +59,8 @@
             MailOwner.find(
                 function (result) {
                     vm.mailOwners = result;
+                    // set the first item as selcted in the combo box
+                    vm.mailOwner = vm.mailOwners[0];
                 });
         }
         

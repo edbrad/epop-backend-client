@@ -16,6 +16,7 @@
         
         // storage for a new Mail Owner to be added
         vm.newMailOwner = {};
+        vm.newMailOwner.State = "IL"; // set the initial State Code
         
         // error checking flag
         vm.submitted = false;

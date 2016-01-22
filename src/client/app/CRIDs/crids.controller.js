@@ -28,9 +28,9 @@
             paginationPageSizes: [8, 32, 96],
             rowHeight: 40,
             columnDefs:[
+                {name: 'CRID', displayName: 'CRID'},
                 {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Mail Owner Name',
                  cellTemplate: '<div style="padding: 5px;">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</div>'},
-                {name: 'CRID', displayName: 'CRID'},
                 // append Edit & Delete buttons
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
                                                                        '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editCRID(row.entity.id)">' +

@@ -10,6 +10,7 @@
                         <h3>{{vm.mailOwner.Address2}}</h3>
                         <h3>{{vm.formatCityStateZip(vm.mailOwner.City, vm.mailOwner.State, vm.mailOwner.Zip5, vm.mailOwner.ZipPlus4)}}</h3>
                         <h3>Phone: {{vm.mailOwner.Phone}}</h3>
+                        <button class="btn btn-primary" style="margin-top: 3px; margin-left: 0px;" ng-click="vm.editMailOwner(vm.mailOwner.id)"><i class="fa fa-edit"></i>Edit</button>
                     </div>
                 </div>
                 <div class="col-lg-8 col-xs-8">
@@ -20,17 +21,17 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col-lg-4 col-xs-4">
+                <div class="col-lg-4 col-xs-12">
                     <div class="widget wgreen">
                     <div ht-widget-header title="CRID&#39s" allow-collapse="true"></div>
                         <div class="widget-content text-left text-info">
-                            <p><i class="fa fa-database"></i><strong> USPS Registered CRID&#39s</strong></p>
+                            <p><i class="fa fa-database"></i><strong> USPS Registered CRID&#39s ({{vm.CRIDCount}})</strong></p>
                             <div ui-grid="cridsGridOptions" class="grid short"></div>
                         </div>
                     </div>
-                    <button class="btn btn-success"><i class="fa fa-plus"></i> <b>ADD NEW CRID</b> </button>
+                    <button class="btn btn-success" ng-click="vm.addCRID()"><i class="fa fa-plus"></i> <b>ADD NEW CRID</b> </button>
                 </div>
-                <div class="col-lg-4 col-xs-4">
+                <div class="col-lg-4 col-xs-12">
                     <div class="widget worange">
                     <div ht-widget-header title="Permits" allow-collapse="true"></div>
                         <div class="widget-content text-left text-info">
@@ -40,7 +41,7 @@
                     </div>
                     <button class="btn btn-default"><i class="fa fa-plus"></i> <b>ADD NEW PERMIT</b> </button>
                 </div>
-                <div class="col-lg-4 col-xs-4">
+                <div class="col-lg-4 col-xs-12">
                     <div class="widget wred">
                     <div ht-widget-header title="Mailer ID&#39s" allow-collapse="true"></div>
                         <div class="widget-content text-left text-info">

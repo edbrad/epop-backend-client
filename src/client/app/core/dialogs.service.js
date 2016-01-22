@@ -16,7 +16,8 @@
 			editMailOwner: editMailOwner,
 			addCRID: addCRID,
 			deleteCRID: deleteCRID,
-			editCRID: editCRID
+			editCRID: editCRID,
+			addCRIDToMailOwner: addCRIDToMailOwner
 		};
         
         return service;
@@ -152,6 +153,27 @@
 			 var modalInstance = $modal.open({
 				templateUrl: 'app/CRIDs/cridEditModal.html',
 				controller: 'CRIDEditModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // add CRID to Current Mail Owner Modal Window
+		 function addCRIDToMailOwner(title, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/CRIDs/cridAddToMailOwnerModal.html',
+				controller: 'CRIDAddToMailOwnerModalController',
 				controllerAs: 'vm',
 				resolve: {
 					data: function(){

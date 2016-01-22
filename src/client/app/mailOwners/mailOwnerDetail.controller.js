@@ -15,10 +15,15 @@
         vm.title = 'Mail Owner Detail';
         
         // storage for the selected Mail Owner
-        vm.mailOwner = [];
+        vm.mailOwner = {};
         
         // asynchronous functions array storage
-        var promises = void[]; 
+        var promises = void[];
+        
+        // storage for counts
+        vm.CRIDCount = 0;
+        vm.permitCount = 0;
+        vm.mailerIdCount = 0; 
         
         // initialize UI Grid layout/formatting options for displaying related CRIDs
         $scope.cridsGridOptions = {
@@ -27,12 +32,12 @@
                 {name: 'CRID', displayName: 'CRID'},
                 // append Edit & Delete buttons
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
-                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailOwner(row.entity.id)">' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editCRID(row.entity.id)">' +
                                                                        '	    <i class="fa fa-edit"></i>Edit' +
                                                                        '  </button>' +
                                                                        '</span>' +
                                                                        '<span>'+
-                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteMailOwner(row.entity.id)">' +
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteCRID(row.entity.id)">' +
                                                                        '		<i class="fa fa-trash"></i>Delete' +
                                                                        '	</button>' +
                                                                        '</span>', width: 173}
@@ -80,11 +85,22 @@
                 });
         }
         
+        // invoke modal dialog w/form to edit selected Mail Owner
+        vm.editMailOwner = function(id){
+            dialog.editMailOwner('Edit Mail Owner', ['UPDATE', 'CANCEL'], id)
+            .then(function(){
+                getMailOwner();
+                logger.success("Mail Owner Updated!");
+            });
+        };
+        
+        
         // collect related CRID's for the Mail Owner from the database
         function getCRIDs() {
             MailOwner.CRIDs({id: $stateParams.id},
                 function (result) {
                     $scope.cridsGridOptions.data = result;
+                    vm.CRIDCount = result.length;
                 });
         }
         
@@ -103,5 +119,32 @@
                     $scope.mailerIdsGridOptions.data = result;
                 });
         }
+        
+        // invoke modal dialog w/form to add new CRID
+        vm.addCRID = function(){
+            dialog.addCRIDToMailOwner('Add New CRID', ['ADD', 'CANCEL'], vm.mailOwner.id)
+            .then(function(){
+                getCRIDs();
+                logger.success("New CRID Added for Mail Owner!");
+            });
+        };
+        
+        // invoke modal dialog to delete current CRID, and update the grid
+        $scope.deleteCRID = function(id){
+            dialog.deleteCRID('Delete CRID?', 'Are You Sure You Want to Delete this CRID?', ['DELETE', 'CANCEL'], id)
+            .then(function(){
+                getCRIDs();
+                logger.success("CRID Deleted!");
+            });
+        };
+        
+        // invoke modal dialog w/form to edit selected CRID
+        $scope.editCRID = function(id){
+            dialog.editCRID('Edit CRID', ['UPDATE', 'CANCEL'], id)
+            .then(function(){
+                getCRIDs();
+                logger.success("CRID Updated!");
+            });
+        };
     }
 })();

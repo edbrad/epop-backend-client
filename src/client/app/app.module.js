@@ -18,7 +18,8 @@
         'app.MailOwnerEditModal',
         'app.CRIDAddModal',
         'app.CRIDDeleteModal',
-        'app.CRIDEditModal'
+        'app.CRIDEditModal',
+        'app.CRIDAddToMailOwnerModal'
     ]);
 
 })();

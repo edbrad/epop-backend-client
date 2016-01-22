@@ -1,0 +1,22 @@
+<div class="modal-header">
+	<h2>{{vm.properties.title}}</h2>	
+</div>
+
+<div class='modal-body container'>
+	<h3><b>{{vm.mailOwner.Name}}</b></h3>
+	<form name="addCRIDForm" class="form-horizontal" role="form" ng-submit="vm.add()" novalidate  >
+		<div class="form-group" ng-class="{ 'has-error' : addCRIDForm.CRID.$invalid }">
+			<label class="col-sm-12" for="CRID">CRID:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="CRID" required ng-maxlength="100" ng-model="vm.newCRID.CRID" placeholder="Enter CRID" />
+				<span class="help-block" ng-show="addCRIDForm.CRID.$error.required && vm.submitted">CRID is Required!.</span>
+				<span class="help-block" ng-show="addCRIDForm.CRID.$error.maxlength && vm.submitted">CRID is too long (must be less than 100 digits)!.</span>
+			</div>
+		</div>
+		<p><small>* = Required</small></p>
+		<div class='modal-footer'>
+			<button class="btn btn-primary" type="submit"><i class="fa fa-plus-square"></i>{{vm.properties.buttons[0]}}</button>
+			<button class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i>{{vm.properties.buttons[1]}}</button>
+		</div>
+	</form>
+</div>

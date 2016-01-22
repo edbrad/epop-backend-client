@@ -29,7 +29,7 @@
             rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Name', displayName: 'Owner Name', cellTemplate: '<div style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.id })">{{ row.entity.Name }}</a></div>'},
+                {field: 'Name', displayName: 'Owner Name', cellTemplate: '<div style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="mailOwnerDetail({ id: row.entity.id })">{{ row.entity.Name }}</a></div>'},
                 {name: 'Address1', displayName: 'Address 1'},
                 {name: 'Address2', displayName: 'Address 2'},
                 {name: 'City', displayName: 'City' },

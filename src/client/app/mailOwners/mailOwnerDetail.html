@@ -35,17 +35,17 @@
                     <div class="widget worange">
                     <div ht-widget-header title="Permits" allow-collapse="true"></div>
                         <div class="widget-content text-left text-info">
-                            <p><i class="fa fa-database"></i><strong> USPS Registered Permits</strong></p>
+                            <p><i class="fa fa-database"></i><strong> USPS Registered Permits ({{vm.permitCount}})</strong></p>
                             <div ui-grid="permitsGridOptions" class="grid short"></div>
                         </div>
                     </div>
-                    <button class="btn btn-default"><i class="fa fa-plus"></i> <b>ADD NEW PERMIT</b> </button>
+                    <button class="btn btn-success" ng-click="vm.addPermit()"><i class="fa fa-plus"></i> <b>ADD NEW PERMIT</b> </button>
                 </div>
                 <div class="col-lg-4 col-xs-12">
                     <div class="widget wred">
                     <div ht-widget-header title="Mailer ID&#39s" allow-collapse="true"></div>
                         <div class="widget-content text-left text-info">
-                            <p><i class="fa fa-database"></i><strong> USPS Registered Mailer ID&#39s</strong></p>
+                            <p><i class="fa fa-database"></i><strong> USPS Registered Mailer ID&#39s ({{vm.mailerIdCount}})</strong></p>
                             <div ui-grid="mailerIdsGridOptions" class="grid short"></div>
                         </div>
                     </div>

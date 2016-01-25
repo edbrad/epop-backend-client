@@ -48,9 +48,19 @@
         $scope.permitsGridOptions = {
             columnDefs:[
                 {name: 'PermitNumber', displayName: '#'},
-                {name: 'PermitCity', displayName: 'City'},
+                /*{name: 'PermitCity', displayName: 'City'},
                 {name: 'PermitState', displayName: 'State'},
-                {name: 'PermitZip5', displayName: 'Zip'}
+                {name: 'PermitZip5', displayName: 'Zip'},*/
+                {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editPermit(row.entity.id)">' +
+                                                                       '	    <i class="fa fa-edit"></i>Edit' +
+                                                                       '  </button>' +
+                                                                       '</span>' +
+                                                                       '<span>'+
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deletePermit(row.entity.id)">' +
+                                                                       '		<i class="fa fa-trash"></i>Delete' +
+                                                                       '	</button>' +
+                                                                       '</span>', width: 173}
             ]
         };
         
@@ -108,7 +118,8 @@
         function getPermits() {
             MailOwner.Permits({id: $stateParams.id},
                 function (result) {
-                    $scope.permitsGridOptions.data = result;
+                    $scope.permitsGridOptions.data = result
+                    vm.permitCount = result.length;
                 });
         }
         
@@ -144,6 +155,33 @@
             .then(function(){
                 getCRIDs();
                 logger.success("CRID Updated!");
+            });
+        };
+       
+         // invoke modal dialog w/form to add new CRID
+        vm.addPermit = function(){
+            dialog.addPermitToMailOwner('Add New Permit', ['ADD', 'CANCEL'], vm.mailOwner.id)
+            .then(function(){
+                getPermits();
+                logger.success("New Permit Added for Mail Owner!");
+            });
+        };
+        
+        // invoke modal dialog to delete current Permit, and update the grid
+        $scope.deletePermit = function(id){
+            dialog.deletePermit('Delete Permit?', 'Are You Sure You Want to Delete this Permit?', ['DELETE', 'CANCEL'], id)
+            .then(function(){
+                getPermits();
+                logger.success("Permit Deleted!");
+            });
+        };
+        
+        // invoke modal dialog w/form to edit selected Permit
+        $scope.editPermit = function(id){
+            dialog.editPermit('Edit Permit', ['UPDATE', 'CANCEL'], id)
+            .then(function(){
+                getPermits();
+                logger.success("Permit Updated!");
             });
         };
     }

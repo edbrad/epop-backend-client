@@ -1,0 +1,129 @@
+<!--<div class="modal-header">
+	<h2>{{vm.properties.title}}</h2>	
+</div>
+
+<div class='modal-body container'>
+	<h3><b>{{vm.mailOwner.Name}}</b></h3>
+	<form name="addCRIDForm" class="form-horizontal" role="form" ng-submit="vm.add()" novalidate  >
+		<div class="form-group" ng-class="{ 'has-error' : addCRIDForm.CRID.$invalid }">
+			<label class="col-sm-12" for="CRID">CRID:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="CRID" required ng-maxlength="100" ng-model="vm.newCRID.CRID" placeholder="Enter CRID" />
+				<span class="help-block" ng-show="addCRIDForm.CRID.$error.required && vm.submitted">CRID is Required!.</span>
+				<span class="help-block" ng-show="addCRIDForm.CRID.$error.maxlength && vm.submitted">CRID is too long (must be less than 100 digits)!.</span>
+			</div>
+		</div>
+		<p><small>* = Required</small></p>
+		<div class='modal-footer'>
+			<button class="btn btn-primary" type="submit"><i class="fa fa-plus-square"></i>{{vm.properties.buttons[0]}}</button>
+			<button class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i>{{vm.properties.buttons[1]}}</button>
+		</div>
+	</form>
+</div>-->
+
+<div class="modal-header">
+	<h2>{{vm.properties.title}}</h2>	
+</div>
+
+<div class='modal-body container'>
+	<h3><b>{{vm.mailOwner.Name}}</b></h3>
+	<form name="addPermitForm" class="form-horizontal" role="form" ng-submit="vm.add()" novalidate  >
+		<div class="form-group" ng-class="{ 'has-error' : addPermitForm.PermitNumber.$invalid }">
+			<label class="col-sm-12" for="PermitNumber">Permit Number:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="PermitNumber" required ng-maxlength="100" ng-model="vm.newPermit.PermitNumber" placeholder="Enter Permit Number" />
+				<span class="help-block" ng-show="addPermitForm.PermitNumber.$error.required && vm.submitted">Permit Number is Required!.</span>
+				<span class="help-block" ng-show="addPermitForm.PermitNumber.$error.maxlength && vm.submitted">Permit Number is too long (must be less than 100 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addPermitForm.PermitCity.$invalid }">
+			<label class="col-sm-12" for="PermitCity">Permit City:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="PermitCity" required ng-maxlength="100" ng-model="vm.newPermit.PermitCity" placeholder="Enter Permit City" />
+				<span class="help-block" ng-show="addPermitForm.PermitCity.$error.required && vm.submitted">Permit City is Required!.</span>
+				<span class="help-block" ng-show="addPermitForm.PermitCity.$error.maxlength && vm.submitted">Permit City is too long (must be less than 100 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addPermitForm.PermitState.$invalid }">
+			<label class="col-sm-12" for="PermitState">PermitState:*</label>
+			<div class="col-sm-4">
+				<select class="form-control" name="PermitState" required ng-model="vm.newPermit.PermitState">
+					<option value="AL">AL</option>
+					<option value="AK">AK</option>
+					<option value="AZ">AZ</option>
+					<option value="AR">AR</option>
+					<option value="CA">CA</option>
+					<option value="CO">CO</option>
+					<option value="CT">CT</option>
+					<option value="DE">DE</option>
+					<option value="DC">DC</option>
+					<option value="FL">FL</option>
+					<option value="GA">GA</option>
+					<option value="HI">HI</option>
+					<option value="ID">ID</option>
+					<option value="IL">IL</option>
+					<option value="IN">IN</option>
+					<option value="IA">IA</option>
+					<option value="KS">KS</option>
+					<option value="KY">KY</option>
+					<option value="LA">LA</option>
+					<option value="ME">ME</option>
+					<option value="MD">MD</option>
+					<option value="MA">MA</option>
+					<option value="MI">MI</option>
+					<option value="MN">MN</option>
+					<option value="MS">MS</option>
+					<option value="MO">MO</option>
+					<option value="MT">MT</option>
+					<option value="NE">NE</option>
+					<option value="NV">NV</option>
+					<option value="NH">NH</option>
+					<option value="NJ">NJ</option>
+					<option value="NM">NM</option>
+					<option value="NY">NY</option>
+					<option value="NC">NC</option>
+					<option value="ND">ND</option>
+					<option value="OH">OH</option>
+					<option value="OK">OK</option>
+					<option value="OR">OR</option>
+					<option value="PA">PA</option>
+					<option value="RI">RI</option>
+					<option value="SC">SC</option>
+					<option value="SD">SD</option>
+					<option value="TN">TN</option>
+					<option value="TX">TX</option>
+					<option value="UT">UT</option>
+					<option value="VT">VT</option>
+					<option value="VA">VA</option>
+					<option value="WA">WA</option>
+					<option value="WV">WV</option>
+					<option value="WI">WI</option>
+					<option value="WY">WY</option>
+				</select>
+				<span class="help-block" ng-show="addPermitForm.PermitState.$error.required && vm.submitted">Permit State Code is Required!</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addPermitForm.Zip5.$invalid }">
+			<label class="col-sm-12" for="Zip5">Zip Code:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="Zip5" required ng-minlength="5" ng-maxlength="5" ng-model="vm.newPermit.PermitZip5" placeholder="Enter 5-Digit Zip Code" />
+				<span class="help-block" ng-show="addPermitForm.Zip5.$error.required && vm.submitted">Zip Code is Required!</span>
+				<span class="help-block" ng-show="addPermitForm.Zip5.$error.minlength && vm.submitted">Zip Code is too short (must be 5 digits)!.</span>
+				<span class="help-block" ng-show="addPermitForm.Zip5.$error.maxlength && vm.submitted">Zip Code is too long (must be 5 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addPermitForm.ZipPlus4.$invalid }">
+			<label class="col-sm-12" for="ZipPlus4">Zip Plus 4:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="ZipPlus4" ng-minlength="4" ng-maxlength="4" ng-model="vm.newPermit.PermitZipPlus4" placeholder="Enter 4-Digit Plus4 Code" />
+				<span class="help-block" ng-show="addPermitForm.ZipPlus4.$error.minlength && vm.submitted">Zip Plus 4 Code is too short (must be 4 digits)!.</span>
+				<span class="help-block" ng-show="addPermitForm.ZipPlus4.$error.maxlength && vm.submitted">Zip Plus 4 Code is too long (must be 4 digits)!.</span>
+			</div>
+		</div>
+		<p><small>* = Required</small></p>
+		<div class='modal-footer'>
+			<button class="btn btn-primary" type="submit"><i class="fa fa-plus-square"></i>{{vm.properties.buttons[0]}}</button>
+			<button class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i>{{vm.properties.buttons[1]}}</button>
+		</div>
+	</form>
+</div>

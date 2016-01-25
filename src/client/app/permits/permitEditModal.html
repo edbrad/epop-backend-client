@@ -1,0 +1,112 @@
+<div class="modal-header">
+	<h2>{{vm.properties.title}}</h2>	
+</div>
+<div class='modal-body container'>
+	<form name="editPermitForm" class="form-horizontal" role="form" ng-submit="vm.update()" novalidate  >
+		<div class="form-group" ng-class="{ 'has-error' : editPermitForm.MailOwner.$invalid }">
+			<label class="col-sm-12" for="MailOwner">Mail Owner:*</label>
+			<div class="col-sm-12">
+				<select class="form-control" name="MailOwner" required ng-model="vm.newMailOwner" ng-options="o.Name for o in vm.mailOwners">
+				</select>
+				<span class="help-block" ng-show="editPermitForm.MailOwner.$error.required && vm.submitted">Mail Owner is Required!</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : editPermitForm.PermitNumber.$invalid }">
+			<label class="col-sm-12" for="PermitNumber">Permit Number:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="PermitNumber" required ng-maxlength="100" ng-model="vm.permit.PermitNumber" placeholder="Enter Permit Number" />
+				<span class="help-block" ng-show="editPermitForm.PermitNumber.$error.required && vm.submitted">Permit Number is Required!.</span>
+				<span class="help-block" ng-show="editPermitForm.PermitNumber.$error.maxlength && vm.submitted">Permit Number is too long (must be less than 100 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : editPermitForm.PermitCity.$invalid }">
+			<label class="col-sm-12" for="PermitCity">Permit City:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="PermitCity" required ng-maxlength="100" ng-model="vm.permit.PermitCity" placeholder="Enter Permit City" />
+				<span class="help-block" ng-show="editPermitForm.PermitCity.$error.required && vm.submitted">Permit City is Required!.</span>
+				<span class="help-block" ng-show="editPermitForm.PermitCity.$error.maxlength && vm.submitted">Permit City is too long (must be less than 100 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : editPermitForm.PermitState.$invalid }">
+			<label class="col-sm-12" for="PermitState">PermitState:*</label>
+			<div class="col-sm-4">
+				<select class="form-control" name="PermitState" required ng-model="vm.permit.PermitState">
+					<option value="AL">AL</option>
+					<option value="AK">AK</option>
+					<option value="AZ">AZ</option>
+					<option value="AR">AR</option>
+					<option value="CA">CA</option>
+					<option value="CO">CO</option>
+					<option value="CT">CT</option>
+					<option value="DE">DE</option>
+					<option value="DC">DC</option>
+					<option value="FL">FL</option>
+					<option value="GA">GA</option>
+					<option value="HI">HI</option>
+					<option value="ID">ID</option>
+					<option value="IL">IL</option>
+					<option value="IN">IN</option>
+					<option value="IA">IA</option>
+					<option value="KS">KS</option>
+					<option value="KY">KY</option>
+					<option value="LA">LA</option>
+					<option value="ME">ME</option>
+					<option value="MD">MD</option>
+					<option value="MA">MA</option>
+					<option value="MI">MI</option>
+					<option value="MN">MN</option>
+					<option value="MS">MS</option>
+					<option value="MO">MO</option>
+					<option value="MT">MT</option>
+					<option value="NE">NE</option>
+					<option value="NV">NV</option>
+					<option value="NH">NH</option>
+					<option value="NJ">NJ</option>
+					<option value="NM">NM</option>
+					<option value="NY">NY</option>
+					<option value="NC">NC</option>
+					<option value="ND">ND</option>
+					<option value="OH">OH</option>
+					<option value="OK">OK</option>
+					<option value="OR">OR</option>
+					<option value="PA">PA</option>
+					<option value="RI">RI</option>
+					<option value="SC">SC</option>
+					<option value="SD">SD</option>
+					<option value="TN">TN</option>
+					<option value="TX">TX</option>
+					<option value="UT">UT</option>
+					<option value="VT">VT</option>
+					<option value="VA">VA</option>
+					<option value="WA">WA</option>
+					<option value="WV">WV</option>
+					<option value="WI">WI</option>
+					<option value="WY">WY</option>
+				</select>
+				<span class="help-block" ng-show="editPermitForm.PermitState.$error.required && vm.submitted">Permit State Code is Required!</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : editPermitForm.Zip5.$invalid }">
+			<label class="col-sm-12" for="Zip5">Zip Code:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="Zip5" required ng-minlength="5" ng-maxlength="5" ng-model="vm.permit.PermitZip5" placeholder="Enter 5-Digit Zip Code" />
+				<span class="help-block" ng-show="editPermitForm.Zip5.$error.required && vm.submitted">Zip Code is Required!</span>
+				<span class="help-block" ng-show="editPermitForm.Zip5.$error.minlength && vm.submitted">Zip Code is too short (must be 5 digits)!.</span>
+				<span class="help-block" ng-show="editPermitForm.Zip5.$error.maxlength && vm.submitted">Zip Code is too long (must be 5 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : editPermitForm.ZipPlus4.$invalid }">
+			<label class="col-sm-12" for="ZipPlus4">Zip Plus 4:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="ZipPlus4" ng-minlength="4" ng-maxlength="4" ng-model="vm.permit.PermitZipPlus4" placeholder="Enter 4-Digit Plus4 Code" />
+				<span class="help-block" ng-show="editPermitForm.ZipPlus4.$error.minlength && vm.submitted">Zip Plus 4 Code is too short (must be 4 digits)!.</span>
+				<span class="help-block" ng-show="editPermitForm.ZipPlus4.$error.maxlength && vm.submitted">Zip Plus 4 Code is too long (must be 4 digits)!.</span>
+			</div>
+		</div>
+		<p><small>* = Required</small></p>
+		<div class='modal-footer'>
+			<button class="btn btn-primary" type="submit"><i class="fa fa-plus-square"></i>{{vm.properties.buttons[0]}}</button>
+			<button class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i>{{vm.properties.buttons[1]}}</button>
+		</div>
+	</form>
+</div>

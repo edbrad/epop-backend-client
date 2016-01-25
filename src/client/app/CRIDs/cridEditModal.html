@@ -9,7 +9,7 @@
 			<div class="col-sm-12">
 				<select class="form-control" name="MailOwner" required ng-model="vm.newMailOwner" ng-options="o.Name for o in vm.mailOwners">
 				</select>
-				<span class="help-block" ng-show="addCRIDForm.MailOwner.$error.required && vm.submitted">Mail Owner is Required!</span>
+				<span class="help-block" ng-show="editCRIDForm.MailOwner.$error.required && vm.submitted">Mail Owner is Required!</span>
 			</div>
 		</div>
 		<div class="form-group" ng-class="{ 'has-error' : editCRIDForm.CRID.$invalid }">

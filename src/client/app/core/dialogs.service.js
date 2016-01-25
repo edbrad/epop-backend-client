@@ -17,7 +17,11 @@
 			addCRID: addCRID,
 			deleteCRID: deleteCRID,
 			editCRID: editCRID,
-			addCRIDToMailOwner: addCRIDToMailOwner
+			addCRIDToMailOwner: addCRIDToMailOwner,
+			addPermit: addPermit,
+			deletePermit: deletePermit,
+			editPermit: editPermit,
+			addPermitToMailOwner: addPermitToMailOwner
 		};
         
         return service;
@@ -174,6 +178,90 @@
 			 var modalInstance = $modal.open({
 				templateUrl: 'app/CRIDs/cridAddToMailOwnerModal.html',
 				controller: 'CRIDAddToMailOwnerModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // add Permit Modal Window
+		 function addPermit(title, buttons){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/permits/permitAddModal.html',
+				controller: 'PermitAddModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // delete Permit Modal Window
+		 function deletePermit(title, message, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/permits/permitDeleteModal.html',
+				controller: 'PermitDeleteModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							message: message,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // edit Permit Modal Window
+		 function editPermit(title, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/permits/permitEditModal.html',
+				controller: 'PermitEditModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // add Permit to Current Mail Owner Modal Window
+		 function addPermitToMailOwner(title, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/permits/permitAddToMailOwnerModal.html',
+				controller: 'PermitAddToMailOwnerModalController',
 				controllerAs: 'vm',
 				resolve: {
 					data: function(){

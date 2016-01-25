@@ -1,38 +1,6 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter"> 
         <div class="container">
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="widget worange">
-                        <div ht-widget-header title="Permits"
-                             allow-collapse="true"></div>
-                        <div class="widget-content text-center text-info">
-                            <table class="table table-condensed table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Permit #</th>
-                                        <th>Permit Holder / Mail Owner</th>
-                                        <th>Permit City</th>
-                                        <th>Permit State</th>
-                                        <th>Permit Zip</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="p in vm.Permits">
-                                        <td>{{p.PermitNumber}}</td>
-                                        <td>{{vm.getMailOwnerName(p.mailOwnerId)}}</td>
-                                        <td>{{p.PermitCity}}</td>
-                                        <td>{{p.PermitState}}</td>
-                                        <td>{{p.PermitZip5}}</td>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="widget-foot">
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget worange">
@@ -42,6 +10,7 @@
                             <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter class="grid"></div>
                         </div>
                     </div>
+                    <button class="btn btn-success" ng-click="vm.addPermit()"><i class="fa fa-plus-square"></i> <b>ADD NEW PERMIT</b> </button>
                 </div>
             </div>
         </div>

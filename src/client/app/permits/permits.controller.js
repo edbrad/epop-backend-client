@@ -5,9 +5,9 @@
         .module('app.permits', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
         .controller('PermitsController', PermitsController);
 
-    PermitsController.$inject = ['$q', 'Permit', 'MailOwner', 'logger', '$scope'];
+    PermitsController.$inject = ['$q', 'Permit', 'MailOwner', 'logger', '$scope', 'dialogsService'];
     /* @ngInject */
-    function PermitsController($q, Permit, MailOwner, logger, $scope) {
+    function PermitsController($q, Permit, MailOwner, logger, $scope, dialog) {
         var vm = this;
         vm.title = 'Permits';
         
@@ -17,14 +17,25 @@
         var currentDate = new Date();
         
         $scope.gridOptions = {
-            paginationPageSizes: [25, 75, 100],
+            paginationPageSizes: [8, 32, 96],
+            rowHeight: 40,
             columnDefs:[
                 {name: 'PermitNumber', displayName: 'Permit #'},
                 {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Permit Holder / Mail Owner',
                  cellTemplate: '<div style="padding: 5px;">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</div>'},
                 {name: 'PermitCity', displayName: 'Permit City'},
                 {name: 'PermitState', displayName: 'Permit State'},
-                {name: 'PermitZip5', displayName: 'Permit Zip'}
+                {name: 'PermitZip5', displayName: 'Permit Zip'},
+                {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editPermit(row.entity.id)">' +
+                                                                       '	    <i class="fa fa-edit"></i>Edit' +
+                                                                       '  </button>' +
+                                                                       '</span>' +
+                                                                       '<span>'+
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deletePermit(row.entity.id)">' +
+                                                                       '		<i class="fa fa-trash"></i>Delete' +
+                                                                       '	</button>' +
+                                                                       '</span>', width: 173}
             ],
             enableGridMenu: true,
             enableFiltering: true,
@@ -99,5 +110,33 @@
                 }
             }
         };
+        
+        // invoke modal dialog w/form to add new Permit
+        vm.addPermit = function(){
+            dialog.addPermit('Add New Permit', ['ADD', 'CANCEL'])
+            .then(function(){
+                getPermits();
+                logger.success("New Permit Added!");
+            });
+        };
+        
+        // invoke modal dialog to delete current Permit, and update the grid
+        $scope.deletePermit = function(id){
+            dialog.deletePermit('Delete Permit?', 'Are You Sure You Want to Delete this Permit?', ['DELETE', 'CANCEL'], id)
+            .then(function(){
+                getPermits();
+                logger.success("Permit Deleted!");
+            });
+        };
+        
+        // invoke modal dialog w/form to edit selected Permit
+        $scope.editPermit = function(id){
+            dialog.editPermit('Edit Permit', ['UPDATE', 'CANCEL'], id)
+            .then(function(){
+                getPermits();
+                logger.success("Permit Updated!");
+            });
+        };
+        
     }
 })();

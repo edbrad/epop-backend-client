@@ -46,6 +46,7 @@
         
         // initialize UI Grid layout/formatting options for displaying related Permits
         $scope.permitsGridOptions = {
+            rowHeight: 40,
             columnDefs:[
                 {name: 'PermitNumber', displayName: '#'},
                 /*{name: 'PermitCity', displayName: 'City'},
@@ -66,9 +67,20 @@
         
         // initialize UI Grid layout/formatting options for displaying related Mailer Id's
         $scope.mailerIdsGridOptions = {
+            rowHeight: 40,
             columnDefs:[
                 {name: 'MailerID', displayName: 'Mailer ID'},
-                {name: 'MailerName', displayName: 'Mailer Name'} 
+                {name: 'MailerName', displayName: 'Mailer Name'},
+                {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailerId(row.entity.id)">' +
+                                                                       '	    <i class="fa fa-edit"></i>Edit' +
+                                                                       '  </button>' +
+                                                                       '</span>' +
+                                                                       '<span>'+
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteMailerId(row.entity.id)">' +
+                                                                       '		<i class="fa fa-trash"></i>Delete' +
+                                                                       '	</button>' +
+                                                                       '</span>', width: 173}
             ]
         };
         
@@ -128,6 +140,7 @@
             MailOwner.MailerIDs({id: $stateParams.id},
                 function (result) {
                     $scope.mailerIdsGridOptions.data = result;
+                    vm.mailerIdCount = result.length;
                 });
         }
         
@@ -158,7 +171,7 @@
             });
         };
        
-         // invoke modal dialog w/form to add new CRID
+        // invoke modal dialog w/form to add new CRID
         vm.addPermit = function(){
             dialog.addPermitToMailOwner('Add New Permit', ['ADD', 'CANCEL'], vm.mailOwner.id)
             .then(function(){
@@ -182,6 +195,33 @@
             .then(function(){
                 getPermits();
                 logger.success("Permit Updated!");
+            });
+        };
+        
+        // invoke modal dialog w/form to add new Mailer Id
+        vm.addMailerId = function(){
+            dialog.addMailerIdToMailOwner('Add New Mailer ID', ['ADD', 'CANCEL'], vm.mailOwner.id)
+            .then(function(){
+                getMailerIDs();
+                logger.success("New Mailer ID Added for Mail Owner!");
+            });
+        };
+        
+        // invoke modal dialog to delete current Mailer ID, and update the grid
+        $scope.deleteMailerId = function(id){
+            dialog.deleteMailerId('Delete Mailer ID?', 'Are You Sure You Want to Delete this Mailer ID?', ['DELETE', 'CANCEL'], id)
+            .then(function(){
+                getMailerIDs();
+                logger.success("Mailer ID Deleted!");
+            });
+        };
+        
+        // invoke modal dialog w/form to edit selected Permit
+        $scope.editMailerId = function(id){
+            dialog.editMailerId('Edit Mailer ID', ['UPDATE', 'CANCEL'], id)
+            .then(function(){
+                getMailerIDs();
+                logger.success("Mailer ID Updated!");
             });
         };
     }

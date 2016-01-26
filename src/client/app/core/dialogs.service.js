@@ -21,7 +21,11 @@
 			addPermit: addPermit,
 			deletePermit: deletePermit,
 			editPermit: editPermit,
-			addPermitToMailOwner: addPermitToMailOwner
+			addPermitToMailOwner: addPermitToMailOwner,
+			addMailerId: addMailerId,
+			deleteMailerId: deleteMailerId,
+			editMailerId: editMailerId,
+			addMailerIdToMailOwner: addMailerIdToMailOwner
 		};
         
         return service;
@@ -262,6 +266,90 @@
 			 var modalInstance = $modal.open({
 				templateUrl: 'app/permits/permitAddToMailOwnerModal.html',
 				controller: 'PermitAddToMailOwnerModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // add Mailer Id Modal Window
+		 function addMailerId(title, buttons){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/mailerIds/mailerIdAddModal.html',
+				controller: 'MailerIdAddModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // delete Mailer Id Modal Window
+		 function deleteMailerId(title, message, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/mailerIds/mailerIdDeleteModal.html',
+				controller: 'MailerIdDeleteModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							message: message,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // edit Mailer Id Modal Window
+		 function editMailerId(title, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/mailerIds/mailerIdEditModal.html',
+				controller: 'MailerIdEditModalController',
+				controllerAs: 'vm',
+				resolve: {
+					data: function(){
+						return {
+							title: title,
+							buttons: buttons,
+							id: id
+						};	
+					}
+				},
+				size: 'md'
+			 });
+			 
+			 return modalInstance.result;
+		 }
+		 
+		 // add Mailer Id to Current Mail Owner Modal Window
+		 function addMailerIdToMailOwner(title, buttons, id){
+			 var modalInstance = $modal.open({
+				templateUrl: 'app/mailerIds/mailerIdAddToMailOwnerModal.html',
+				controller: 'MailerIdAddToMailOwnerModalController',
 				controllerAs: 'vm',
 				resolve: {
 					data: function(){

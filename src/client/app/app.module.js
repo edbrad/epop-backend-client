@@ -23,7 +23,11 @@
         'app.PermitAddModal',
         'app.PermitDeleteModal',
         'app.PermitEditModal',
-        'app.PermitAddToMailOwnerModal'
+        'app.PermitAddToMailOwnerModal',
+        'app.MailerIdAddModal',
+        'app.MailerIdDeleteModal',
+        'app.MailerIdEditModal',
+        'app.MailerIdAddToMailOwnerModal'
     ]);
 
 })();

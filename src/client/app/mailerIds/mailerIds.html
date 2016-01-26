@@ -1,34 +1,6 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter"> 
         <div class="container">
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="widget wred">
-                        <div ht-widget-header title="Mailer ID&#39s"
-                             allow-collapse="true"></div>
-                        <div class="widget-content text-center text-info">
-                            <table class="table table-condensed table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Mailer ID</th>
-                                        <th>Mailer Name</th>
-                                        <th>Mailer Owner</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="m in vm.MailerIds">
-                                        <td>{{m.MailerID}}</td>
-                                        <td>{{m.MailerName}}</td>
-                                        <td>{{vm.getMailOwnerName(m.mailOwnerId)}}</td>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="widget-foot">
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget wred">
@@ -38,6 +10,7 @@
                             <div ui-grid="gridOptions" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter class="grid"></div>
                         </div>
                     </div>
+                    <button class="btn btn-success" ng-click="vm.addMailerId()"><i class="fa fa-plus-square"></i> <b>ADD NEW MAILER ID</b> </button>
                 </div>
             </div>
         </div>

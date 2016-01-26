@@ -1,0 +1,138 @@
+<div class="modal-header">
+	<h2>{{vm.properties.title}}</h2>	
+</div>
+
+<div class='modal-body container'>
+	<h3><b>{{vm.mailOwner.Name}}</b></h3>
+	<form name="addMailerIdForm" class="form-horizontal" role="form" ng-submit="vm.add()" novalidate  >
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerID.$invalid }">
+			<label class="col-sm-12" for="MailerID">Mailer ID:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerID" required ng-maxlength="100" ng-model="vm.newMailerId.MailerID" placeholder="Enter Mailer ID" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerID.$error.required && vm.submitted">Mailer ID is Required!.</span>
+				<span class="help-block" ng-show="addMailerIdForm.MailerID.$error.maxlength && vm.submitted">Mailer ID is too long (must be less than 100 characters)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerName.$invalid }">
+			<label class="col-sm-12" for="MailerName">Mailer Name:*</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerName" required ng-maxlength="100" ng-model="vm.newMailerId.MailerName" placeholder="Enter Mailer Name" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerName.$error.required && vm.submitted">Mailer Name is Required!.</span>
+				<span class="help-block" ng-show="addMailerIdForm.MailerName.$error.maxlength && vm.submitted">Mailer Name is too long (must be less than 100 characters)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerContactName.$invalid }">
+			<label class="col-sm-12" for="MailerContcatName">Mailer Contact Name:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerContactName" ng-maxlength="100" ng-model="vm.newMailerId.MailerContactName" placeholder="Enter Mailer Contact Name" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerContactName.$error.maxlength && vm.submitted">Mailer Contact Name is too long (must be less than 100 characters)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerAddress1.$invalid }">
+			<label class="col-sm-12" for="MailerAddress1">Mailer Address 1:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerAddress1" ng-maxlength="100" ng-model="vm.newMailerId.MailerAddress1" placeholder="Enter Address 1" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerAddress1.$error.maxlength && vm.submitted">Mailer Address 1 is too long (must be less than 100 characters)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerAddress2.$invalid }">
+			<label class="col-sm-12" for="MailerAddress2">Mailer Address 2:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerAddress2" ng-maxlength="100" ng-model="vm.newMailerId.MailerAddress2" placeholder="Enter Address 2" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerAddress2.$error.maxlength && vm.submitted">Mailer Address 2 is too long (must be less than 100 characters)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerCity.$invalid }">
+			<label class="col-sm-12" for="MailerCity">Mailer City:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerCity" ng-maxlength="100" ng-model="vm.newMailerId.MailerCity" placeholder="Enter Mailer City" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerCity.$error.maxlength && vm.submitted">Mailer City is too long (must be less than 100 characters)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerState.$invalid }">
+			<label class="col-sm-12" for="MailerState">Mailer State:</label>
+			<div class="col-sm-4">
+				<select class="form-control" name="MailerState" required ng-model="vm.newMailerId.MailerState">
+					<option value="AL">AL</option>
+					<option value="AK">AK</option>
+					<option value="AZ">AZ</option>
+					<option value="AR">AR</option>
+					<option value="CA">CA</option>
+					<option value="CO">CO</option>
+					<option value="CT">CT</option>
+					<option value="DE">DE</option>
+					<option value="DC">DC</option>
+					<option value="FL">FL</option>
+					<option value="GA">GA</option>
+					<option value="HI">HI</option>
+					<option value="ID">ID</option>
+					<option value="IL">IL</option>
+					<option value="IN">IN</option>
+					<option value="IA">IA</option>
+					<option value="KS">KS</option>
+					<option value="KY">KY</option>
+					<option value="LA">LA</option>
+					<option value="ME">ME</option>
+					<option value="MD">MD</option>
+					<option value="MA">MA</option>
+					<option value="MI">MI</option>
+					<option value="MN">MN</option>
+					<option value="MS">MS</option>
+					<option value="MO">MO</option>
+					<option value="MT">MT</option>
+					<option value="NE">NE</option>
+					<option value="NV">NV</option>
+					<option value="NH">NH</option>
+					<option value="NJ">NJ</option>
+					<option value="NM">NM</option>
+					<option value="NY">NY</option>
+					<option value="NC">NC</option>
+					<option value="ND">ND</option>
+					<option value="OH">OH</option>
+					<option value="OK">OK</option>
+					<option value="OR">OR</option>
+					<option value="PA">PA</option>
+					<option value="RI">RI</option>
+					<option value="SC">SC</option>
+					<option value="SD">SD</option>
+					<option value="TN">TN</option>
+					<option value="TX">TX</option>
+					<option value="UT">UT</option>
+					<option value="VT">VT</option>
+					<option value="VA">VA</option>
+					<option value="WA">WA</option>
+					<option value="WV">WV</option>
+					<option value="WI">WI</option>
+					<option value="WY">WY</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerZip5.$invalid }">
+			<label class="col-sm-12" for="MailerZip5">Mailer Zip Code:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerZip5" required ng-minlength="5" ng-maxlength="5" ng-model="vm.newMailerId.MailerZip5" placeholder="Enter 5-Digit Zip Code" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerZip5.$error.minlength && vm.submitted">Zip Code is too short (must be 5 digits)!.</span>
+				<span class="help-block" ng-show="addMailerIdForm.MailerZip5.$error.maxlength && vm.submitted">Zip Code is too long (must be 5 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerZipPlus4.$invalid }">
+			<label class="col-sm-12" for="MailerZipPlus4">Mailer Zip Plus 4:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerZipPlus4" ng-minlength="4" ng-maxlength="4" ng-model="vm.newMailerId.MailerZipPlus4" placeholder="Enter 4-Digit Plus4 Code" />
+				<span class="help-block" ng-show="addMailerIdForm.MailerZipPlus4.$error.minlength && vm.submitted">Zip Plus 4 Code is too short (must be 4 digits)!.</span>
+				<span class="help-block" ng-show="addMailerIdForm.MailerZipPlus4.$error.maxlength && vm.submitted">Zip Plus 4 Code is too long (must be 4 digits)!.</span>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : addMailerIdForm.MailerPhone.$invalid }">
+			<label class="col-sm-12" for="MailerPhone">Mailer Phone:</label>
+			<div class="col-sm-12">
+				<input type="text" class ="form-control" name="MailerPhone" ng-model="vm.newMailerId.MailerPhone" placeholder="Enter a Phone Number" />
+			</div>
+		</div>
+		<p><small>* = Required</small></p>
+		<div class='modal-footer'>
+			<button class="btn btn-primary" type="submit"><i class="fa fa-plus-square"></i>{{vm.properties.buttons[0]}}</button>
+			<button class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i>{{vm.properties.buttons[1]}}</button>
+		</div>
+	</form>
+</div>

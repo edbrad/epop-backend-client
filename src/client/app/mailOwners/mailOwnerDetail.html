@@ -10,13 +10,13 @@
                         <h3>{{vm.mailOwner.Address2}}</h3>
                         <h3>{{vm.formatCityStateZip(vm.mailOwner.City, vm.mailOwner.State, vm.mailOwner.Zip5, vm.mailOwner.ZipPlus4)}}</h3>
                         <h3>Phone: {{vm.mailOwner.Phone}}</h3>
-                        <button class="btn btn-primary" style="margin-top: 3px; margin-left: 0px;" ng-click="vm.editMailOwner(vm.mailOwner.id)"><i class="fa fa-edit"></i>Edit</button>
+                        <button class="btn btn-primary" style="margin-top: 3px; margin-bottom: 14px; margin-left: 0px;" ng-click="vm.editMailOwner(vm.mailOwner.id)"><i class="fa fa-edit"></i>Edit</button>
                     </div>
                 </div>
-                <div class="col-lg-8 col-xs-8">
-                    <!--<ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom">
+                <div class="col-lg-8 col-xs-12">
+                    <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom">
                 
-                    </ui-gmap-google-map>-->
+                    </ui-gmap-google-map>
                 </div>
             </div>
             <hr>

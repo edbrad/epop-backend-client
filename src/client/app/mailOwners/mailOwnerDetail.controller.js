@@ -5,9 +5,9 @@
         .module('app.mailOwnerDetail', ['lbServices', 'app.dialogsService', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
         .controller('MailOwnerDetailController', MailOwnerDetailController);
 
-    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams', 'dialogsService'];
+    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams', 'dialogsService', 'maps', 'currentPosition'];
     /* @ngInject */
-    function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams, dialog) {
+    function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams, dialog, maps, currentPosition) {
         // establish View Model
         var vm = this;
         
@@ -23,7 +23,16 @@
         // storage for counts
         vm.CRIDCount = 0;
         vm.permitCount = 0;
-        vm.mailerIdCount = 0; 
+        vm.mailerIdCount = 0;
+        
+        // storage for Google Maps data
+        vm.map = {
+            center: {
+                latitude: currentPosition.coords.latitude,
+                longitude: currentPosition.coords.longitude
+            },
+            zoom: 12
+        };
         
         // initialize UI Grid layout/formatting options for displaying related CRIDs
         $scope.cridsGridOptions = {
@@ -92,11 +101,33 @@
         // activate/initialize view
         activate();
         
+        // set up Google Map
+        vm.mailOwnerAddress = "";
+        vm.mailOwnerAddress = vm.mailOwner.Address1 + ' ' + vm.mailOwner.Address2 + ' ' + vm.mailOwner.City + ' ' + vm.mailOwner.State + ' ' + vm.mailOwner.Zip5;
+        vm.mailOwnerAddress = "1609 Terrace Road Homewood IL 60430";
+        console.log("Address: " + vm.mailOwnerAddress);
+        refreshMap(); 
+        
         function activate() {
             promises = [getMailOwner(), getCRIDs(), getPermits(), getMailerIDs()];
             return $q.all(promises).then(function() {
                 logger.info('Activated Mail Owner Detail View');
             });
+            
+        }
+        
+        // get geolocation of Mail Owner address and center it on the map
+        function refreshMap(){
+            var geocoder = new maps.Geocoder();
+            geocoder.geocode({address: vm.mailOwnerAddress}, function(result){
+                if (result.length > 0){
+                    var mailOwnerLocation = result[0].geometry.location;
+                    vm.map.center = {
+                        latitude: mailOwnerLocation.lat(),
+                        longitude: mailOwnerLocation.lng()
+                    };
+                }
+            })
         }
         
         // collect selected Mail Owner from database

@@ -34,7 +34,19 @@
                     templateUrl: 'app/mailOwners/mailOwnerDetail.html',
                     controller: 'MailOwnerDetailController',
                     controllerAs: 'vm',
-                    title: 'Mail Owner Detail'
+                    title: 'Mail Owner Detail',
+                    resolve: {
+                        maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
+                            return uiGmapGoogleMapApi;
+                        }],
+                        currentPosition:['$q', function($q){
+                            var deferred = $q.defer();
+                            navigator.geolocation.getCurrentPosition(function(position){
+                                deferred.resolve(position);
+                            });
+                            return deferred.promise;
+                        }]
+                    }
                 }
             }
         ];

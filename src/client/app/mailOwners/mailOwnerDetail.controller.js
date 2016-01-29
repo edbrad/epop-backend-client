@@ -58,6 +58,11 @@
             refreshMap();
         };
         
+        // hide map
+        vm.hideMap = function(){
+            vm.showMap = false;
+            refreshMap();
+        };
         
         // initialize UI Grid layout/formatting options for displaying related CRIDs
         $scope.cridsGridOptions = {
@@ -82,7 +87,7 @@
         $scope.permitsGridOptions = {
             rowHeight: 40,
             columnDefs:[
-                {name: 'PermitNumber', displayName: '#'},
+                {name: 'PermitNumber', displayName: 'Permit #'},
                 /*{name: 'PermitCity', displayName: 'City'},
                 {name: 'PermitState', displayName: 'State'},
                 {name: 'PermitZip5', displayName: 'Zip'},*/
@@ -104,7 +109,7 @@
             rowHeight: 40,
             columnDefs:[
                 {name: 'MailerID', displayName: 'Mailer ID'},
-                {name: 'MailerName', displayName: 'Mailer Name'},
+                //{name: 'MailerName', displayName: 'Mailer Name'},
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
                                                                        '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailerId(row.entity.id)">' +
                                                                        '	    <i class="fa fa-edit"></i>Edit' +
@@ -158,7 +163,7 @@
                             }
                         };
                         
-                        vm.map.zoom = 18;
+                        vm.map.zoom = 15;
                     }, 0);   
                 }
             })

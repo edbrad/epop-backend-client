@@ -10,7 +10,10 @@
                         <h3>{{vm.mailOwner.Address2}}</h3>
                         <h3>{{vm.formatCityStateZip(vm.mailOwner.City, vm.mailOwner.State, vm.mailOwner.Zip5, vm.mailOwner.ZipPlus4)}}</h3>
                         <h3>Phone: {{vm.mailOwner.Phone}}</h3>
-                        <button class="btn btn-primary" style="margin-top: 3px; margin-bottom: 14px; margin-left: 0px;" ng-click="vm.editMailOwner(vm.mailOwner.id)"><i class="fa fa-edit"></i>Edit</button>
+                        <span>
+                            <button class="btn btn-primary" style="margin-top: 3px; margin-bottom: 14px; margin-left: 0px;" ng-click="vm.editMailOwner(vm.mailOwner.id)"><i class="fa fa-edit"></i>Edit</button>
+                            <button ng-if="vm.showMap" class="btn btn-warning" style="margin-top: 3px; margin-bottom: 14px; margin-left: 0px;" ng-click="vm.hideMap()"><i class="fa fa-minus-square"></i>Hide Map</button>
+                        </span>
                     </div>
                 </div>
                 <div ng-if="vm.showMap" class="col-lg-8 col-xs-12">
@@ -18,8 +21,8 @@
                         <ui-gmap-marker idKey="vm.marker.id" coords="vm.marker.coords" options="vm.marker.options"></ui-gmap-marker>
                     </ui-gmap-google-map>
                 </div>
-                <div ng-if="!vm.showMap"  style="height: 200px; border: solid 1px green; text-align:center;line-height:200px;" class="col-lg-8 col-xs-12 pagination-centered">
-                    <button class="btn btn-primary btn-huge" style="text-align: center; vertical-align: middle; font-size: 2em;" ng-click="vm.showTheMap(vm.mailOwner.Address1, vm.mailOwner.Address2, vm.mailOwner.City, vm.mailOwner.State, vm.mailOwner.Zip5)"><i class="fa fa-map fa-5x"></i>SHOW MAP</button>
+                <div ng-if="!vm.showMap"  style="height: 200px;  text-align:center;line-height:200px;" class="col-lg-8 col-xs-12 pagination-centered">
+                    <button class="btn btn-primary btn-huge" style="text-align: center; vertical-align: middle; font-size: 2em;" ng-click="vm.showTheMap(vm.mailOwner.Address1, vm.mailOwner.Address2, vm.mailOwner.City, vm.mailOwner.State, vm.mailOwner.Zip5)"><i class="fa fa-map-marker fa-5x"></i>CLICK HERE TO SHOW MAP</button>
                 </div>
             </div>
             <hr>

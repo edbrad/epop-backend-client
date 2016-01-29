@@ -4,10 +4,10 @@
     angular
         .module('app.mailOwnerDetail', ['lbServices', 'app.dialogsService', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
         .controller('MailOwnerDetailController', MailOwnerDetailController);
-
-    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams', 'dialogsService', 'maps', 'currentPosition'];
+        
+    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams', 'dialogsService', 'maps', '$timeout'];
     /* @ngInject */
-    function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams, dialog, maps, currentPosition) {
+    function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams, dialog, maps, $timeout) {
         // establish View Model
         var vm = this;
         
@@ -16,6 +16,7 @@
         
         // storage for the selected Mail Owner
         vm.mailOwner = {};
+        vm.mailOwnerAddress = "";
         
         // asynchronous functions array storage
         var promises = void[];
@@ -25,14 +26,38 @@
         vm.permitCount = 0;
         vm.mailerIdCount = 0;
         
-        // storage for Google Maps data
+        // initialize map location
         vm.map = {
             center: {
-                latitude: currentPosition.coords.latitude,
-                longitude: currentPosition.coords.longitude
+                latitude: 38.897733,
+                longitude: -77.036531
             },
             zoom: 12
         };
+        
+        vm.marker = {
+            id: 1,
+            coords: {
+                latitude: 38.897733,
+                longitude: -77.036531
+            },
+            options: {
+                title: "The White House"
+            }
+        };
+        
+        // set map view flag/switch
+        vm.showMap = true;
+
+        // update map
+        vm.showTheMap = function(addr1, addr2, city, state, zip5){
+            vm.showMap = true;
+            vm.mailOwnerAddress = "";
+            vm.mailOwnerAddress = addr1 + ' ' + city + ' ' + state + ' ' + zip5;
+            console.log('Map Address: ' + vm.mailOwnerAddress);
+            refreshMap();
+        };
+        
         
         // initialize UI Grid layout/formatting options for displaying related CRIDs
         $scope.cridsGridOptions = {
@@ -100,32 +125,52 @@
         
         // activate/initialize view
         activate();
+        showMap();
         
-        // set up Google Map
-        vm.mailOwnerAddress = "";
-        vm.mailOwnerAddress = vm.mailOwner.Address1 + ' ' + vm.mailOwner.Address2 + ' ' + vm.mailOwner.City + ' ' + vm.mailOwner.State + ' ' + vm.mailOwner.Zip5;
-        vm.mailOwnerAddress = "1609 Terrace Road Homewood IL 60430";
-        console.log("Address: " + vm.mailOwnerAddress);
-        refreshMap(); 
+        //
+        function showMap(){
+            vm.mailOwnerAddress = "";
+            vm.mailOwnerAddress = vm.mailOwner.Address1 + ' ' + vm.mailOwner.City + ' ' + vm.mailOwner.Statw + ' ' + vm.mailOwner.Zip5;
+            console.log('Map Address: ' + vm.mailOwnerAddress);
+            refreshMap();
+        }
+        
         
         function activate() {
             promises = [getMailOwner(), getCRIDs(), getPermits(), getMailerIDs()];
             return $q.all(promises).then(function() {
-                logger.info('Activated Mail Owner Detail View');
-            });
-            
+               logger.info('Activated Mail Owner Detail View'); 
+            }) 
         }
         
         // get geolocation of Mail Owner address and center it on the map
         function refreshMap(){
+            
+            // get geo-coordinates from the address
             var geocoder = new maps.Geocoder();
             geocoder.geocode({address: vm.mailOwnerAddress}, function(result){
                 if (result.length > 0){
                     var mailOwnerLocation = result[0].geometry.location;
-                    vm.map.center = {
-                        latitude: mailOwnerLocation.lat(),
-                        longitude: mailOwnerLocation.lng()
-                    };
+                    
+                    // force map to redraw itself
+                    $timeout(function(){
+                        vm.map.center = {
+                            latitude: mailOwnerLocation.lat(),
+                            longitude: mailOwnerLocation.lng()
+                        };
+                        vm.marker = {
+                            id: 1,
+                            coords: {
+                                latitude: mailOwnerLocation.lat(),
+                                longitude: mailOwnerLocation.lng()
+                            },
+                            options: {
+                                title: vm.mailOwner.Name
+                            }
+                        };
+                        
+                        vm.map.zoom = 18;
+                    }, 0);   
                 }
             })
         }
@@ -202,6 +247,8 @@
             });
         };
        
+        
+        
         // invoke modal dialog w/form to add new CRID
         vm.addPermit = function(){
             dialog.addPermitToMailOwner('Add New Permit', ['ADD', 'CANCEL'], vm.mailOwner.id)

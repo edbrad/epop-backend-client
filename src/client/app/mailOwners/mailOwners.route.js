@@ -38,13 +38,6 @@
                     resolve: {
                         maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
                             return uiGmapGoogleMapApi;
-                        }],
-                        currentPosition:['$q', function($q){
-                            var deferred = $q.defer();
-                            navigator.geolocation.getCurrentPosition(function(position){
-                                deferred.resolve(position);
-                            });
-                            return deferred.promise;
                         }]
                     }
                 }

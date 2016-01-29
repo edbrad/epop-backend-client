@@ -47,7 +47,7 @@
         };
         
         // set map view flag/switch
-        vm.showMap = true;
+        vm.showMap = false;
 
         // update map
         vm.showTheMap = function(addr1, addr2, city, state, zip5){
@@ -125,16 +125,6 @@
         
         // activate/initialize view
         activate();
-        showMap();
-        
-        //
-        function showMap(){
-            vm.mailOwnerAddress = "";
-            vm.mailOwnerAddress = vm.mailOwner.Address1 + ' ' + vm.mailOwner.City + ' ' + vm.mailOwner.Statw + ' ' + vm.mailOwner.Zip5;
-            console.log('Map Address: ' + vm.mailOwnerAddress);
-            refreshMap();
-        }
-        
         
         function activate() {
             promises = [getMailOwner(), getCRIDs(), getPermits(), getMailerIDs()];
@@ -145,7 +135,6 @@
         
         // get geolocation of Mail Owner address and center it on the map
         function refreshMap(){
-            
             // get geo-coordinates from the address
             var geocoder = new maps.Geocoder();
             geocoder.geocode({address: vm.mailOwnerAddress}, function(result){
@@ -188,6 +177,10 @@
             dialog.editMailOwner('Edit Mail Owner', ['UPDATE', 'CANCEL'], id)
             .then(function(){
                 getMailOwner();
+                vm.mailOwnerAddress = "";
+                vm.mailOwnerAddress = vm.mailOwner.Address1 + ' ' + vm.mailOwner.City + ' ' + vm.mailOwner.State + ' ' + vm.mailOwner.Zip5;
+                console.log('Map Address: ' + vm.mailOwnerAddress);
+                refreshMap();
                 logger.success("Mail Owner Updated!");
             });
         };

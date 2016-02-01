@@ -124,5 +124,10 @@
                 logger.success("Mail Owner Updated!");
             });
         }; 
+        
+        // format the Mail Owner City/State/Zip line for display
+        vm.formatCityStateZip = function(city, state, zip5, zip4){
+            return city + ', ' + state + ' ' + zip5;
+        };
     }
 })();

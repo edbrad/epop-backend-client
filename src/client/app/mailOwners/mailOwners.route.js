@@ -18,7 +18,7 @@
                 state: 'mailOwners',
                 config: {
                     url: '/mailowners',
-                    templateUrl: 'app/mailOwners/mailOwners.html',
+                    templateUrl: 'app/mailOwners/mailOwners_M.html',
                     controller: 'MailOwnersController',
                     controllerAs: 'vm',
                     title: 'Mail Owners',

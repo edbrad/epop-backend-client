@@ -1,0 +1,29 @@
+<section id="mailOwners-view" class="mainbar">
+    <section class="matter">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget wlightblue">
+                    <!--<div ht-widget-header title="Mail Owners" allow-collapse="true">-->
+                        <!--<div class="widget-content text-left text-info">-->
+                            <p><i class="fa fa-database"></i><strong> USPS Registered Mail Owners</strong></p>
+                            <div class="col-lg-4 col-xs-12" ng-repeat="o in vm.mailOwners">
+                                <!-- small box -->
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h4><b>{{o.Name}}</b></h4>
+                                        <p>{{o.Address1}}</p>
+                                        <p>{{o.Address2}}&nbsp</p>
+                                        <p>{{o.City}}, {{o.State}} {{o.Zip5}}</p>
+                                    </div>
+                                    <div class="small-box-footer" style="text-align: left;">
+                                        <span><button class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px;" ng-click="editMailOwner(o.id)"><i class="fa fa-edit"></i>Edit</button></span>
+                                        <span><button class="btn btn-danger" style="margin-top: 10px; margin-bottom: 10px;" ng-click="deleteMailOwner(o.id)"><i class="fa fa-trash"></i>Delete</button></span>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+    </section>
+</section>

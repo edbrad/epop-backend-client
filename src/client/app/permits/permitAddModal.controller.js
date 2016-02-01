@@ -21,7 +21,7 @@
         // storage for the selected Mail Owner to associate with the new Permit
         vm.mailOwner = {};
         
-        // storage for Mail Owners (for combo box)
+        // storage for Mail Owners (for combo box selection list)
         vm.mailOwners = [];
         
         // error checking flag
@@ -41,16 +41,14 @@
             if ($scope.addPermitForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.newPermit.mailOwnerId = vm.mailOwner.id;
-                console.log("New Permit: " + JSON.stringify(vm.newPermit));
+                logger.log("New Permit: " + JSON.stringify(vm.newPermit));
                 Permit.create(vm.newPermit).$promise.then(function(){         
-                    console.log('Permit Add Modal: close/ok');
+                    logger.log('Permit Add Modal: close/ok');
                     vm.newPermit = {};
                     vm.mailOwner = {}
                     $modalInstance.close()
                 });
-            
             }
-                
         };
         
         // collect all available Mail Owners, to select which is to be associated with the new Permit
@@ -64,8 +62,5 @@
                     vm.mailOwner = vm.mailOwners[0];
                 });
         }
-        
-        
-        
     }
 })();

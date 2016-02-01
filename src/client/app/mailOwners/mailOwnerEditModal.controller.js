@@ -41,15 +41,12 @@
         vm.update = function(){
             vm.submitted = true;
             if ($scope.editMailOwnerForm.$valid){
-                console.log("Updated Mail Owner: " + JSON.stringify(vm.mailOwner));
+                logger.log("Updated Mail Owner: " + JSON.stringify(vm.mailOwner));
                 MailOwner.upsert(vm.mailOwner).$promise.then(function(){  
                     vm.mailOwner = {};      
                     $modalInstance.close()
                 });
-            
             }
-                
         };
-        
     }
 })();

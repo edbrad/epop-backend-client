@@ -41,16 +41,14 @@
             if ($scope.addMailerIdForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.newMailerId.mailOwnerId = vm.mailOwner.id;
-                console.log("New Mailer Id: " + JSON.stringify(vm.newMailerId));
+                logger.log("New Mailer Id: " + JSON.stringify(vm.newMailerId));
                 MailerID.create(vm.newMailerId).$promise.then(function(){         
-                    console.log('Mailer Id Add Modal: close/ok');
+                    logger.log('Mailer Id Add Modal: close/ok');
                     vm.newMailerId = {};
                     vm.mailOwner = {}
                     $modalInstance.close()
                 });
-            
             }
-                
         };
         
         // collect all available Mail Owners, to select which is to be associated with the new Mailer Id
@@ -64,8 +62,5 @@
                     vm.mailOwner = vm.mailOwners[0];
                 });
         }
-        
-        
-        
     }
 })();

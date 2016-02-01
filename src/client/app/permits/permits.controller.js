@@ -8,14 +8,25 @@
     PermitsController.$inject = ['$q', 'Permit', 'MailOwner', 'logger', '$scope', 'dialogsService'];
     /* @ngInject */
     function PermitsController($q, Permit, MailOwner, logger, $scope, dialog) {
+        // establish View Model
         var vm = this;
+        
+        // set View title
         vm.title = 'Permits';
         
+        // storage for Permits
         vm.Permits = [];
+        
+        // storage for Mail Owners (to get/display the associated Mail Owner for a Permit)
         vm.MailOwners = [];
         
+        // storage for the asyncronous function list (for $q) 
+        var promises = void[];
+        
+        // storage for date used in UI Grid Excel/CSV/PDF exporting
         var currentDate = new Date();
         
+        // set UI Grid layout/formatting options
         $scope.gridOptions = {
             paginationPageSizes: [8, 32, 96],
             rowHeight: 40,
@@ -69,15 +80,17 @@
             }
         };
         
+        // activate/initialize view
         activate();
         
         function activate() {
-            var promises = [getPermits(), getMailOwners()];
+            promises = [getPermits(), getMailOwners()];
             return $q.all(promises).then(function() {
                 logger.info('Activated Permits View');
             });
         }
         
+        // collect Permits from database
         function getPermits() {
             Permit.find(
                 function (result) {
@@ -86,6 +99,7 @@
                 });
         }
         
+        // collect Mail Owners from database
         function getMailOwners() {
             MailOwner.find(
                 function (result) {
@@ -93,15 +107,7 @@
                 });
         }
         
-        /*vm.getMailOwnerName = function(id){
-            for(var i = 0 ; i < vm.MailOwners.length; i++){
-                var obj = vm.MailOwners[i];
-                if (obj.id == id){
-                    return obj.Name;
-                }
-            }
-        };*/
-        
+        // get associated Mail Owner Name for given Permit
         $scope.getMailOwnerName = function(id){
             for(var i = 0 ; i < vm.MailOwners.length; i++){
                 var obj = vm.MailOwners[i];

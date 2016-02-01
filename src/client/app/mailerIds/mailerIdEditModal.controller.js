@@ -43,12 +43,11 @@
             if ($scope.editMailerIdForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.mailerId.mailOwnerId = vm.newMailOwner.id;
-                console.log("Updated Mailer ID: " + JSON.stringify(vm.mailerId));
+                logger.log("Updated Mailer ID: " + JSON.stringify(vm.mailerId));
                 MailerID.upsert(vm.mailerId).$promise.then(function(){  
                     vm.mailerId = {};      
                     $modalInstance.close()
                 });
-            
             }    
         };
         
@@ -59,11 +58,11 @@
             MailerID.findById({id: vm.properties.id},
                 function (result) {
                     vm.mailerId = result;
-                    console.log("- Mailer Id: " + JSON.stringify(vm.mailerId));
+                    logger.log("- Mailer Id: " + JSON.stringify(vm.mailerId));
                     MailOwner.findById({id: vm.mailerId.mailOwnerId},
                     function (result) {
                         vm.mailOwner = result;
-                        console.log("Mail Owner ID: " + vm.mailOwner.id);
+                        logger.log("Mail Owner ID: " + vm.mailOwner.id);
                         // set the selected Mail Owner
                         for(var i = 0 ; i < vm.mailOwners.length; i++){
                             if (vm.mailerId.mailOwnerId == vm.mailOwners[i].id){
@@ -83,6 +82,5 @@
                     vm.mailOwners = result;
                 });
         }
-        
     }
 })();

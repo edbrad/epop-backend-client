@@ -22,15 +22,14 @@
         
         // perform 'DELETE' processing (remove CRID, then close the dialog)
         vm.delete = function(id){
-            console.log('Deleting CRID w/ id: ' + id);
+            logger.log('Deleting CRID w/ id: ' + id);
             
             // delete the CRID
             CRID.deleteById({id: id}).$promise.then(function(){         
-                console.log('Deleted CRID');
+                logger.log('Deleted CRID');
                 $modalInstance.close()
             });
             
-        }; 
-        
+        };  
     }
 })();

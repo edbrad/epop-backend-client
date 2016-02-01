@@ -20,7 +20,7 @@
         // storage for the selected Mail Owner to associate with the new CRID
         vm.mailOwner = {};
         
-        // storage for Mail Owners (for combo box)
+        // storage for Mail Owners (for combo box selection list)
         vm.mailOwners = [];
         
         // error checking flag
@@ -40,16 +40,14 @@
             if ($scope.addCRIDForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.newCRID.mailOwnerId = vm.mailOwner.id;
-                console.log("New CRID: " + JSON.stringify(vm.newCRID));
+                logger.log("New CRID: " + JSON.stringify(vm.newCRID));
                 CRID.create(vm.newCRID).$promise.then(function(){         
-                    console.log('CRID Add Modal: close/ok');
+                    logger.log('CRID Add Modal: close/ok');
                     vm.newCRID = {};
                     vm.mailOwner = {}
                     $modalInstance.close()
                 });
-            
-            }
-                
+            }    
         };
         
         // collect all available Mail Owners, to select which is to be associated with the new CRID
@@ -62,9 +60,6 @@
                     // set the first item as selcted in the combo box
                     vm.mailOwner = vm.mailOwners[0];
                 });
-        }
-        
-        
-        
+        } 
     }
 })();

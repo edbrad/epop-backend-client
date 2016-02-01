@@ -22,15 +22,13 @@
         
         // perform 'DELETE' processing (remove Permit, then close the dialog)
         vm.delete = function(id){
-            console.log('Deleting Permit w/ id: ' + id);
+            logger.log('Deleting Permit w/ id: ' + id);
             
             // delete the Permit
             Permit.deleteById({id: id}).$promise.then(function(){         
-                console.log('Deleted Permit');
+                logger.log('Deleted Permit');
                 $modalInstance.close()
             });
-            
-        }; 
-        
+        };   
     }
 })();

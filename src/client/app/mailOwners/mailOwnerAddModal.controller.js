@@ -31,7 +31,7 @@
         vm.add = function(){
             vm.submitted = true;
             if ($scope.addMailOwnerForm.$valid){
-                console.log("New Mail Owner: " + JSON.stringify(vm.newMailOwner));
+                logger.log("New Mail Owner: " + JSON.stringify(vm.newMailOwner));
                 MailOwner.create(vm.newMailOwner).$promise.then(function(){         
                     logger.success('Mail Owner Add Modal: close/ok');
                     $modalInstance.close()

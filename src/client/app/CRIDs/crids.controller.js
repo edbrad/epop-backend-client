@@ -20,10 +20,13 @@
         // storage for available Mail Owners
         vm.MailOwners = [];
         
-        // date used in Reports and Excel/CSV exporting
+        // storage for the asyncronous function list (for $q) 
+        var promises = void[];
+        
+        // storage for date used in UI Grid Excel/CSV/PDF exporting
         var currentDate = new Date();
         
-        // CRID display grid options
+        // initialize UI Grid layout/formatting options 
         $scope.gridOptions = {
             paginationPageSizes: [8, 32, 96],
             rowHeight: 40,
@@ -79,7 +82,7 @@
         activate();
         
         function activate() {
-            var promises = [getCRIDs(), getMailOwners()];
+            promises = [getCRIDs(), getMailOwners()];
             return $q.all(promises).then(function() {
                 logger.info('Activated CRIDs View');      
             });

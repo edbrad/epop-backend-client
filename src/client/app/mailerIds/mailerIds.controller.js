@@ -8,14 +8,22 @@
     MailerIdsController.$inject = ['$q', 'MailerID', 'MailOwner', 'logger', '$scope', 'dialogsService'];
     /* @ngInject */
     function MailerIdsController($q, MailerID, MailOwner, logger, $scope, dialog) {
+        // establish View Model
         var vm = this;
+        
+        // set View title
         vm.title = 'Mailer Ids';
         
+        // storage for Mailer IDs
         vm.MailerIds = [];
+        
+        // storage for Mail Owners
         vm.MailOwners = [];
         
+        // storage for date used in UI Grid Excel/CSV/PDF exporting
         var currentDate = new Date();
         
+        // initialize UI Grid layout/formatting options
         $scope.gridOptions = {
             paginationPageSizes: [8, 32, 96],
             rowHeight: 40,
@@ -72,6 +80,7 @@
             }
         };
         
+        // activate/initialize view
         activate();
         
         function activate() {
@@ -81,6 +90,7 @@
             });
         }
         
+        // collect Mailer IDs from database
         function getMailerIds() {
             MailerID.find(
                 function (result) {
@@ -89,6 +99,7 @@
                 });
         }
         
+        // collect Mail Owners from database
         function getMailOwners() {
             MailOwner.find(
                 function (result) {
@@ -96,15 +107,7 @@
                 });
         }
         
-        /*vm.getMailOwnerName = function(id){
-            for(var i = 0 ; i < vm.MailOwners.length; i++){
-                var obj = vm.MailOwners[i];
-                if (obj.id == id){
-                    return obj.Name;
-                }
-            }
-        };*/
-        
+        // get associated Mail Owner Name for given Permit
         $scope.getMailOwnerName = function(id){
             for(var i = 0 ; i < vm.MailOwners.length; i++){
                 var obj = vm.MailOwners[i];

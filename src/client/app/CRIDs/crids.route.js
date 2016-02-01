@@ -14,6 +14,7 @@
     function getStates() {
         return [
             {
+                // display all CRIDs
                 state: 'crids',
                 config: {
                     url: '/crids',

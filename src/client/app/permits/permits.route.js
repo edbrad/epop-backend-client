@@ -14,6 +14,7 @@
     function getStates() {
         return [
             {
+                // display all Permits
                 state: 'permits',
                 config: {
                     url: '/permits',

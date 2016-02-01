@@ -43,12 +43,11 @@
             if ($scope.editCRIDForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.CRID.mailOwnerId = vm.newMailOwner.id;
-                console.log("Updated CRID: " + JSON.stringify(vm.CRID));
+                logger.log("Updated CRID: " + JSON.stringify(vm.CRID));
                 CRID.upsert(vm.CRID).$promise.then(function(){  
                     vm.CRID = {};      
                     $modalInstance.close()
                 });
-            
             }    
         };
         
@@ -59,11 +58,11 @@
             CRID.findById({id: vm.properties.id},
                 function (result) {
                     vm.CRID = result;
-                    console.log("- CRID: " + JSON.stringify(vm.CRID));
+                    logger.log("- CRID: " + JSON.stringify(vm.CRID));
                     MailOwner.findById({id: vm.CRID.mailOwnerId},
                     function (result) {
                         vm.mailOwner = result;
-                        console.log("MailOwner ID: " + vm.mailOwner.id);
+                        logger.log("MailOwner ID: " + vm.mailOwner.id);
                         // set the selected Mail Owner
                         for(var i = 0 ; i < vm.mailOwners.length; i++){
                             if (vm.CRID.mailOwnerId == vm.mailOwners[i].id){
@@ -82,7 +81,6 @@
                 function (result) {
                     vm.mailOwners = result;
                 });
-        }
-        
+        }    
     }
 })();

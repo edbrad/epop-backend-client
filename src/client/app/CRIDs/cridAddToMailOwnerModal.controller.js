@@ -37,16 +37,14 @@
             if ($scope.addCRIDForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.newCRID.mailOwnerId = vm.mailOwner.id;
-                console.log("New CRID: " + JSON.stringify(vm.newCRID));
+                logger.log("New CRID: " + JSON.stringify(vm.newCRID));
                 CRID.create(vm.newCRID).$promise.then(function(){         
-                    console.log('CRID Add Modal: close/ok');
+                    logger.log('CRID Add Modal: close/ok');
                     vm.newCRID = {};
                     vm.mailOwner = {}
                     $modalInstance.close()
                 });
-            
-            }
-                
+            }      
         };
         
         // collect current Mail Owner, which is to be associated with the new CRID
@@ -57,9 +55,6 @@
                 function (result) {
                     vm.mailOwner = result;
                 });
-        }
-        
-        
-        
+        }  
     }
 })();

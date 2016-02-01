@@ -43,7 +43,7 @@
             if ($scope.editPermitForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.permit.mailOwnerId = vm.newMailOwner.id;
-                console.log("Updated Permit: " + JSON.stringify(vm.permit));
+                logger.log("Updated Permit: " + JSON.stringify(vm.permit));
                 Permit.upsert(vm.permit).$promise.then(function(){  
                     vm.permit = {};      
                     $modalInstance.close()
@@ -59,11 +59,11 @@
             Permit.findById({id: vm.properties.id},
                 function (result) {
                     vm.permit = result;
-                    console.log("- Permit: " + JSON.stringify(vm.permit));
+                    logger.log("- Permit: " + JSON.stringify(vm.permit));
                     MailOwner.findById({id: vm.permit.mailOwnerId},
                     function (result) {
                         vm.mailOwner = result;
-                        console.log("MailOwner ID: " + vm.mailOwner.id);
+                        logger.log("MailOwner ID: " + vm.mailOwner.id);
                         // set the selected Mail Owner
                         for(var i = 0 ; i < vm.mailOwners.length; i++){
                             if (vm.permit.mailOwnerId == vm.mailOwners[i].id){
@@ -82,7 +82,6 @@
                 function (result) {
                     vm.mailOwners = result;
                 });
-        }
-        
+        }   
     }
 })();

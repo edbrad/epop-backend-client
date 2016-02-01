@@ -14,6 +14,7 @@
     function getStates() {
         return [
             {
+                // display all Mail Owners
                 state: 'mailOwners',
                 config: {
                     url: '/mailowners',
@@ -28,6 +29,7 @@
                 }
             },
             {
+                // display details for a single Mail Owner (using id)
                 state: 'mailOwnerDetail',
                 config: {
                     url: '/mailowners/:id',
@@ -35,6 +37,7 @@
                     controller: 'MailOwnerDetailController',
                     controllerAs: 'vm',
                     title: 'Mail Owner Detail',
+                    // pre-load Google Maps public API (Internet)
                     resolve: {
                         maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
                             return uiGmapGoogleMapApi;

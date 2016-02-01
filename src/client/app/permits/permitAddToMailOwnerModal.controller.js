@@ -38,9 +38,9 @@
             if ($scope.addPermitForm.$valid){
                 // assign the Mail Owner id from the selected Mail Owner
                 vm.newPermit.mailOwnerId = vm.mailOwner.id;
-                console.log("New CRID: " + JSON.stringify(vm.newPermit));
+                logger.log("New CRID: " + JSON.stringify(vm.newPermit));
                 Permit.create(vm.newPermit).$promise.then(function(){         
-                    console.log('Permit Add Modal: close/ok');
+                    logger.log('Permit Add Modal: close/ok');
                     vm.newPermit = {};
                     vm.mailOwner = {}
                     $modalInstance.close()
@@ -58,9 +58,6 @@
                 function (result) {
                     vm.mailOwner = result;
                 });
-        }
-        
-        
-        
+        } 
     }
 })();

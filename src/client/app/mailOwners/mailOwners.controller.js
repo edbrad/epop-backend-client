@@ -17,10 +17,10 @@
         // storage for Mail Owner data
         vm.mailOwners = [];
         
-        // asyncronous function array storage 
+        // storage for the asyncronous function list (for $q) 
         var promises = void[];
         
-        // store current date for grid export
+        // storage for date used in UI Grid Excel/CSV/PDF exporting
         var currentDate = new Date();
                     
         // initialize UI Grid layout/formatting options                            
@@ -37,15 +37,15 @@
                 {name: 'Zip5', displayName: 'Zip Code', width: "*" },
                 // append Edit & Delete buttons
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
-                                                                       '  <button tooltip-placement="left" uib-tooltip="Edit the Mail Owner" class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailOwner(row.entity.id)">' +
-                                                                       '	    <i class="fa fa-edit fa-2x"></i>' +
+                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailOwner(row.entity.id)">' +
+                                                                       '	    <i class="fa fa-edit"></i>Edit' +
                                                                        '  </button>' +
                                                                        '</span>' +
                                                                        '<span>'+
-                                                                       '	<button tooltip-placement="left" uib-tooltip="Delete the Mail Owner" class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteMailOwner(row.entity.id)">' +
-                                                                       '		<i class="fa fa-trash fa-2x"></i>' +
+                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteMailOwner(row.entity.id)">' +
+                                                                       '		<i class="fa fa-trash"></i>Delete' +
                                                                        '	</button>' +
-                                                                       '</span>', width: 153}
+                                                                       '</span>', width: 173}
             ],
             enableGridMenu: true,
             enableFiltering: true,
@@ -123,7 +123,6 @@
                 getMailOwners();
                 logger.success("Mail Owner Updated!");
             });
-        };
-        
+        }; 
     }
 })();

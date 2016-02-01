@@ -22,15 +22,13 @@
         
         // perform 'DELETE' processing (remove Permit, then close the dialog)
         vm.delete = function(id){
-            console.log('Deleting Mailer ID w/ id: ' + id);
+            logger.log('Deleting Mailer ID w/ id: ' + id);
             
             // delete the Permit
             MailerID.deleteById({id: id}).$promise.then(function(){         
-                console.log('Deleted Mailer Id');
+                logger.log('Deleted Mailer Id');
                 $modalInstance.close()
-            });
-            
-        }; 
-        
+            });  
+        };  
     }
 })();

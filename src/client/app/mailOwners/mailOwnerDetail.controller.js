@@ -18,7 +18,7 @@
         vm.mailOwner = {};
         vm.mailOwnerAddress = "";
         
-        // asynchronous functions array storage
+        // storage for the asynchronous functions list (for $q)
         var promises = void[];
         
         // storage for counts
@@ -26,7 +26,7 @@
         vm.permitCount = 0;
         vm.mailerIdCount = 0;
         
-        // initialize map location
+        // initialize map center/focus
         vm.map = {
             center: {
                 latitude: 38.897733,
@@ -35,6 +35,7 @@
             zoom: 12
         };
         
+        // initialize map marker
         vm.marker = {
             id: 1,
             coords: {
@@ -49,12 +50,12 @@
         // set map view flag/switch
         vm.showMap = false;
 
-        // update map
+        // update map address
         vm.showTheMap = function(addr1, addr2, city, state, zip5){
             vm.showMap = true;
             vm.mailOwnerAddress = "";
             vm.mailOwnerAddress = addr1 + ' ' + city + ' ' + state + ' ' + zip5;
-            console.log('Map Address: ' + vm.mailOwnerAddress);
+            logger.log('Map Address: ' + vm.mailOwnerAddress);
             refreshMap();
         };
         
@@ -162,7 +163,7 @@
                                 title: vm.mailOwner.Name
                             }
                         };
-                        
+                        // set map zoom level
                         vm.map.zoom = 15;
                     }, 0);   
                 }
@@ -184,7 +185,7 @@
                 getMailOwner();
                 vm.mailOwnerAddress = "";
                 vm.mailOwnerAddress = vm.mailOwner.Address1 + ' ' + vm.mailOwner.City + ' ' + vm.mailOwner.State + ' ' + vm.mailOwner.Zip5;
-                console.log('Map Address: ' + vm.mailOwnerAddress);
+                logger.log('Map Address: ' + vm.mailOwnerAddress);
                 refreshMap();
                 logger.success("Mail Owner Updated!");
             });
@@ -244,9 +245,7 @@
                 logger.success("CRID Updated!");
             });
         };
-       
-        
-        
+
         // invoke modal dialog w/form to add new CRID
         vm.addPermit = function(){
             dialog.addPermitToMailOwner('Add New Permit', ['ADD', 'CANCEL'], vm.mailOwner.id)

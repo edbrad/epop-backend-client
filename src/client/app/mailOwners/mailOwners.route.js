@@ -14,10 +14,25 @@
     function getStates() {
         return [
             {
-                // display all Mail Owners
+                // display all Mail Owners (Grid View)
                 state: 'mailOwners',
                 config: {
                     url: '/mailowners',
+                    templateUrl: 'app/mailOwners/mailOwners.html',
+                    controller: 'MailOwnersController',
+                    controllerAs: 'vm',
+                    title: 'Mail Owners',
+                    settings: {
+                        //nav: 2,
+                        content: '<i class="fa fa-database"></i> Mail Owners'
+                    }
+                }
+            },
+            {
+                // display all Mail Owners (Card/Mobile View)
+                state: 'mailOwners_M',
+                config: {
+                    url: '/mailowners_M',
                     templateUrl: 'app/mailOwners/mailOwners_M.html',
                     controller: 'MailOwnersController',
                     controllerAs: 'vm',

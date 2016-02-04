@@ -3,8 +3,9 @@
 
     angular
         .module('app.mailOwners', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService'])
-        .controller('MailOwnersController', MailOwnersController);
-
+        .controller('MailOwnersController', MailOwnersController)
+        .directive('focus', FocusDirective);
+            
     MailOwnersController.$inject = ['$q', 'MailOwner', 'logger', '$scope', 'dialogsService', '$state', '$stateParams', '$timeout'];
     /* @ngInject */
     function MailOwnersController($q, MailOwner, logger, $scope, dialog, $state, $stateParams, $timeout) {
@@ -130,4 +131,26 @@
             return city + ', ' + state + ' ' + zip5;
         };
     }
+    
+    // HTML Directive - set cursor focus (search input field)
+    FocusDirective.$inject = ['$timeout']
+    /* @ngInject */
+    function FocusDirective($timeout) {
+        return {
+            scope: {
+                trigger: '@focus'
+            },
+            link: function (scope, element) {
+                scope.$watch('trigger', function (value) {
+                    if (value === "true") {
+                        $timeout(function () {
+                            element[0].focus();
+                        });
+                    }
+                });
+            }
+        };
+    };
+
+       
 })();

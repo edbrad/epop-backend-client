@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="widget wlightblue">
                     <div ht-widget-header title="Mail Owners" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info" style="display:inline-block;">    
+                        <div class="widget-content text-left text-info" style="display:inline-block; width: 100%">    
                              <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 3px;">
                                 <span><i class="fa fa-database"></i><strong> USPS Registered Mail Owners</strong></span>
                                 <span><button style="margin-bottom: 10px;" ui-sref="mailOwners"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Grid View</button></span>
@@ -15,9 +15,9 @@
                               </div>
                               <div class="col-lg-4 col-xs-12" ng-repeat="o in vm.mailOwners | filter:search">
                                 <!-- small box -->
-                                <div class="small-box bg-aqua">
+                                <div class="small-box bg-aqua" style="text-overflow: ellipsis;">
                                     <div class="inner">
-                                        <h4><a ui-sref="mailOwnerDetail({ id: o.id })" style="color: white;">{{o.Name}}</h4></a>
+                                        <h4 style="text-overflow: ellipsis;"><a ui-sref="mailOwnerDetail({ id: o.id })" style="color: white;">{{o.Name}}</h4></a>
                                         <p>
                                             {{o.Address1}}<br>
                                             {{o.Address2}}&nbsp<br>

@@ -101,7 +101,7 @@
         
         // invoke modal dialog w/form to add new Mail Owner
         vm.addMailOwner = function(){
-            dialog.addMailOwner('Add New Mail Owner', ['ADD', 'CANCEL'])
+            dialog.addMailOwner('Add New Mail Owner', ['Add', 'Cancel'])
             .then(function(){
                 getMailOwners();
                 logger.success("Mail Owner Added!");
@@ -110,7 +110,7 @@
         
         // invoke modal dialog to delete current Mail Owner, and update the grid
         $scope.deleteMailOwner = function(id){
-            dialog.deleteMailOwner('Delete Mail Owner?', 'WARNING: This will also delete all associated CRIDs, MIDs, Permits and Mailer IDs for this Mail Owner!', ['DELETE', 'CANCEL'], id)
+            dialog.deleteMailOwner('Delete Mail Owner?', 'WARNING: This will also delete all associated CRIDs, MIDs, Permits and Mailer IDs for this Mail Owner!', ['Delete', 'Cancel'], id)
             .then(function(){
                 getMailOwners();
                 logger.success("Mail Owner Deleted!");
@@ -119,7 +119,7 @@
         
         // invoke modal dialog w/form to edit selected Mail Owner
         $scope.editMailOwner = function(id){
-            dialog.editMailOwner('Edit Mail Owner', ['UPDATE', 'CANCEL'], id)
+            dialog.editMailOwner('Edit Mail Owner', ['Update', 'Cancel'], id)
             .then(function(){
                 getMailOwners();
                 logger.success("Mail Owner Updated!");
@@ -132,7 +132,7 @@
         };
     }
     
-    // HTML Directive - set cursor focus (search input field)
+    // Directive - set cursor focus (search input field)
     FocusDirective.$inject = ['$timeout']
     /* @ngInject */
     function FocusDirective($timeout) {
@@ -151,6 +151,5 @@
             }
         };
     };
-
-       
+         
 })();

@@ -6,10 +6,12 @@
                     <div class="widget wlightblue">
                         <div ht-widget-header title="Mail Owners" allow-collapse="true"></div>
                         <div class="widget-content text-left text-info">
-                            <p>
+                            <div style="margin-bottom: 5px">
                                 <i class="fa fa-database"></i><strong> USPS Registered Mail Owners</strong>
+                            </div>
+                            <div style="margin-bottom: 5px">
                                 <button style="margin-bottom: 10px;" ui-sref="mailOwners_M"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Card/Mobile View</button></span>
-                            </p>
+                            </div>
                             <div ui-grid="gridOptions" ng-if="!refresh" external-scopes="gridModel" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter ui-grid-auto-resize class="grid"></div>
                         </div>
                     </div>

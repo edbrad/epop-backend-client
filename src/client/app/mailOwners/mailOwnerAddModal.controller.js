@@ -4,7 +4,7 @@
     angular
         .module('app.MailOwnerAddModal',['lbServices'])
         .controller('MailOwnerAddModalController', MailOwnerAddModalController);
-
+        
     MailOwnerAddModalController.$inject = ['$scope','$modalInstance', 'logger', 'data', 'MailOwner'];
     /* @ngInject */
     function MailOwnerAddModalController($scope, $modalInstance, logger, data, MailOwner) {
@@ -42,4 +42,5 @@
         };
         
     }
+    
 })();

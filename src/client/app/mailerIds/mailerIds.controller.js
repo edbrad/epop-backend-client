@@ -119,7 +119,7 @@
         
         // invoke modal dialog w/form to add new Mailer Id
         vm.addMailerId = function(){
-            dialog.addMailerId('Add New Mailer ID', ['ADD', 'CANCEL'])
+            dialog.addMailerId('Add New Mailer ID', ['Add', 'Cancel'])
             .then(function(){
                 getMailerIds();
                 logger.success("New Mailer ID Added!");
@@ -128,7 +128,7 @@
         
         // invoke modal dialog to delete current Mailer ID, and update the grid
         $scope.deleteMailerId = function(id){
-            dialog.deleteMailerId('Delete Mailer ID?', 'Are You Sure You Want to Delete this Mailer ID?', ['DELETE', 'CANCEL'], id)
+            dialog.deleteMailerId('Delete Mailer ID?', 'Are You Sure You Want to Delete this Mailer ID?', ['Delete', 'Cancel'], id)
             .then(function(){
                 getMailerIds();
                 logger.success("Mailer ID Deleted!");
@@ -137,7 +137,7 @@
         
         // invoke modal dialog w/form to edit selected Mailer Id
         $scope.editMailerId = function(id){
-            dialog.editMailerId('Edit Mailer ID', ['UPDATE', 'CANCEL'], id)
+            dialog.editMailerId('Edit Mailer ID', ['Update', 'Cancel'], id)
             .then(function(){
                 getMailerIds();
                 logger.success("Mailer ID Updated!");

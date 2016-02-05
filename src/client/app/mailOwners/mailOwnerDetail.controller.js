@@ -180,7 +180,7 @@
         
         // invoke modal dialog w/form to edit selected Mail Owner
         vm.editMailOwner = function(id){
-            dialog.editMailOwner('Edit Mail Owner', ['UPDATE', 'CANCEL'], id)
+            dialog.editMailOwner('Edit Mail Owner', ['Update', 'Cancel'], id)
             .then(function(){
                 getMailOwner();
                 vm.mailOwnerAddress = "";
@@ -221,7 +221,7 @@
         
         // invoke modal dialog w/form to add new CRID
         vm.addCRID = function(){
-            dialog.addCRIDToMailOwner('Add New CRID', ['ADD', 'CANCEL'], vm.mailOwner.id)
+            dialog.addCRIDToMailOwner('Add New CRID', ['Add', 'Cancel'], vm.mailOwner.id)
             .then(function(){
                 getCRIDs();
                 logger.success("New CRID Added for Mail Owner!");
@@ -230,7 +230,7 @@
         
         // invoke modal dialog to delete current CRID, and update the grid
         $scope.deleteCRID = function(id){
-            dialog.deleteCRID('Delete CRID?', 'Are You Sure You Want to Delete this CRID?', ['DELETE', 'CANCEL'], id)
+            dialog.deleteCRID('Delete CRID?', 'Are You Sure You Want to Delete this CRID?', ['Delete', 'Cancel'], id)
             .then(function(){
                 getCRIDs();
                 logger.success("CRID Deleted!");
@@ -239,7 +239,7 @@
         
         // invoke modal dialog w/form to edit selected CRID
         $scope.editCRID = function(id){
-            dialog.editCRID('Edit CRID', ['UPDATE', 'CANCEL'], id)
+            dialog.editCRID('Edit CRID', ['Update', 'Cancel'], id)
             .then(function(){
                 getCRIDs();
                 logger.success("CRID Updated!");
@@ -248,7 +248,7 @@
 
         // invoke modal dialog w/form to add new CRID
         vm.addPermit = function(){
-            dialog.addPermitToMailOwner('Add New Permit', ['ADD', 'CANCEL'], vm.mailOwner.id)
+            dialog.addPermitToMailOwner('Add New Permit', ['Add', 'Cancel'], vm.mailOwner.id)
             .then(function(){
                 getPermits();
                 logger.success("New Permit Added for Mail Owner!");
@@ -257,7 +257,7 @@
         
         // invoke modal dialog to delete current Permit, and update the grid
         $scope.deletePermit = function(id){
-            dialog.deletePermit('Delete Permit?', 'Are You Sure You Want to Delete this Permit?', ['DELETE', 'CANCEL'], id)
+            dialog.deletePermit('Delete Permit?', 'Are You Sure You Want to Delete this Permit?', ['Delete', 'Cancel'], id)
             .then(function(){
                 getPermits();
                 logger.success("Permit Deleted!");
@@ -266,7 +266,7 @@
         
         // invoke modal dialog w/form to edit selected Permit
         $scope.editPermit = function(id){
-            dialog.editPermit('Edit Permit', ['UPDATE', 'CANCEL'], id)
+            dialog.editPermit('Edit Permit', ['Update', 'Cancel'], id)
             .then(function(){
                 getPermits();
                 logger.success("Permit Updated!");
@@ -275,7 +275,7 @@
         
         // invoke modal dialog w/form to add new Mailer Id
         vm.addMailerId = function(){
-            dialog.addMailerIdToMailOwner('Add New Mailer ID', ['ADD', 'CANCEL'], vm.mailOwner.id)
+            dialog.addMailerIdToMailOwner('Add New Mailer ID', ['Add', 'Cancel'], vm.mailOwner.id)
             .then(function(){
                 getMailerIDs();
                 logger.success("New Mailer ID Added for Mail Owner!");
@@ -284,7 +284,7 @@
         
         // invoke modal dialog to delete current Mailer ID, and update the grid
         $scope.deleteMailerId = function(id){
-            dialog.deleteMailerId('Delete Mailer ID?', 'Are You Sure You Want to Delete this Mailer ID?', ['DELETE', 'CANCEL'], id)
+            dialog.deleteMailerId('Delete Mailer ID?', 'Are You Sure You Want to Delete this Mailer ID?', ['Delete', 'Cancel'], id)
             .then(function(){
                 getMailerIDs();
                 logger.success("Mailer ID Deleted!");
@@ -293,7 +293,7 @@
         
         // invoke modal dialog w/form to edit selected Permit
         $scope.editMailerId = function(id){
-            dialog.editMailerId('Edit Mailer ID', ['UPDATE', 'CANCEL'], id)
+            dialog.editMailerId('Edit Mailer ID', ['Update', 'Cancel'], id)
             .then(function(){
                 getMailerIDs();
                 logger.success("Mailer ID Updated!");

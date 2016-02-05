@@ -117,7 +117,7 @@
         
         // invoke modal dialog w/form to add new CRID
         vm.addCRID = function(){
-            dialog.addCRID('Add New CRID', ['ADD', 'CANCEL'])
+            dialog.addCRID('Add New CRID', ['Add', 'Cancel'])
             .then(function(){
                 getCRIDs();
                 logger.success("New CRID Added!");
@@ -126,7 +126,7 @@
         
         // invoke modal dialog to delete current CRID, and update the grid
         $scope.deleteCRID = function(id){
-            dialog.deleteCRID('Delete CRID?', 'Are You Sure You Want to Delete this CRID?', ['DELETE', 'CANCEL'], id)
+            dialog.deleteCRID('Delete CRID?', 'Are You Sure You Want to Delete this CRID?', ['Delete', 'Cancel'], id)
             .then(function(){
                 getCRIDs();
                 logger.success("CRID Deleted!");
@@ -135,7 +135,7 @@
         
         // invoke modal dialog w/form to edit selected CRID
         $scope.editCRID = function(id){
-            dialog.editCRID('Edit CRID', ['UPDATE', 'CANCEL'], id)
+            dialog.editCRID('Edit CRID', ['Update', 'Cancel'], id)
             .then(function(){
                 getCRIDs();
                 logger.success("CRID Updated!");

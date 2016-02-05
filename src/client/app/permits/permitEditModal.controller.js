@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.PermitEditModal',['lbServices'])
+        .module('app.PermitEditModal',['lbServices', 'app.FocusDirective'])
         .controller('PermitEditModalController', PermitEditModalController);
 
     PermitEditModalController.$inject = ['$q', '$scope','$modalInstance', 'logger', 'data', 'Permit', 'MailOwner'];

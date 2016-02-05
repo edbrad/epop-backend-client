@@ -7,7 +7,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : editMailOwnerForm.Name.$invalid }">
 			<label class="col-sm-12" for="Name">Mail Owner Name:*</label>
 			<div class="col-sm-12">
-				<input type="text" class="form-control" name="Name" required ng-model="vm.mailOwner.Name" placeholder="Enter Mail Owner/Company Name" ng-class="{ 'has-error' : editMailOwnerForm.Name.$invalid }">
+				<input type="text" focus="true" class="form-control" name="Name" required ng-model="vm.mailOwner.Name" placeholder="Enter Mail Owner/Company Name" ng-class="{ 'has-error' : editMailOwnerForm.Name.$invalid }">
 				<span class="help-block" ng-show="editMailOwnerForm.Name.$error.required && vm.submitted">Mail Owner Name is Required!</span>
 			</div>
 		</div>

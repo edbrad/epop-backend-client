@@ -12,7 +12,6 @@
         'app.permits',
         'app.mailerIds',
         'app.layout',
-        'app.confirmModal',
         'app.MailOwnerAddModal',
         'app.MailOwnerDeleteModal',
         'app.MailOwnerEditModal',

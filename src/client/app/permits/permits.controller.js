@@ -119,7 +119,7 @@
         
         // invoke modal dialog w/form to add new Permit
         vm.addPermit = function(){
-            dialog.addPermit('Add New Permit', ['ADD', 'CANCEL'])
+            dialog.addPermit('Add New Permit', ['Add', 'Cancel'])
             .then(function(){
                 getPermits();
                 logger.success("New Permit Added!");
@@ -128,7 +128,7 @@
         
         // invoke modal dialog to delete current Permit, and update the grid
         $scope.deletePermit = function(id){
-            dialog.deletePermit('Delete Permit?', 'Are You Sure You Want to Delete this Permit?', ['DELETE', 'CANCEL'], id)
+            dialog.deletePermit('Delete Permit?', 'Are You Sure You Want to Delete this Permit?', ['Delete', 'Cancel'], id)
             .then(function(){
                 getPermits();
                 logger.success("Permit Deleted!");
@@ -137,7 +137,7 @@
         
         // invoke modal dialog w/form to edit selected Permit
         $scope.editPermit = function(id){
-            dialog.editPermit('Edit Permit', ['UPDATE', 'CANCEL'], id)
+            dialog.editPermit('Edit Permit', ['Update', 'Cancel'], id)
             .then(function(){
                 getPermits();
                 logger.success("Permit Updated!");

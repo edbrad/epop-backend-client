@@ -15,7 +15,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : addPermitForm.PermitNumber.$invalid }">
 			<label class="col-sm-12" for="PermitNumber">Permit Number:*</label>
 			<div class="col-sm-12">
-				<input type="text" class ="form-control" name="PermitNumber" required ng-maxlength="100" ng-model="vm.newPermit.PermitNumber" placeholder="Enter Permit Number" />
+				<input type="text" focus="true" class ="form-control" name="PermitNumber" required ng-maxlength="100" ng-model="vm.newPermit.PermitNumber" placeholder="Enter Permit Number" />
 				<span class="help-block" ng-show="addPermitForm.PermitNumber.$error.required && vm.submitted">Permit Number is Required!.</span>
 				<span class="help-block" ng-show="addPermitForm.PermitNumber.$error.maxlength && vm.submitted">Permit Number is too long (must be less than 100 digits)!.</span>
 			</div>

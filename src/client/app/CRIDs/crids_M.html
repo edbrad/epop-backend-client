@@ -13,17 +13,20 @@
                             <button style="margin-bottom: 10px;" class="btn btn-success" ng-click="vm.addCRID()"><i class="fa fa-plus-square"></i>Add New CRID</button>
                             </span>
                         </div>
-                        <div class="form-group row col-lg-12 col-xs-12" style="margin-bottom: 10px;">
-                            <label class="col-sm-12" style="font-size: 20px;" for="search"></label>
-                            <div class="col-sm-12">
+                        <div class="form-group row col-lg-12 col-xs-12" style="margin-bottom: 10px;"> 
+                            <div class="col-sm-12 col-lg-8 col-xs-12">
                                 <input type="search"  focus="true" class="form-control" ng-model="search.CRID" placeholder="Search" />
                             </div>
+                        </div>
+                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px">
+                            <hr>
                         </div>
                         <div class="col-lg-4 col-xs-12" ng-repeat="c in vm.CRIDs | filter:search">
                             <!-- small box -->
                             <div class="small-box bg-green" style="text-overflow: ellipsis;">
                                 <div class="inner">
-                                    <h4 style="text-overflow: ellipsis;">{{c.CRID}}</h4></a>
+                                    <h3 style="text-overflow: ellipsis;"><a ui-sref="mailOwnerDetail({ id: c.mailOwnerId })" style="color: white;">{{c.CRID}}</h3></a>
+                                    <h4><a ui-sref="mailOwnerDetail({ id: c.mailOwnerId })" style="color: white;">{{getMailOwnerName(c.mailOwnerId)}}</h4></a>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-android-drafts"></i>

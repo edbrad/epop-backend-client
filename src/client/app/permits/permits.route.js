@@ -23,6 +23,21 @@
                     controllerAs: 'vm',
                     title: 'Permits',
                     settings: {
+                        //nav: 4,
+                        content: '<i class="fa fa-database"></i> Permits'
+                    }
+                }
+            },
+            {
+                // display all Permits (Card/Mobile View)
+                state: 'permits_M',
+                config: {
+                    url: '/permits_M',
+                    templateUrl: 'app/permits/permits_M.html',
+                    controller: 'PermitsController',
+                    controllerAs: 'vm',
+                    title: 'Permits',
+                    settings: {
                         nav: 4,
                         content: '<i class="fa fa-database"></i> Permits'
                     }

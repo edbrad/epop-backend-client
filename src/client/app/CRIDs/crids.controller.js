@@ -82,8 +82,9 @@
         activate();
         
         function activate() {
-            promises = [getCRIDs(), getMailOwners()];
+            promises = [getCRIDs(), getMailOwners(), appendMailOwnerName()];
             return $q.all(promises).then(function() {
+                //appendMailOwnerName();
                 logger.info('Activated CRIDs View');      
             });
         }
@@ -115,6 +116,18 @@
             }
         };
         
+        //
+        function appendMailOwnerName(){
+            for(var i = 0 ; i < vm.CRIDs.length; i++){
+                for(var j = 0 ; j < vm.MailOwners.length; j++){
+                    if (vm.CRIDs.mailOwnerId[i] == vm.MailOwners.id[j]){
+                        vm.CRIDs[i].mailOwnerName = vm.MailOwners.Name[j];
+                        console.log("CRID: " + vm.CRIDs.CRID + " Mail Owner: " + vm.MailOwners.Name[j])
+                    }
+                }
+            }
+        };
+        
         // invoke modal dialog w/form to add new CRID
         vm.addCRID = function(){
             dialog.addCRID('Add New CRID', ['Add', 'Cancel'])
@@ -142,6 +155,12 @@
             });
         };
         
+        $scope.mailOwnerNameMatch = function(search){
+            return function(item) {
+                var Name = $scope.getMailOwnerName(item.mailOwnerId)
+                return Name === search;
+            };
+        };
          
     }
 })();

@@ -1,0 +1,45 @@
+<section id="permits-view" class="mainbar">
+    <section class="matter">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget worange">
+                    <div ht-widget-header title="Permits" allow-collapse="true"></div>
+                    <div class="widget-content text-left text-info" style="display:inline-block; width: 100%">
+                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px;"> 
+                            <span><i class="fa fa-database"></i><strong> USPS Registered Permits</strong></span>
+                        </div>
+                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 5px; margin-left: 0px;">   
+                            <span><button style="margin-bottom: 10px;" ui-sref="permits"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Grid View</button></span>
+                            <button style="margin-bottom: 10px;" class="btn btn-success" ng-click="vm.addPermit()"><i class="fa fa-plus-square"></i>Add New Permit</button>
+                            </span>
+                        </div>
+                        <div class="form-group row col-lg-12 col-xs-12" style="margin-bottom: 10px;"> 
+                            <div class="col-sm-12 col-lg-8 col-xs-12">
+                                <input type="search"  focus="true" class="form-control" ng-model="search.PermitNumber" placeholder="Search" />
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px">
+                            <hr>
+                        </div>
+                        <div class="col-lg-4 col-xs-12" ng-repeat="p in vm.Permits | filter:search">
+                            <!-- small box -->
+                            <div class="small-box bg-orange" style="text-overflow: ellipsis;">
+                                <div class="inner">
+                                    <h3 style="text-overflow: ellipsis;"><a ui-sref="mailOwnerDetail({ id: p.mailOwnerId })" style="color: white;">{{p.PermitNumber}}</h3></a>
+                                    <h4><a ui-sref="mailOwnerDetail({ id: p.mailOwnerId })" style="color: white;">{{getMailOwnerName(p.mailOwnerId)}}</h4></a>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-document-text"></i>
+                                </div>
+                                <div class="small-box-footer" style="text-align: left;">
+                                    <span><button class="btn btn-primary" style="margin-left: 9px;margin-top: 10px; margin-bottom: 10px;" ng-click="editPermit(p.id)"><i class="fa fa-edit"></i>Edit</button></span>
+                                    <span><button class="btn btn-danger" style="margin-top: 10px; margin-bottom: 10px;" ng-click="deletePermit(p.id)"><i class="fa fa-trash"></i>Delete</button></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

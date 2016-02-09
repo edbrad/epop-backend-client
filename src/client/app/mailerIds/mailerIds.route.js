@@ -22,6 +22,21 @@
                     controllerAs: 'vm',
                     title: 'Mailer Ids',
                     settings: {
+                        //nav: 5,
+                        content: '<i class="fa fa-database"></i> Mailer ID&#39s'
+                    }
+                }
+            },
+            {
+                // display all Mailer IDs (Card/Mobile View)
+                state: 'mailerids_M',
+                config: {
+                    url: '/mailerids_M',
+                    templateUrl: 'app/mailerIds/mailerids_M.html',
+                    controller: 'MailerIdsController',
+                    controllerAs: 'vm',
+                    title: 'Mailer Ids',
+                    settings: {
                         nav: 5,
                         content: '<i class="fa fa-database"></i> Mailer ID&#39s'
                     }

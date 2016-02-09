@@ -23,7 +23,7 @@
                     title: 'Mailer Ids',
                     settings: {
                         //nav: 5,
-                        content: '<i class="fa fa-database"></i> Mailer ID&#39s'
+                        content: '<i class="ion ion-email"></i> Mailer ID&#39s'
                     }
                 }
             },
@@ -38,7 +38,7 @@
                     title: 'Mailer Ids',
                     settings: {
                         nav: 5,
-                        content: '<i class="fa fa-database"></i> Mailer ID&#39s'
+                        content: '<i class="ion ion-email"></i> Mailer ID&#39s'
                     }
                 }
             }

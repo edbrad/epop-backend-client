@@ -24,7 +24,7 @@
                     title: 'CRIDs',
                     settings: {
                         //nav: 3,
-                        content: '<i class="fa fa-database"></i> CRID&#39s'
+                        content: '<i class="ion ion-android-list"></i> CRID&#39s'
                     }
                 }
             },
@@ -39,7 +39,7 @@
                     title: 'CRIDs',
                     settings: {
                         nav: 3,
-                        content: '<i class="fa fa-database"></i> CRID&#39s'
+                        content: '<i class="ion ion-android-list"></i> CRID&#39s'
                     }
                 }
             }

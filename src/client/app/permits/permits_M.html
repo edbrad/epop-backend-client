@@ -8,14 +8,19 @@
                         <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px;"> 
                             <span><i class="ion ion-document-text"></i><strong> USPS Registered Permits</strong></span>
                         </div>
-                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 5px; margin-left: 0px;">   
-                            <span><button style="margin-bottom: 10px;" ui-sref="permits"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Grid View</button></span>
-                            <button style="margin-bottom: 10px;" class="btn btn-success" ng-click="vm.addPermit()"><i class="fa fa-plus-square"></i>Add New Permit</button>
+                        <div class="row col-lg-6 col-xs-12" style="margin-bottom: 5px; margin-left: 0px;">   
+                            <span>
+                                <button style="margin-bottom: 10px;" ui-sref="permits"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Grid View</button></span>
+                                <button style="margin-bottom: 10px;" class="btn btn-success" ng-click="vm.addPermit()"><i class="fa fa-plus-square"></i>Add New Permit</button>
                             </span>
+                        </div>
+                        <div class="row col-lg-6 col-xs-12" style="margin-bottom: 15px; margin-left: 0px;">
+                            <h1><b>99 Permits</b></h1>
                         </div>
                         <div class="form-group row col-lg-12 col-xs-12" style="margin-bottom: 10px;"> 
                             <div class="col-sm-12 col-lg-8 col-xs-12">
-                                <input type="search"  focus="true" class="form-control" ng-model="search.PermitNumber" placeholder="Search" />
+                                <span class="fa fa-search" style="position: absolute;top: 7px;left: 27px; color: gray; font-size: 1.5em;"></span>
+                                <input style="text-indent: 32px;" type="search"  focus="true" class="form-control" ng-model="search.PermitNumber" placeholder="Search" />
                             </div>
                         </div>
                         <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px">

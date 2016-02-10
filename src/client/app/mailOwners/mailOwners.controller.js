@@ -94,6 +94,7 @@
             MailOwner.find(
                 function (result) {
                     vm.mailOwners = result;
+                    console.log("mail owner count: " + vm.mailOwners.length);
                     $scope.gridOptions.data = result;
                 });
         }

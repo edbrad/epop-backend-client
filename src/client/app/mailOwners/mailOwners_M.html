@@ -15,7 +15,7 @@
                             </span>
                         </div>
                         <div class="row col-lg-6 col-xs-12" style="margin-bottom: 15px; margin-left: 0px;">
-                            <h1><b>{{vm.mailOwners.length}} Mail Owners</b></h1>
+                            <h1><b>{{(vm.mailOwners | filter: search).length}} Mail Owners found</b></h1>
                         </div>
                         <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px;">
                             <div class="col-sm-12 col-lg-8 col-xs-12">

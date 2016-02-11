@@ -5,9 +5,9 @@
         .module('app.dashboard', ['lbServices'])
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$q', 'dataservice', 'MailOwner', 'CRID', 'Permit', 'MailerID', 'logger'];
+    DashboardController.$inject = ['$q', 'dataservice', 'MailOwner', 'CRID', 'Permit', 'MailerID','EDocStatement', 'logger'];
     /* @ngInject */
-    function DashboardController($q, dataservice, MailOwner, CRID, Permit, MailerID, logger) {
+    function DashboardController($q, dataservice, MailOwner, CRID, Permit, MailerID, EDocStatement, logger) {
         var vm = this;
         vm.news = {
             title: 'EPOP Backend Client',
@@ -27,6 +27,8 @@
         
         vm.mailerIDs = [];
         vm.mailerIDCount = [];
+        
+        vm.eDocStatements =[];
 
         activate();
         
@@ -38,7 +40,8 @@
                 getMailOwnerCount(), 
                 getCRIDCount(), 
                 getPermitCount(),
-                getMailerIDCount()
+                getMailerIDCount(),
+                getEDocStatements()
             ];
             return $q.all(promises).then(function() {
                 logger.info('Activated Dashboard View');
@@ -63,6 +66,13 @@
             MailOwner.find(
                 function (result) {
                     vm.mailOwners = result;
+                });
+        }
+        
+        function getEDocStatements(){
+            EDocStatement.find(
+                function (result) {
+                    vm.eDocStatements = result;
                 });
         }
         

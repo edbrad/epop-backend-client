@@ -11,6 +11,7 @@
         'app.CRIDs',
         'app.permits',
         'app.mailerIds',
+        'app.statements',
         'app.layout',
         'app.MailOwnerAddModal',
         'app.MailOwnerDeleteModal',

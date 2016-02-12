@@ -1,0 +1,117 @@
+<section id="statementDetail-view" class="mainbar">
+    <section class="matter"> 
+        <div class="container">
+            <div class="row">
+				<div class="col-lg-12 col-xs-12">
+                	<h1>Statement: <b>{{vm.statement.Statement_ID}}</b></h1>
+					<h3>Mail Date: {{vm.statement.MailDate}} </h3>
+					<h3>Description: {{vm.statement.Description}}</h3>
+				</div>
+            </div>
+			<div class="row">
+                <div class="col-lg-4 col-xs-12">
+                    <div class="widget wblue">
+                    <div ht-widget-header title="PERMIT HOLDER" allow-collapse="true"></div>
+                        <div class="widget-content text-left text-info">
+                            <b>Permit Number: </b>{{vm.statement.PermitNumber}} <b>CRID: </b>{{vm.statement.PermitHolderCRID}}
+                            <br><b>Permit Holder: </b>
+							<br>{{vm.statement.PermitHolderName}}
+							<br>{{vm.statement.PermitHolderAddress1}}
+							<br>{{vm.statement.PermitHolderAddress2}}&nbsp
+							<br>{{vm.statement.PermitHolderCity}}, {{vm.statement.PermitHolderState}} {{vm.statement.PermitHolderZipCode}}
+							<br>{{vm.statement.PermitHolderPhone}}&nbsp
+                        </div>
+                    </div>
+                </div>
+				<div class="col-lg-4 col-xs-12">
+                    <div class="widget wblue">
+                    <div ht-widget-header title="MAIL PREPARER" allow-collapse="true"></div>
+                        <div class="widget-content text-left text-info">
+							<b>CRID: </b>{{vm.statement.MailPreparerCRID}}
+                            <br>{{vm.statement.MailPreparerName}}
+							<br>{{vm.statement.MailPreparerAddress1}}
+							<br>{{vm.statement.MailPreparerAddress2}}&nbsp
+							<br>{{vm.statement.MailPreparerCity}}, {{vm.statement.MailPreparerState}} {{vm.statement.MailPreparerZipCode}}
+							<br>{{vm.statement.MailPreparerPhone}}&nbsp
+							<br>&nbsp                          
+                        </div>
+                    </div>
+                </div>
+				<div class="col-lg-4 col-xs-12">
+                    <div class="widget wblue">
+                    <div ht-widget-header title="MAIL OWNER" allow-collapse="true"></div>
+                        <div class="widget-content text-left text-info">
+							<b>CRID: </b>{{vm.statement.MailOwnerCRID}}
+                            <br>{{vm.statement.MailOwnerName}}
+							<br>{{vm.statement.MailownerAddress1}}
+							<br>{{vm.statement.MailOwnerAddress2}}&nbsp
+							<br>{{vm.statement.MailOwnerCity}}, {{vm.statement.MailOwnerState}} {{vm.statement.MailOwnerZipCode}}
+							<br>{{vm.statement.MailOwnerPhone}}&nbsp
+							<br>&nbsp                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-lg-12 col-xs-12">
+                    <div class="widget wblue">
+                    <div ht-widget-header title="POSTAGE" allow-collapse="true"></div>
+                        <div class="widget-content text-left text-info">
+							<h2><b>Standard Mail</b></h2>
+							<hr>
+							<h3><b>Part A</b></h3> Automation Letters - 3.3 oz (0.2063 lbs.) or less
+							<table class="table table-bordered table-striped table-responsive">
+								<thead>
+									<tr>
+										<th>-</th>
+										<th>Entry</th>
+										<th>Price Category</th>
+										<th>Price</th>
+										<th># of Pieces</th>
+										<th>Postage</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="d in vm.postageDetails_A">
+										<td>{{d.PS3602}}</td>
+										<td>{{d.Entry}}</td>
+										<td>{{d.Category}}</td>
+										<td>{{d.Price}}</td>
+										<td>{{d.Count}}</td>
+										<td>{{d.Postage}}</td>
+									</tr>
+								</tbody>
+							</table>
+							<br>           
+							<h3><b>Part B</b></h3> NonAutomation Letters - 3.3 oz (0.2063 lbs.) or less
+							<table class="table table-bordered table-striped table-responsive">
+								<thead>
+									<tr>
+										<th>-</th>
+										<th>Entry</th>
+										<th>Price Category</th>
+										<th>Price</th>
+										<th># of Pieces</th>
+										<th>Postage</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<tr ng-repeat="d in vm.postageDetails_B">
+										<td>{{d.PS3602}}</td>
+										<td>{{d.Entry}}</td>
+										<td>{{d.Category}}</td>
+										<td>{{d.Price}}</td>
+										<td>{{d.Count}}</td>
+										<td>{{d.Postage}}</td>
+									</tr>
+									</tr>
+								</tbody>
+							</table>           
+                        </div>
+                    </div>
+                </div>
+			</div>
+        </div>
+    </section>
+</section>

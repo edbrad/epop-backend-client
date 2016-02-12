@@ -42,6 +42,17 @@
                         content: '<i class="ion ion-document-text"></i> eDoc Statements'
                     }
                 }
+            },
+            {
+                // display Statement detail
+                state: 'statementDetail',
+                config: {
+                    url: '/statementDetail/:id',
+                    templateUrl: 'app/statements/statementDetail.html',
+                    controller: 'StatementDetailController',
+                    controllerAs: 'vm',
+                    title: 'eDoc Statement Detail',
+                }
             }
         ];
     }

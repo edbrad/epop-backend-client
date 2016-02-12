@@ -10,8 +10,7 @@
                         </div>
                         <div class="row col-lg-6 col-xs-12" style="margin-bottom: 5px; margin-left: 0px;">   
                             <span>
-                                <button style="margin-bottom: 10px;" ui-sref="mailOwners"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Grid View</button></span>
-                                <button style="margin-bottom: 10px;" class="btn btn-success" ng-click="vm.addMailOwner()"><i class="fa fa-plus-square"></i>Add New Mail Owner</button>
+                                <button style="margin-bottom: 10px;" ui-sref="statements"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Grid View</button></span>
                             </span>
                         </div>
                         <div class="row col-lg-6 col-xs-12" style="margin-bottom: 15px; margin-left: 0px;">
@@ -20,31 +19,29 @@
                         <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px;">
                             <div class="col-sm-12 col-lg-8 col-xs-12">
                                 <span class="fa fa-search" style="position: absolute;top: 7px;left: 27px; color: gray; font-size: 1.5em;"></span>
-                                <input style="text-indent: 32px;" type="search" focus="true" class="form-control" ng-model="search.Name" placeholder="Search"/>
+                                <input style="text-indent: 32px;" type="search" focus="true" class="form-control" ng-model="search.Statement_ID" placeholder="Search"/>
                             </div>
                         </div>
                         <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px">
                             <hr>
                         </div>
-                        <div class="col-lg-4 col-xs-12" ng-repeat="o in vm.mailOwners | filter:search">
+                        <div class="col-lg-4 col-xs-12" ng-repeat="s in vm.eDocStatements | filter:search">
                             <!-- small box -->
-                            <!--<div class="small-box bg-aqua" style="text-overflow: ellipsis;">
+                            <div class="small-box bg-purple" style="text-overflow: ellipsis;">
                                 <div class="inner">
-                                    <h4 style="text-overflow: ellipsis;"><a ui-sref="mailOwnerDetail({ id: o.id })" style="color: white;">{{o.Name}}</h4></a>
+                                    <h4 style="text-overflow: ellipsis;"><a ui-sref="statementDetail({ id: s.id })" style="color: white;">{{s.Statement_ID}}</h4></a>
                                     <p>
-                                        {{o.Address1}}
-                                        <br> {{o.Address2}}&nbsp
-                                        <br> {{o.City}}, {{o.State}} {{o.Zip5}}
+                                        Mail Date: <b>{{vm.dateFormat("2016-02-11")}}</b>
+                                        <br>Total Pieces: <b>{{vm.numberFormat(s.TotalPieceCount)}}</b>
+                                        <br>Total Postage: <b>{{vm.currencyFormat(s.TotalPostage)}}</b>
                                     </p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-android-drafts"></i>
+                                    <i class="ion ion-document-text"></i>
                                 </div>
                                 <div class="small-box-footer" style="text-align: left;">
-                                    <span><button class="btn btn-primary" style="margin-left: 9px;margin-top: 10px; margin-bottom: 10px;" ng-click="editMailOwner(o.id)"><i class="fa fa-edit"></i>Edit</button></span>
-                                    <span><button class="btn btn-danger" style="margin-top: 10px; margin-bottom: 10px;" ng-click="deleteMailOwner(o.id)"><i class="fa fa-trash"></i>Delete</button></span>
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>

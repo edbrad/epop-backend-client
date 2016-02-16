@@ -2,10 +2,13 @@
     <section class="matter"> 
         <div class="container">
             <div class="row">
-				<div class="col-lg-12 col-xs-12">
+				<div class="col-lg-8 col-xs-12">
                 	<h1>Statement: <b>{{vm.statement.Statement_ID}}</b></h1>
 					<h3>Mail Date: {{vm.statement.MailDate}} </h3>
 					<h3>Description: {{vm.statement.Description}}</h3>
+				</div>
+				<div class="col-lg-4 col-xs-12">
+                	<p>System ID: <b>{{vm.statement.id}}</b><p>
 				</div>
             </div>
 			<div class="row">
@@ -55,9 +58,18 @@
 			<div class="row">
 				<div class="col-lg-12 col-xs-12">
                     <div class="widget wblue">
-                    <div ht-widget-header title="POSTAGE" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info">
-							<h2><b>Standard Mail</b></h2>
+                    <div ht-widget-header title="POSTAGE SUMMARY" allow-collapse="true"></div>
+                        <div class="row widget-content text-left text-info">
+							<div class="row">
+								<div class="col-lg-6 col-xs-12">
+									<h2><b>Standard Mail</b></h2>
+									<h4>Type of Postage: <b>Permit Imprint</b> [ Profit ] </h4>
+								</div>
+								<div class="col-lg-6 col-xs-12">
+									<h4><b>Total Pieces:</b></h4>
+									<h4><b>Total Postage:</b></h4>
+								</div>
+							</div>
 							<hr>
 							<h3><b>Part A</b></h3> Automation Letters - 3.3 oz (0.2063 lbs.) or less
 							<table class="table table-bordered table-striped table-responsive">
@@ -81,6 +93,16 @@
 										<td>{{d.Postage}}</td>
 									</tr>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td height=30> </td>
+										<td height=30> </td>
+										<td height=30> </td>
+										<td height=30><b>TOTALS</b></td>
+										<td height=30><b>11,000</b></td>
+										<td height=30><b>$2,781.00</b></td>
+									</tr>
+								</tfoot>
 							</table>
 							<br>           
 							<h3><b>Part B</b></h3> NonAutomation Letters - 3.3 oz (0.2063 lbs.) or less
@@ -107,6 +129,16 @@
 									</tr>
 									</tr>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td height=30> </td>
+										<td height=30> </td>
+										<td height=30> </td>
+										<td height=30><b>TOTALS</b></td>
+										<td height=30><b>5,000</b> </td>
+										<td height=30><b>$1,378</b></td>
+									</tr>
+								</tfoot>
 							</table>           
                         </div>
                     </div>

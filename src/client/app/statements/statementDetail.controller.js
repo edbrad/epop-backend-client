@@ -59,7 +59,7 @@
             vm.postageDetails_A.push({"PS3602": "A9", "Entry": "DSCF", "Category": "5-Digit", "Price":"$0.217", "Count":"1,000", "Postage":"$217.00"});
             vm.postageDetails_A.push({"PS3602": "A10", "Entry": "DSCF", "Category": "3-Digit", "Price":"$0.235", "Count":"1,000", "Postage":"$235.00"});
             vm.postageDetails_A.push({"PS3602": "A11", "Entry": "DSCF", "Category": "AADC", "Price":"$0.225", "Count":"1,000", "Postage":"$225.00"});
-            
+            //
             vm.postageDetails_B = [];
             vm.postageDetails_B.push({"PS3602": "B1", "Entry": "None", "Category": "AADC", "Price":"$0.291", "Count":"1,000", "Postage":"$291.00"});
             vm.postageDetails_B.push({"PS3602": "B2", "Entry": "None", "Category": "Mixed AADC", "Price":"$0.309", "Count":"1,000", "Postage":"$309.00"});

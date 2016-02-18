@@ -20,13 +20,19 @@
 		// storage for the asynchronous functions list (for $q)
         var promises = void[];
         
+        vm.rateType = "";
         vm.postageDetails_A = [];
         vm.postageDetails_B = [];
-        
+        vm.pieceTotal_A = 0;
+        vm.pieceTotal_B = 0;
+        vm.postageTotal_A = 0;
+        vm.postageTotal_B = 0;
+        vm.pieceTotal = 0;
+        vm.postageTotal = 0;
        
 	   // activate/initialize view
-       getPostageDetails();
        activate();
+       
         
         function activate() {
             promises = [getStatement()];
@@ -41,32 +47,450 @@
                 function (result) {
                     vm.statement = result;
                     console.log(vm.statement);
+                    getPostageDetails();
                 });
         }
+        
+        // format numbers w/ comma's
+        vm.numberFormat = function(number){
+            return numeral(number).format('0,0');
+        };
+        
+        // format numbers as money
+        vm.currencyFormat = function(number){
+            return numeral(number).format('$0,0.00');
+        };
+        
+        // format Dates
+        vm.dateFormat = function(d){
+            var fmtDate = d.substring(0,4) + "-" + d.substring(4,6) + "-" + d.substring(6,8);
+            logger.log("original Date: " + d);
+            logger.log("new Date: " + fmtDate);
+            return moment(fmtDate).format('MMMM Do YYYY');
+        };
         
         // build postage details
         function getPostageDetails(){
             
+            // determine the type of statement
+            var statementType ="";
+            
+            // Profit
+            if (vm.statement.FP_PI_PieceCount > 0){
+                statementType = "FP_PI";
+            }
+            if (vm.statement.FP_MT_PieceCount > 0){
+                statementType = "FP_MT";
+            }
+            if (vm.statement.FP_ST_PieceCount > 0){
+                statementType = "FP_ST";
+            }
+            
+            // Non-Profit
+            if (vm.statement.NP_PI_PieceCount > 0){
+                statementType = "NP_PI";
+            }
+            if (vm.statement.NP_MT_PieceCount > 0){
+                statementType = "NP_MT";
+            }
+            if (vm.statement.NP_ST_PieceCount > 0){
+                statementType = "NP_ST";
+            }
+            
+            logger.log("Statement Type: " + statementType);
+            
+            // collect counts for display
             vm.postageDetails_A = [];
-            vm.postageDetails_A.push({"PS3602": "A1", "Entry": "None", "Category": "5-Digit", "Price":"$0.261", "Count":"1,000", "Postage":"$261.00"});
-            vm.postageDetails_A.push({"PS3602": "A2", "Entry": "None", "Category": "3-Digit", "Price":"$0.279", "Count":"1,000", "Postage":"$279.00"});
-            vm.postageDetails_A.push({"PS3602": "A3", "Entry": "None", "Category": "AADC", "Price":"$0.279", "Count":"1,000", "Postage":"$279.00"});
-            vm.postageDetails_A.push({"PS3602": "A4", "Entry": "None", "Category": "Mixed AADC", "Price":"$0.301", "Count":"1,000", "Postage":"$301.00"});
-            vm.postageDetails_A.push({"PS3602": "A5", "Entry": "DNDC", "Category": "5-Digit", "Price":"$0.227", "Count":"1,000", "Postage":"$227.00"});
-            vm.postageDetails_A.push({"PS3602": "A6", "Entry": "DNDC", "Category": "3-Digit", "Price":"$0.245", "Count":"1,000", "Postage":"$245.00"});
-            vm.postageDetails_A.push({"PS3602": "A7", "Entry": "DNDC", "Category": "AADC", "Price":"$0.245", "Count":"1,000", "Postage":"$245.00"});
-            vm.postageDetails_A.push({"PS3602": "A8", "Entry": "DNDC", "Category": "Mixed AADC", "Price":"$0.267", "Count":"1,000", "Postage":"$267.00"});
-            vm.postageDetails_A.push({"PS3602": "A9", "Entry": "DSCF", "Category": "5-Digit", "Price":"$0.217", "Count":"1,000", "Postage":"$217.00"});
-            vm.postageDetails_A.push({"PS3602": "A10", "Entry": "DSCF", "Category": "3-Digit", "Price":"$0.235", "Count":"1,000", "Postage":"$235.00"});
-            vm.postageDetails_A.push({"PS3602": "A11", "Entry": "DSCF", "Category": "AADC", "Price":"$0.225", "Count":"1,000", "Postage":"$225.00"});
-            //
             vm.postageDetails_B = [];
-            vm.postageDetails_B.push({"PS3602": "B1", "Entry": "None", "Category": "AADC", "Price":"$0.291", "Count":"1,000", "Postage":"$291.00"});
-            vm.postageDetails_B.push({"PS3602": "B2", "Entry": "None", "Category": "Mixed AADC", "Price":"$0.309", "Count":"1,000", "Postage":"$309.00"});
-            vm.postageDetails_B.push({"PS3602": "B3", "Entry": "DNDC", "Category": "AADC", "Price":"$0.257", "Count":"1,000", "Postage":"$257.00"});
-            vm.postageDetails_B.push({"PS3602": "B4", "Entry": "DNDC", "Category": "Mixed AADC", "Price":"$0.275", "Count":"1,000", "Postage":"$275.00"});
-            vm.postageDetails_B.push({"PS3602": "B5", "Entry": "DSCF", "Category": "AADC", "Price":"$0.246", "Count":"1,000", "Postage":"$246.00"});
+            vm.pieceTotal_A = 0;
+            vm.pieceTotal_B = 0;
+            vm.postageTotal_A = 0;
+            vm.postageTotal_B = 0;
+            vm.pieceTotal = 0;
+            vm.postageTotal = 0;
+            
+            switch(statementType)
+            {
+                // PROFIT / PERMIT IMPRINT
+                case "FP_PI":
+                
+                    vm.rateType = "Permit Imprint [For Profit]"
+                    // -------------------------------------------------------------------------------------------
+                    // PROFIT/PERMIT/NONE
+                    // Auto [A]
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_NONE_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_NONE_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_NONE_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_NONE_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_NONE_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_NONE_5Digit_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_NONE_5Digit_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_NONE_5Digit_Auto_Count;
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_NONE_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_NONE_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_NONE_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_NONE_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_NONE_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_NONE_3Digit_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_NONE_3Digit_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_NONE_3Digit_Auto_Count;
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_NONE_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_NONE_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_NONE_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_NONE_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_NONE_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_NONE_AADC_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_NONE_AADC_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_NONE_AADC_Auto_Count;
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_NONE_MxdAADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_NONE_MxdAADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_NONE_MxdAADC_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_NONE_MxdAADC_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_NONE_MxdAADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_NONE_MxdAADC_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_NONE_MxdAADC_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_NONE_MxdAADC_Auto_Count;
+                     
+                    // Non-Auto [B]
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_PI_NONE_AADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_NONE_AADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_PI_NONE_AADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_PI_NONE_AADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_PI_NONE_AADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_PI_NONE_AADC_NonAuto_Postage});
+                    vm.postageTotal_B += vm.statement.FP_PI_NONE_AADC_NonAuto_Postage;
+                    vm.pieceTotal_B += vm.statement.FP_PI_NONE_AADC_NonAuto_Count;
+                                              
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_PI_NONE_MxdAADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_NONE_MxdAADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_PI_NONE_MxdAADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_PI_NONE_MxdAADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_PI_NONE_MxdAADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_PI_NONE_MxdAADC_NonAuto_Postage});
+                    vm.postageTotal_B += vm.statement.FP_PI_NONE_MxdAADC_NonAuto_Postage;
+                    vm.pieceTotal_B += vm.statement.FP_PI_NONE_MxdAADC_NonAuto_Count;
+                    
+                    // -------------------------------------------------------------------------------------------                          
+                    // PROFIT/PERMIT/DNDC
+                    // Auto [A]
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_DNDC_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DNDC_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_DNDC_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_DNDC_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_DNDC_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_DNDC_5Digit_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_DNDC_5Digit_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_DNDC_5Digit_Auto_Count;
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_DNDC_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DNDC_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_DNDC_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_DNDC_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_DNDC_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_DNDC_3Digit_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_DNDC_3Digit_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_DNDC_3Digit_Auto_Count;
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_DNDC_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DNDC_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_DNDC_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_DNDC_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_DNDC_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_DNDC_AADC_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_DNDC_AADC_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_DNDC_AADC_Auto_Count;
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_DNDC_MxdAADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DNDC_MxdAADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_DNDC_MxdAADC_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_DNDC_MxdAADC_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_DNDC_MxdAADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_DNDC_MxdAADC_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_DNDC_MxdAADC_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_DNDC_MxdAADC_Auto_Count;
+                    
+                    // Non-Auto [B]
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_PI_DNDC_AADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DNDC_AADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_PI_DNDC_AADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_PI_DNDC_AADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_PI_DNDC_AADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_PI_DNDC_AADC_NonAuto_Postage});
+                    vm.postageTotal_B += vm.statement.FP_PI_DNDC_AADC_NonAuto_Postage;
+                    vm.pieceTotal_B += vm.statement.FP_PI_DNDC_AADC_NonAuto_Count;
+                                              
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_Postage});
+                    vm.postageTotal_B += vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_Postage;
+                    vm.pieceTotal_B += vm.statement.FP_PI_DNDC_MxdAADC_NonAuto_Count;
+                    
+                    // -------------------------------------------------------------------------------------------                         
+                    // PROFIT/PERMIT/DSCF
+                    // Auto [A]
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_DSCF_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DSCF_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_DSCF_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_DSCF_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_DSCF_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_DSCF_5Digit_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_DSCF_5Digit_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_DSCF_5Digit_Auto_Count;
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_DSCF_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DSCF_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_DSCF_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_DSCF_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_DSCF_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_DSCF_3Digit_Auto_Postage});
+                    vm.postageTotal_A += vm.statement.FP_PI_DSCF_3Digit_Auto_Postage;
+                    vm.pieceTotal_A += vm.statement.FP_PI_DSCF_3Digit_Auto_Count;
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_PI_DSCF_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DSCF_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_PI_DSCF_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_PI_DSCF_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_PI_DSCF_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_PI_DSCF_AADC_Auto_Postage});
+                   vm.postageTotal_A += vm.statement.FP_PI_DSCF_AADC_Auto_Postage;
+                   vm.pieceTotal_A += vm.statement.FP_PI_DSCF_AADC_Auto_Count;
+                   
+                   // Non-Auto [B]
+                   vm.postageDetails_B.push({"PS3602": vm.statement.FP_PI_DSCF_AADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_PI_DSCF_AADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_PI_DSCF_AADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_PI_DSCF_AADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_PI_DSCF_AADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_PI_DSCF_AADC_NonAuto_Postage});
+                   vm.postageTotal_B += vm.statement.FP_PI_DSCF_AADC_NonAuto_Postage;
+                   vm.pieceTotal_B += vm.statement.FP_PI_DSCF_AADC_NonAuto_Count;
+                   
+                   // GRAND TOTALS
+                   vm.pieceTotal = vm.pieceTotal_A + vm.pieceTotal_B; 
+                   vm.postageTotal = vm.postageTotal_A + vm.postageTotal_B;
+                                        
+                break;
+                
+                // PROFIT / METER
+                case "FP_MT":
+                
+                    // PROFIT/METER/NONE
+                    // Auto [A]
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_NONE_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_NONE_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_NONE_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_NONE_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_NONE_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_NONE_5Digit_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_NONE_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_NONE_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_NONE_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_NONE_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_NONE_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_NONE_3Digit_Auto_Postage});
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_NONE_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_NONE_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_NONE_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_NONE_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_NONE_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_NONE_AADC_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_NONE_MxdAADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_NONE_MxdAADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_MxdNONE_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_NONE_MxdAADC_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_NONE_MxdAADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_NONE_MxdAADC_Auto_Postage});
+                    
+                    // Non-Auto [B]
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_MT_NONE_AADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_NONE_AADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_MT_NONE_AADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_MT_NONE_AADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_MT_NONE_AADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_MT_NONE_AADC_NonAuto_Postage});
+                                              
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_MT_NONE_MxdAADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_NONE_MxdAADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_MT_MxdNONE_AADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_MT_NONE_MxdAADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_MT_NONE_MxdAADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_MT_NONE_MxdAADC_NonAuto_Postage});
+                    
+                    // PROFIT/METER/DNDC
+                    // Auto [A]
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_DNDC_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DNDC_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_DNDC_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DNDC_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_DNDC_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_DNDC_5Digit_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_DNDC_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DNDC_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_DNDC_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DNDC_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_DNDC_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_DNDC_3Digit_Auto_Postage});
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_DNDC_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DNDC_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_DNDC_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DNDC_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_DNDC_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_DNDC_AADC_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_DNDC_MxdAADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DNDC_MxdAADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_DNDC_MxdNONE_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DNDC_MxdAADC_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_DNDC_MxdAADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_DNDC_MxdAADC_Auto_Postage});
+                    
+                    // Non-Auto [B]
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_MT_DNDC_AADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DNDC_AADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_MT_DNDC_AADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_MT_DNDC_AADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_MT_DNDC_AADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_MT_DNDC_AADC_NonAuto_Postage});
+                                              
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_MT_DNDC_MxdAADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DNDC_MxdAADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_MT_DNDC_MxdNONE_NonAADC_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DNDC_MxdAADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_MT_DNDC_MxdAADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_MT_DNDC_MxdAADC_NonAuto_Postage});
+                                              
+                    // PROFIT/METER/DSCF
+                    // Auto [A]
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_DSCF_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DSCF_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_DSCF_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DSCF_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_DSCF_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_DSCF_5Digit_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_DSCF_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DSCF_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_DSCF_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DSCF_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_DSCF_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_DSCF_3Digit_Auto_Postage});
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_MT_DSCF_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DSCF_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_MT_DSCF_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_MT_DSCF_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_MT_DSCF_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_MT_DSCF_AADC_Auto_Postage});      
+                
+                    // Non-Auto [B]
+                    vm.postageDetails_B.push({"PS3602": vm.statement.FP_MT_DSCF_AADC_NonAuto_PS3602, 
+                                              "Entry": vm.statement.FP_MT_DSCF_AADC_NonAuto_Entry, 
+                                              "Category": vm.statement.FP_MT_DSCF_AADC_NonAuto_Category, 
+                                              "Price": vm.statement.FP_MT_DSCF_AADC_NonAuto_Price, 
+                                              "Count": vm.statement.FP_MT_DSCF_AADC_NonAuto_Count, 
+                                              "Postage": vm.statement.FP_MT_DSCF_AADC_NonAuto_Postage});      
+                
+                break;
+                
+                // Profit Stamp
+                case "FP_ST":
+                
+                    // Profit/Stamp/NONE
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_NONE_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_NONE_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_NONE_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_NONE_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_NONE_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_NONE_5Digit_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_NONE_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_NONE_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_NONE_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_NONE_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_NONE_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_NONE_3Digit_Auto_Postage});
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_NONE_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_NONE_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_NONE_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_NONE_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_NONE_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_NONE_AADC_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_NONE_MxdAADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_NONE_MxdAADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_MxdNONE_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_NONE_MxdAADC_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_NONE_MxdAADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_NONE_MxdAADC_Auto_Postage});
+                    
+                    // Profit/Stamp/DNDC
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_DNDC_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_DNDC_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_DNDC_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_DNDC_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_DNDC_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_DNDC_5Digit_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_DNDC_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_DNDC_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_DNDC_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_DNDC_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_DNDC_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_DNDC_3Digit_Auto_Postage});
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_DNDC_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_DNDC_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_DNDC_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_DNDC_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_DNDC_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_DNDC_AADC_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_DNDC_MxdAADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_DNDC_MxdAADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_DNDC_MxdNONE_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_DNDC_MxdAADC_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_DNDC_MxdAADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_DNDC_MxdAADC_Auto_Postage});
+                                              
+                    // Profit/Stamp/DSCF
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_DSCF_5Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_DSCF_5Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_DSCF_5Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_DSCF_5Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_DSCF_5Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_DSCF_5Digit_Auto_Postage});
+                                              
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_DSCF_3Digit_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_DSCF_3Digit_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_DSCF_3Digit_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_DSCF_3Digit_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_DSCF_3Digit_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_DSCF_3Digit_Auto_Postage});
+                    
+                    vm.postageDetails_A.push({"PS3602": vm.statement.FP_ST_DSCF_AADC_Auto_PS3602, 
+                                              "Entry": vm.statement.FP_ST_DSCF_AADC_Auto_Entry, 
+                                              "Category": vm.statement.FP_ST_DSCF_AADC_Auto_Category, 
+                                              "Price": vm.statement.FP_ST_DSCF_AADC_Auto_Price, 
+                                              "Count": vm.statement.FP_ST_DSCF_AADC_Auto_Count, 
+                                              "Postage": vm.statement.FP_ST_DSCF_AADC_Auto_Postage});      
+                
+                
+                break;
+            }
             
         }
+        
 	}
 })();

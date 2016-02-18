@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row">
 				<div class="col-lg-8 col-xs-12">
-                	<h1>Statement: <b>{{vm.statement.Statement_ID}}</b></h1>
-					<h3>Mail Date: {{vm.statement.MailDate}} </h3>
+                	<h1>EPOP eDoc Statement: <b>{{vm.statement.Statement_ID}}</b></h1>
+					<h3>Mail Date: {{vm.dateFormat(vm.statement.MailDate)}} </h3>
 					<h3>Description: {{vm.statement.Description}}</h3>
 				</div>
 				<div class="col-lg-4 col-xs-12">
@@ -63,11 +63,11 @@
 							<div class="row">
 								<div class="col-lg-6 col-xs-12">
 									<h2><b>Standard Mail</b></h2>
-									<h4>Type of Postage: <b>Permit Imprint</b> [ Profit ] </h4>
+									<h4>Type of Postage: <b>{{vm.rateType}}</b> </h4>
 								</div>
 								<div class="col-lg-6 col-xs-12">
-									<h4><b>Total Pieces:</b></h4>
-									<h4><b>Total Postage:</b></h4>
+									<h4>Total Pieces: <b>{{vm.numberFormat(vm.pieceTotal)}}</b></h4>
+									<h4>Total Postage: <b>{{vm.currencyFormat(vm.postageTotal)}}</b></h4>
 								</div>
 							</div>
 							<hr>
@@ -88,9 +88,9 @@
 										<td>{{d.PS3602}}</td>
 										<td>{{d.Entry}}</td>
 										<td>{{d.Category}}</td>
-										<td>{{d.Price}}</td>
-										<td>{{d.Count}}</td>
-										<td>{{d.Postage}}</td>
+										<td>{{vm.currencyFormat(d.Price)}}</td>
+										<td>{{vm.numberFormat(d.Count)}}</td>
+										<td>{{vm.currencyFormat(d.Postage)}}</td>
 									</tr>
 								</tbody>
 								<tfoot>
@@ -99,8 +99,8 @@
 										<td height=30> </td>
 										<td height=30> </td>
 										<td height=30><b>TOTALS</b></td>
-										<td height=30><b>11,000</b></td>
-										<td height=30><b>$2,781.00</b></td>
+										<td height=30><b>{{vm.numberFormat(vm.pieceTotal_A)}}</b></td>
+										<td height=30><b>{{vm.currencyFormat(vm.postageTotal_A)}}</b></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -123,9 +123,9 @@
 										<td>{{d.PS3602}}</td>
 										<td>{{d.Entry}}</td>
 										<td>{{d.Category}}</td>
-										<td>{{d.Price}}</td>
-										<td>{{d.Count}}</td>
-										<td>{{d.Postage}}</td>
+										<td>{{vm.currencyFormat(d.Price)}}</td>
+										<td>{{vm.numberFormat(d.Count)}}</td>
+										<td>{{vm.currencyFormat(d.Postage)}}</td>
 									</tr>
 									</tr>
 								</tbody>
@@ -135,8 +135,8 @@
 										<td height=30> </td>
 										<td height=30> </td>
 										<td height=30><b>TOTALS</b></td>
-										<td height=30><b>5,000</b> </td>
-										<td height=30><b>$1,378</b></td>
+										<td height=30><b>{{vm.numberFormat(vm.pieceTotal_B)}}</b> </td>
+										<td height=30><b>{{vm.currencyFormat(vm.postageTotal_B)}}</b></td>
 									</tr>
 								</tfoot>
 							</table>           

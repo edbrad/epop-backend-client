@@ -1,11 +1,14 @@
 <section id="statementDetail-view" class="mainbar">
-    <section class="matter"> 
-        <div class="container">
+    <section class="matter">
+		<div>
+			<button style="margin-bottom: 10px; margin-left: 0px;" print print-element-id="eDocStatement" class="btn btn-default"><i class="fa fa-print"></i>Print Statement</button></span>
+			<hr>
+		</div> 
+        <div class="container" id="eDocStatement">
             <div class="row">
 				<div class="col-lg-8 col-xs-12">
                 	<h1>EPOP eDoc Statement: <b>{{vm.statement.Statement_ID}}</b></h1>
-					<!--<h3>Mail Date: {{vm.dateFormat(vm.statement.MailDate)}} </h3>-->
-					<h3>Mail Date: {{vm.dateFormat("20010204")}} </h3>
+					<h3>Mail Date: {{vm.mailDate}} </h3>
 					<h3>Description: {{vm.statement.Description}}</h3>
 				</div>
 				<div class="col-lg-4 col-xs-12">
@@ -85,7 +88,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="d in vm.postageDetails_A">
+									<tr ng-repeat="d in vm.postageDetails_A_Filtered">
 										<td>{{d.PS3602}}</td>
 										<td>{{d.Entry}}</td>
 										<td>{{d.Category}}</td>
@@ -120,7 +123,7 @@
 								</thead>
 								<tbody>
 									<tr>
-										<tr ng-repeat="d in vm.postageDetails_B">
+										<tr ng-repeat="d in vm.postageDetails_B_Filtered">
 										<td>{{d.PS3602}}</td>
 										<td>{{d.Entry}}</td>
 										<td>{{d.Category}}</td>

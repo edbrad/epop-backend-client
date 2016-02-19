@@ -20,20 +20,23 @@
 		// storage for the asynchronous functions list (for $q)
         var promises = void[];
         
+        // storage for statement-related data
+        vm.mailDate = "";
         vm.rateType = "";
         vm.postageDetails_A = [];
         vm.postageDetails_B = [];
+        vm.postageDetails_A_Filtered = [];
+        vm.postageDetails_B_Filtered = [];
         vm.pieceTotal_A = 0;
         vm.pieceTotal_B = 0;
         vm.postageTotal_A = 0;
         vm.postageTotal_B = 0;
         vm.pieceTotal = 0;
         vm.postageTotal = 0;
-       
-	   // activate/initialize view
-       activate();
-       
         
+	    // activate/initialize view
+        activate();
+        //
         function activate() {
             promises = [getStatement()];
             return $q.all(promises).then(function() {
@@ -41,42 +44,65 @@
             }) 
         }
 		
-		// collect selected Statement from database
+		// collect selected Statement from database and perform some pre-processing of the statement data
         function getStatement() {
             EDocStatement.findById({id: $stateParams.id},
                 function (result) {
                     vm.statement = result;
-                    console.log(vm.statement);
+                    logger.log("Statement: " + JSON.stringify(vm.statement));
                     getPostageDetails();
+                    
+                    // re-format Mail Date data into YYYY-MM-DD form for the momemntJS library
+                    var refmtDate = vm.statement.MailDate.substring(0,4) + "-" + vm.statement.MailDate.substring(4,6) + "-" + vm.statement.MailDate.substring(6,8);
+                    vm.mailDate = moment(refmtDate).format('MMMM Do YYYY');
+                    
+                    // get filtered counts (greater than 0 pieces)
+                    vm.postageDetails_A_Filtered = vm.postageDetails_A.filter(function(el){
+                        return el.Count > 0;
+                    });
+                    vm.postageDetails_B_Filtered = vm.postageDetails_B.filter(function(el){
+                        return el.Count > 0;
+                    });
                 });
         }
         
-        // format numbers w/ comma's
+        // format numbers (piece counts) w/ comma's (numeralJS library)
         vm.numberFormat = function(number){
             return numeral(number).format('0,0');
         };
         
-        // format numbers as money
+        // format numbers (postage) as money (numeralJS library)
         vm.currencyFormat = function(number){
             return numeral(number).format('$0,0.000');
         };
         
-        // format Dates
-        vm.dateFormat = function(date){
-            var refmtDate = "";
-            refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
-            logger.log("original Date: " + date);
-            logger.log("new Date: " + refmtDate);
-            return moment(refmtDate).format('MMMM Do YYYY');
-        };
+        // custom (legacy-compatible) Array extension method for filtering
+        if (!Array.prototype.filter) {
+            Array.prototype.filter = function (fun /*, thisp*/) {
+                var len = this.length >>> 0;
+                if (typeof fun != "function")
+                    throw new TypeError();
+
+                var res = [];
+                var thisp = arguments[1];
+                for (var i = 0; i < len; i++) {
+                    if (i in this) {
+                        var val = this[i]; // in case fun mutates this
+                        if (fun.call(thisp, val, i, this))
+                            res.push(val);
+                    }
+                }
+                return res;
+            };
+        }
         
         // build postage details
         function getPostageDetails(){
             
-            // determine the type of statement
+            // determine the type of statement (only counts for 1 statement type will be populated)
             var statementType ="";
             
-            // Profit
+            // For Profit
             if (vm.statement.FP_PI_PieceCount > 0){
                 statementType = "FP_PI";
             }
@@ -100,7 +126,7 @@
             
             logger.log("Statement Type: " + statementType);
             
-            // collect counts for display
+            // collect statement counts for display (based on the determined statement type)
             vm.postageDetails_A = [];
             vm.postageDetails_B = [];
             vm.pieceTotal_A = 0;
@@ -1122,4 +1148,5 @@
         }
         
 	}
+    
 })();

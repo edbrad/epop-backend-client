@@ -91,7 +91,8 @@
                                 { text: vm.statement.PermitHolderAddress1},
                                 { text: vm.statement.PermitHolderAddress2},
                                 { text: vm.statement.PermitHolderCity + ', ' + vm.statement.PermitHolderState + ' ' + vm.statement.PermitHolderZipCode},
-                                { text: vm.statement.PermitHolderPhone}
+                                { text: vm.statement.PermitHolderPhone},
+                                { text: 'CRID: ' + vm.statement.PermitHolderCRID, bold: true}
                             ]
                         },
                         {
@@ -102,7 +103,8 @@
                                 { text: vm.statement.MailPreparerAddress1},
                                 { text: vm.statement.MailPreparerAddress2},
                                 { text: vm.statement.MailPreparerCity + ', ' + vm.statement.MailPreparerState + ' ' + vm.statement.MailPreparerZipCode},
-                                { text: vm.statement.MailPreparerPhone}
+                                { text: vm.statement.MailPreparerPhone},
+                                { text: 'CRID: ' + vm.statement.MailPreparerCRID, bold: true}
                             ]
                         },
                         {
@@ -113,7 +115,8 @@
                                 { text: vm.statement.MailOwnerAddress1},
                                 { text: vm.statement.MailOwnerAddress2},
                                 { text: vm.statement.MailOwnerCity + ', ' + vm.statement.MailOwnerState + ' ' + vm.statement.MailOwnerZipCode},
-                                { text: vm.statement.MailOwnerPhone}
+                                { text: vm.statement.MailOwnerPhone},
+                                { text: 'CRID: ' + vm.statement.MailOwnerCRID, bold: true}
                             ]
                         }
                     ],                    
@@ -133,13 +136,23 @@
                     },
                     { text: '  ' },
                     { text: 'POSTAGE SUMMARY', bold: true },
+                    { text: '  ' },
+                    { text: 'Standard Mail Letters', bold: true },
                     { columns: [
                        {
-                            width: '60%',
+                            width: '20%',
                             stack:[
                                 { text: ' ' },
-                                { text: 'Standard Mail Letters', bold: true },
-                                { text: 'Type of Postage: ' + vm.rateType}
+                                { text: 'Type of Postage: '},
+                                { text: 'Permit Number: '}
+                            ]
+                        },
+                        {
+                            width: '40%',
+                            stack:[
+                                { text: ' ' },
+                                { text: vm.rateType, bold: true},
+                                { text: vm.statement.PermitNumber, bold: true}
                             ]
                         },
                         {

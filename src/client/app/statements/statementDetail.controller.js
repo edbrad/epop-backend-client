@@ -33,6 +33,295 @@
         vm.postageTotal_B = 0;
         vm.pieceTotal = 0;
         vm.postageTotal = 0;
+               
+        // generate PDF version of eDoc Statement (using pdfMake library)
+        vm.createPDF = function () {
+            // define the document layout
+            var docDefinition = {
+                // PDF meta data
+                info: {
+                    title: 'EMS EPOP eDoc Statement',
+                    author: 'Executive Mailing Service',
+                    subject: 'EPOP',
+                    keywords: 'EPOP eDoc Statement 3602',
+                },
+                // PDF Page content
+                content: [
+                    { text: 'EPOP eDoc Statement: ' + vm.statement.Statement_ID, style: 'header' },
+                    { columns: [
+                       {
+                            width: '15%',
+                            stack:[
+                                { text: 'System ID: ' },
+                                { text: 'Mail Date: ' },
+                                { text: 'Description: ' },
+                                { text: '  ' }
+                            ]
+                        },
+                        {
+                            width: '85%',
+                            stack:[
+                                { text: vm.statement.id },
+                                { text: vm.mailDate, bold: true },
+                                { text: vm.statement.Description, bold: true },
+                                { text: '  ' }
+                            ]
+                        }
+                    ],
+                        columnGap: 1
+                    },  
+                    { canvas: [
+                            {
+                                type: 'line',
+                                x1: 0,
+                                y1: 5,
+                                x2: 535,
+                                y2: 5,
+                                lineWidth: 0.5
+                            }
+                        ]
+                    },
+                    { text: '  ' },                  
+                    { columns: [
+                       {
+                            width: '33%',
+                            stack:[
+                                { text: 'PERMIT HOLDER:', bold: true, underline: true }, 
+                                { text: vm.statement.PermitHolderName},
+                                { text: vm.statement.PermitHolderAddress1},
+                                { text: vm.statement.PermitHolderAddress2},
+                                { text: vm.statement.PermitHolderCity + ', ' + vm.statement.PermitHolderState + ' ' + vm.statement.PermitHolderZipCode},
+                                { text: vm.statement.PermitHolderPhone}
+                            ]
+                        },
+                        {
+                            width: '33%',
+                            stack:[
+                                { text: 'MAIL PREPARER:', bold: true }, 
+                                { text: vm.statement.MailPreparerName},
+                                { text: vm.statement.MailPreparerAddress1},
+                                { text: vm.statement.MailPreparerAddress2},
+                                { text: vm.statement.MailPreparerCity + ', ' + vm.statement.MailPreparerState + ' ' + vm.statement.MailPreparerZipCode},
+                                { text: vm.statement.MailPreparerPhone}
+                            ]
+                        },
+                        {
+                            width: '33%',
+                            stack:[
+                                { text: 'MAIL OWNER:', bold: true }, 
+                                { text: vm.statement.MailOwnerName},
+                                { text: vm.statement.MailOwnerAddress1},
+                                { text: vm.statement.MailOwnerAddress2},
+                                { text: vm.statement.MailOwnerCity + ', ' + vm.statement.MailOwnerState + ' ' + vm.statement.MailOwnerZipCode},
+                                { text: vm.statement.MailOwnerPhone}
+                            ]
+                        }
+                    ],                    
+                        columnGap: 10
+                    },
+                    { text: '  ' },
+                    { canvas: [
+                            {
+                                type: 'line',
+                                x1: 0,
+                                y1: 5,
+                                x2: 535,
+                                y2: 5,
+                                lineWidth: 0.5
+                            }
+                        ]
+                    },
+                    { text: '  ' },
+                    { text: 'POSTAGE SUMMARY', bold: true },
+                    { columns: [
+                       {
+                            width: '60%',
+                            stack:[
+                                { text: ' ' },
+                                { text: 'Standard Mail Letters', bold: true },
+                                { text: 'Type of Postage: ' + vm.rateType}
+                            ]
+                        },
+                        {
+                            width: '20%',
+                            stack:[
+                                { text: ' ' }, 
+                                { text: 'Total Pieces: ' },
+                                { text: 'Total Postage: ' }
+                            ]
+                        },
+                        {
+                            width: '20%',
+                            stack:[
+                                { text: ' ' }, 
+                                { text: vm.numberFormat(vm.pieceTotal), bold: true },
+                                { text: vm.currencyFormat(vm.postageTotal), bold: true }
+                            ]
+                        }
+                    ],
+                        columnGap: 10
+                    },
+                    { text: ' '},
+                    { columns: [
+                       {
+                            width: '*',
+                            stack:[
+                                { text: 'Part A', bold: true },
+                                { text: 'Automation Letters - 3.3 oz (0.2063 lbs.) or less', fontSize: 8 }
+                            ]
+                        },
+                        {
+                            width: '*',
+                            stack:[
+                                { text: ' ' }
+                            ]
+                        }
+                    ],
+                        columnGap: 1
+                    },
+                    { table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            widths: [ '*', '*', '*', '*', '*', '*' ],
+                    
+                            body: buildPartABody() 
+                        }
+                    },
+                    { text: ' '},
+                    { columns: [
+                       {
+                            width: '*',
+                            stack:[
+                                { text: 'Part B', bold: true },
+                                { text: 'Non-Automation Letters - 3.3 oz (0.2063 lbs.) or less', fontSize: 8 }
+                            ]
+                        },
+                        {
+                            width: '*',
+                            stack:[
+                                { text: ' ' }
+                            ]
+                        }
+                    ],
+                        columnGap: 1
+                    },
+                    { table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            widths: [ '*', '*', '*', '*', '*', '*' ],
+                    
+                            body: buildPartBBody() 
+                        }
+                    },
+                    
+                    
+                ],
+                
+                // PDF Page footer
+                footer: { 
+                    columns: [
+                        /*{ text: function(currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; }, alignment: 'right'}*/
+                        { text: '2016 - Executive Mailing Service', alignment: 'center' }
+                    ],
+                },
+                
+                // Global Document styles 
+                styles: {
+                    header: {
+                        fontSize: 22,
+                        bold: true
+                    },
+                }
+            };
+            
+            // generate PDF output
+            pdfMake.createPdf(docDefinition).open();
+
+        };
+               
+        // populate the Postage Count Table with the dymanic content
+        function buildPartABody(){
+            var header = [ 
+                { text: '-', bold: true }, 
+                { text: 'Entry', bold: true }, 
+                { text: 'Price Category', bold: true }, 
+                { text: 'Price', bold: true }, 
+                { text: '# of Pieces', bold: true }, 
+                { text: 'Postage', bold: true }
+            ];
+            
+            var body = [];
+            
+            var footer = [ 
+                { text: ' ', bold: true }, 
+                { text: ' ', bold: true }, 
+                { text: ' ', bold: true }, 
+                { text: 'TOTALS', bold: true }, 
+                { text: vm.numberFormat(vm.pieceTotal_A), bold: true }, 
+                { text: vm.currencyFormat(vm.postageTotal_A), bold: true }
+            ];
+            
+            body.push(header);
+            for (var i = 0; i < vm.postageDetails_A_Filtered.length; i++) {
+                body.push 
+                (
+                    [
+                        vm.postageDetails_A_Filtered[i].PS3602, 
+                        vm.postageDetails_A_Filtered[i].Entry,
+                        vm.postageDetails_A_Filtered[i].Category,
+                        vm.currencyFormat(vm.postageDetails_A_Filtered[i].Price),
+                        vm.numberFormat(vm.postageDetails_A_Filtered[i].Count), 
+                        vm.currencyFormat(vm.postageDetails_A_Filtered[i].Postage)
+                    ]
+                );
+            }
+            body.push(footer);
+            logger.log('pdfMake Postage Part A body: ' + JSON.stringify(body));
+            return body;
+        }
+        //
+        function buildPartBBody(){
+            var header = [ 
+                { text: '-', bold: true }, 
+                { text: 'Entry', bold: true }, 
+                { text: 'Price Category', bold: true }, 
+                { text: 'Price', bold: true }, 
+                { text: '# of Pieces', bold: true }, 
+                { text: 'Postage', bold: true }
+            ];
+            
+            var body = [];
+            
+            var footer = [ 
+                { text: ' ', bold: true }, 
+                { text: ' ', bold: true }, 
+                { text: ' ', bold: true }, 
+                { text: 'TOTALS', bold: true }, 
+                { text: vm.numberFormat(vm.pieceTotal_B), bold: true }, 
+                { text: vm.currencyFormat(vm.postageTotal_B), bold: true }
+            ];
+            
+            body.push(header);
+            for (var i = 0; i < vm.postageDetails_B_Filtered.length; i++) {
+                body.push 
+                (
+                    [
+                        vm.postageDetails_B_Filtered[i].PS3602, 
+                        vm.postageDetails_B_Filtered[i].Entry,
+                        vm.postageDetails_B_Filtered[i].Category,
+                        vm.currencyFormat(vm.postageDetails_B_Filtered[i].Price),
+                        vm.numberFormat(vm.postageDetails_B_Filtered[i].Count), 
+                        vm.currencyFormat(vm.postageDetails_B_Filtered[i].Postage)
+                    ]
+                );
+            }
+            body.push(footer);
+            logger.log('pdfMake Postage Part B body: ' + JSON.stringify(body));
+            return body;
+        }
+            
         
 	    // activate/initialize view
         activate();
@@ -40,7 +329,7 @@
         function activate() {
             promises = [getStatement()];
             return $q.all(promises).then(function() {
-               logger.info('Activated eDoc Statement Detail View'); 
+               logger.info('Activated eDoc Statement Detail View');
             }) 
         }
 		

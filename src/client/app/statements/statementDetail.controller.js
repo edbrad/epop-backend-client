@@ -40,9 +40,9 @@
             var docDefinition = {
                 // PDF meta data
                 info: {
-                    title: 'EMS EPOP eDoc Statement',
-                    author: 'Executive Mailing Service',
-                    subject: 'EPOP',
+                    title:    'EMS EPOP eDoc Statement: ' + vm.statement.Statement_ID,
+                    author:   'Executive Mailing Service - EPOP Backend Client',
+                    subject:  'EPOP Backend Client PDF Statement PDF',
                     keywords: 'EPOP eDoc Statement 3602',
                 },
                 // PDF Page content
@@ -231,9 +231,7 @@
                     
                             body: buildPartBBody() 
                         }
-                    },
-                    
-                    
+                    }, 
                 ],
                 
                 // PDF Page footer
@@ -253,12 +251,13 @@
                 }
             };
             
-            // generate PDF output
+            // generate PDF output (from document definition object)
             pdfMake.createPdf(docDefinition).open();
 
         };
                
         // populate the Postage Count Table with the dymanic content
+        // - 3602 Part A Counts
         function buildPartABody(){
             var header = [ 
                 { text: '-', bold: true }, 
@@ -269,6 +268,7 @@
                 { text: 'Postage', bold: true }
             ];
             
+            // storage for presort count table body content
             var body = [];
             
             var footer = [ 
@@ -280,6 +280,7 @@
                 { text: vm.currencyFormat(vm.postageTotal_A), bold: true }
             ];
             
+            // add table header, presort counts, & footer
             body.push(header);
             for (var i = 0; i < vm.postageDetails_A_Filtered.length; i++) {
                 body.push 
@@ -298,7 +299,8 @@
             logger.log('pdfMake Postage Part A body: ' + JSON.stringify(body));
             return body;
         }
-        //
+        
+        // - 3602 Part B Counts
         function buildPartBBody(){
             var header = [ 
                 { text: '-', bold: true }, 
@@ -309,6 +311,7 @@
                 { text: 'Postage', bold: true }
             ];
             
+            // storage for presort count table body content
             var body = [];
             
             var footer = [ 
@@ -320,6 +323,7 @@
                 { text: vm.currencyFormat(vm.postageTotal_B), bold: true }
             ];
             
+            // add table header, presort counts, & footer
             body.push(header);
             for (var i = 0; i < vm.postageDetails_B_Filtered.length; i++) {
                 body.push 
@@ -339,7 +343,6 @@
             return body;
         }
             
-        
 	    // activate/initialize view
         activate();
         //
@@ -382,7 +385,7 @@
             return numeral(number).format('$0,0.000');
         };
         
-        // custom (legacy-compatible) Array extension method for filtering
+        // custom (legacy-compatible) JavaScript Array extension method for filtering
         if (!Array.prototype.filter) {
             Array.prototype.filter = function (fun /*, thisp*/) {
                 var len = this.length >>> 0;
@@ -405,7 +408,7 @@
         // build postage details
         function getPostageDetails(){
             
-            // determine the type of statement (only counts for 1 statement type will be populated)
+            // determine the type of statement (only counts for 1 statement type will be populated in the eDoc statement object)
             var statementType ="";
             
             // For Profit

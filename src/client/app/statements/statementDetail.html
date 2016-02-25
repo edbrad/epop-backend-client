@@ -9,8 +9,8 @@
             <div class="row">
 				<div class="col-lg-8 col-xs-12">
                 	<h1>EPOP eDoc Statement: <b>{{vm.statement.Statement_ID}}</b></h1>
-					<h3>Mail Date: {{vm.mailDate}} </h3>
-					<h3>Description: {{vm.statement.Description}}</h3>
+					<h3>Mail Date: <b>{{vm.mailDate}}</b></h3>
+					<h3>Description: <b>{{vm.statement.Description}}</b></h3>
 				</div>
 				<div class="col-lg-4 col-xs-12">
                 	<p>System ID: <b>{{vm.statement.id}}</b><p>
@@ -51,7 +51,7 @@
                         <div class="widget-content text-left text-info">
 							<b>CRID: </b>{{vm.statement.MailOwnerCRID}}
                             <br>{{vm.statement.MailOwnerName}}
-							<br>{{vm.statement.MailownerAddress1}}
+							<br>{{vm.statement.MailOwnerAddress1}}
 							<br>{{vm.statement.MailOwnerAddress2}}&nbsp
 							<br>{{vm.statement.MailOwnerCity}}, {{vm.statement.MailOwnerState}} {{vm.statement.MailOwnerZipCode}}
 							<br>{{vm.statement.MailOwnerPhone}}&nbsp
@@ -73,7 +73,9 @@
 								</div>
 								<div class="col-lg-6 col-xs-12">
 									<h4>Total Pieces: <b>{{vm.numberFormat(vm.pieceTotal)}}</b></h4>
-									<h4>Total Postage: <b>{{vm.currencyFormat(vm.postageTotal)}}</b></h4>
+									<h4>Total Gross Postage: <b>{{vm.currencyFormat(vm.postageTotal)}}</b></h4>
+									<h4>Full Service Pieces: <b>{{vm.numberFormat(vm.statement.FullServicePieceCount)}}</b></h4>
+									<h4>Net Postage: <b>{{vm.currencyFormat(vm.postageTotal)}}</b></h4>
 								</div>
 							</div>
 							<hr>

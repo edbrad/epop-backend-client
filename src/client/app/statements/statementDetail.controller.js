@@ -156,18 +156,22 @@
                             ]
                         },
                         {
-                            width: '20%',
+                            width: '25%',
                             stack:[
                                 { text: ' ' }, 
                                 { text: 'Total Pieces: ' },
-                                { text: 'Total Postage: ' }
+                                { text: 'Total Gross Postage: ' },
+                                { text: 'Full Service Pieces: ' },
+                                { text: 'Net Postage: ' }
                             ]
                         },
                         {
-                            width: '20%',
+                            width: '15%',
                             stack:[
                                 { text: ' ' }, 
                                 { text: vm.numberFormat(vm.pieceTotal), bold: true },
+                                { text: vm.currencyFormat(vm.postageTotal), bold: true },
+                                { text: vm.numberFormat(vm.statement.FullServicePieceCount), bold: true },
                                 { text: vm.currencyFormat(vm.postageTotal), bold: true }
                             ]
                         }

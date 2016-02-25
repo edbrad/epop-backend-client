@@ -20,6 +20,9 @@
 		// storage for the asynchronous functions list (for $q)
         var promises = void[];
         
+        // full service discount
+        var fullServiceDiscount = .001;
+        
         // storage for statement-related data
         vm.mailDate = "";
         vm.rateType = "";
@@ -33,7 +36,9 @@
         vm.postageTotal_B = 0;
         vm.pieceTotal = 0;
         vm.postageTotal = 0;
-               
+        vm.netPostage = 0;
+        
+                      
         // generate PDF version of eDoc Statement (using pdfMake library)
         vm.createPDF = function () {
             // define the document layout
@@ -172,7 +177,7 @@
                                 { text: vm.numberFormat(vm.pieceTotal), bold: true },
                                 { text: vm.currencyFormat(vm.postageTotal), bold: true },
                                 { text: vm.numberFormat(vm.statement.FullServicePieceCount), bold: true },
-                                { text: vm.currencyFormat(vm.postageTotal), bold: true }
+                                { text: vm.currencyFormat(vm.netPostage), bold: true }
                             ]
                         }
                     ],
@@ -345,6 +350,7 @@
             
 	    // activate/initialize view
         activate();
+        
         //
         function activate() {
             promises = [getStatement()];
@@ -372,6 +378,12 @@
                     vm.postageDetails_B_Filtered = vm.postageDetails_B.filter(function(el){
                         return el.Count > 0;
                     });
+                    
+                    // compute Net Postage
+                    var discount = fullServiceDiscount * vm.statement.FullServicePieceCount;
+                    logger.log("Full Service Discount: " + discount);
+                    vm.netPostage = vm.postageTotal - discount;
+                    logger.log("Net Postage: " + vm.netPostage);
                 });
         }
         

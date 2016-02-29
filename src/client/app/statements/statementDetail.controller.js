@@ -23,9 +23,46 @@
         // full service discount
         var fullServiceDiscount = .001;
         
+        //
+        var statementType ="";
+        
+        $scope.dateOptions = {
+            dateDisabled: "",
+            formatYear: 'yy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(),
+            startingDay: 1
+        };
+        
+        $scope.open1 = function() {
+            $scope.popup1.opened = true;
+        };
+
+        $scope.open2 = function() {
+            $scope.popup2.opened = true;
+        };
+
+        $scope.setDate = function (year, month, day) {
+            $scope.dt = new Date(year, month, day);
+        };
+
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+        $scope.altInputFormats = ['M!/d!/yyyy'];
+
+        $scope.popup1 = {
+            opened: false
+        };
+
+        $scope.popup2 = {
+            opened: false
+        };
+
+                
         // storage for statement-related data
         vm.mailDate = "";
         vm.rateType = "";
+        vm.statementType ="";
         vm.postageDetails_A = [];
         vm.postageDetails_B = [];
         vm.postageDetails_A_Filtered = [];
@@ -37,6 +74,7 @@
         vm.pieceTotal = 0;
         vm.postageTotal = 0;
         vm.netPostage = 0;
+        vm.rateTypeStyle = "";
         
                       
         // generate PDF version of eDoc Statement (using pdfMake library)
@@ -156,7 +194,7 @@
                             width: '40%',
                             stack:[
                                 { text: ' ' },
-                                { text: vm.rateType, bold: true},
+                                { text: vm.rateType, bold: true, style: 'color'},
                                 { text: vm.statement.PermitNumber, bold: true}
                             ]
                         },
@@ -252,6 +290,10 @@
                     header: {
                         fontSize: 22,
                         bold: true
+                    },
+                    color: {
+                        fontSize: 14,
+                        color: "red"
                     },
                 }
             };
@@ -379,11 +421,43 @@
                         return el.Count > 0;
                     });
                     
+                    // set the rate type color
+                    switch(statementType)
+                    {               
+                        // PROFIT / PERMIT IMPRINT
+                        case "FP_PI":
+                            vm.rateTypeStyle = {"background-color": "#00ff00", "color": "#3b3535"};
+                        break;
+                        // PROFIT / METER
+                        case "FP_MT":
+                            vm.rateTypeStyle = {"background-color": "#00ffff", "color": "#3b3535"};
+                        break;
+                        // PROFIT / STAMP
+                        case "FP_ST":
+                            vm.rateTypeStyle = {"background-color": "#ff9900", "color": "#3b3535"};
+                        break;
+                        // NON-PROFIT / PERMIT IMPRINT
+                        case "NP_PI":
+                            vm.rateTypeStyle = {"background-color": "#ffff00", "color": "#3b3535"};
+                        break;
+                        // NON-PROFIT / METER
+                        case "NP_MT":
+                            vm.rateTypeStyle = {"background-color": "#ff00ff", "color": "#3b3535"};
+                        break;
+                        // NON-PROFIT / STAMP                     
+                        case "NP_ST":
+                            vm.rateTypeStyle = {"background-color": "#cc99ff", "color": "#3b3535"};
+                        break;
+                        default:
+                            vm.rateTypeStyle = {"background-color": "red", "color": "#3b3535"};
+                    }  
+                    
                     // compute Net Postage
                     var discount = fullServiceDiscount * vm.statement.FullServicePieceCount;
                     logger.log("Full Service Discount: " + discount);
                     vm.netPostage = vm.postageTotal - discount;
                     logger.log("Net Postage: " + vm.netPostage);
+                    
                 });
         }
         
@@ -421,7 +495,6 @@
         function getPostageDetails(){
             
             // determine the type of statement (only counts for 1 statement type will be populated in the eDoc statement object)
-            var statementType ="";
             
             // For Profit
             if (vm.statement.FP_PI_PieceCount > 0){

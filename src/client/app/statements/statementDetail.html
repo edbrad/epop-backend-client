@@ -1,29 +1,48 @@
 <section id="statementDetail-view" class="mainbar">
     <section class="matter">
 		<div>
-			<!--<button style="margin-bottom: 10px; margin-left: 0px;" print print-element-id="eDocStatement" class="btn btn-default"><i class="fa fa-print"></i>Print Statement</button></span>-->
-			<button style="margin-bottom: 10px; margin-left: 0px;" ng-click="vm.createPDF()" class="btn btn-default"><i class="fa fa-print"></i>Print Statement</button></span>
+			<button style="margin-bottom: 10px; margin-left: 0px;" ng-click="vm.createPDF()" class="btn btn-success"><i class="fa fa-print"></i>Print Statement</button></span>
 			<hr>
 		</div> 
         <div class="container" id="eDocStatement">
             <div class="row">
 				<div class="col-lg-8 col-xs-12">
                 	<h1>EPOP eDoc Statement: <b>{{vm.statement.Statement_ID}}</b></h1>
-					<h3>Mail Date: <b>{{vm.mailDate}}</b></h3>
-					<h3>Description: <b>{{vm.statement.Description}}</b></h3>
+					<!--<table style="font-size: 2em;" class="table table-responsive">
+						<tbody>
+							<tr>
+								<td width="50%">EPOP eDoc Statement:</td>
+								<td width="50%"><b>{{vm.statement.Statement_ID}}</b></td>
+							</tr>
+						</tbody>
+					</table>-->
+					<table style="font-size: 1.5em;" class="table table-responsive">
+						<tbody>
+							<tr>
+								<td width="10%"><b>Mail Date:</b></td>
+								<td width="90%"><b>{{vm.mailDate}}</b></td>
+							</tr>
+							<tr>
+								<td>Description: </td>
+								<td>{{vm.statement.Description}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="col-lg-4 col-xs-12">
+				<div class="col-lg-4 hidden-sm hidden-xs">
                 	<p>System ID: <b>{{vm.statement.id}}</b><p>
+					<p>Post Date & Time: <b>TODO</b><p>
+					<button style="margin-bottom: 10px; margin-left: 0px;" ng-click="vm.createPDF()" class="btn btn-default"><i class="fa fa-usd"></i>Compare Rates</button></span>
 				</div>
             </div>
 			<div class="row">
                 <div class="col-lg-4 col-xs-12">
                     <div class="widget wblue">
                     <div ht-widget-header title="PERMIT HOLDER" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info">
+                        <div style="font-size: 1.2em;" class="widget-content text-left text-info">
                             <b>Permit Number: </b>{{vm.statement.PermitNumber}} <b>CRID: </b>{{vm.statement.PermitHolderCRID}}
-                            <br><b>Permit Holder: </b>
-							<br>{{vm.statement.PermitHolderName}}
+                       		<br>
+							<br><b>{{vm.statement.PermitHolderName}}</b>
 							<br>{{vm.statement.PermitHolderAddress1}}
 							<br>{{vm.statement.PermitHolderAddress2}}&nbsp
 							<br>{{vm.statement.PermitHolderCity}}, {{vm.statement.PermitHolderState}} {{vm.statement.PermitHolderZipCode}}
@@ -34,9 +53,9 @@
 				<div class="col-lg-4 col-xs-12">
                     <div class="widget wblue">
                     <div ht-widget-header title="MAIL PREPARER" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info">
+                        <div style="font-size: 1.2em;" class="widget-content text-left text-info">
 							<b>CRID: </b>{{vm.statement.MailPreparerCRID}}
-                            <br>{{vm.statement.MailPreparerName}}
+                            <br><b>{{vm.statement.MailPreparerName}}</b>
 							<br>{{vm.statement.MailPreparerAddress1}}
 							<br>{{vm.statement.MailPreparerAddress2}}&nbsp
 							<br>{{vm.statement.MailPreparerCity}}, {{vm.statement.MailPreparerState}} {{vm.statement.MailPreparerZipCode}}
@@ -48,9 +67,9 @@
 				<div class="col-lg-4 col-xs-12">
                     <div class="widget wblue">
                     <div ht-widget-header title="MAIL OWNER" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info">
+                        <div style="font-size: 1.2em;" class="widget-content text-left text-info">
 							<b>CRID: </b>{{vm.statement.MailOwnerCRID}}
-                            <br>{{vm.statement.MailOwnerName}}
+                            <br><b>{{vm.statement.MailOwnerName}}</b>
 							<br>{{vm.statement.MailOwnerAddress1}}
 							<br>{{vm.statement.MailOwnerAddress2}}&nbsp
 							<br>{{vm.statement.MailOwnerCity}}, {{vm.statement.MailOwnerState}} {{vm.statement.MailOwnerZipCode}}
@@ -68,19 +87,47 @@
 							<div class="row">
 								<div class="col-lg-6 col-xs-12">
 									<h2><b>Standard Mail</b></h2>
-									<h4>Type of Postage: <b>{{vm.rateType}}</b> </h4>
-									<h4>Permit Number: <b>{{vm.statement.PermitNumber}}</b> </h4>
+									<table style="font-size: 1.5em;" class="table table-bordered table-striped table-responsive">
+										<tbody>
+											<tr>
+												<td><b>Type of Postage:</b></td>
+												<td ng-style="vm.rateTypeStyle"><b>{{vm.rateType}}</b></td>
+											</tr>
+											<tr>
+												<td>Permit Number: </td>
+												<td>{{vm.statement.PermitNumber}}</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 								<div class="col-lg-6 col-xs-12">
-									<h4>Total Pieces: <b>{{vm.numberFormat(vm.pieceTotal)}}</b></h4>
-									<h4>Total Gross Postage: <b>{{vm.currencyFormat(vm.postageTotal)}}</b></h4>
-									<h4>Full Service Pieces: <b>{{vm.numberFormat(vm.statement.FullServicePieceCount)}}</b></h4>
-									<h4>Net Postage: <b>{{vm.currencyFormat(vm.netPostage)}}</b></h4>
+									<table style="font-size: 1.5em;" class="table table-bordered table-striped table-responsive">
+										<tbody>
+											<tr>
+												<td><b>Total Pieces:</b></td>
+												<td><b>{{vm.numberFormat(vm.pieceTotal)}}</b></td>
+											</tr>
+											<tr>
+												<td>Total Gross Postage:</td>
+												<td>{{vm.currencyFormat(vm.postageTotal)}}</td>
+											</tr>
+											<tr>
+												<td>Full Service Pieces:</td>
+												<td>{{vm.numberFormat(vm.statement.FullServicePieceCount)}}</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td><b>Net Postage:</b></td>
+												<td><b>{{vm.currencyFormat(vm.netPostage)}}</b></td>
+											</tr>
+										</tfoot>
+									</table>
 								</div>
 							</div>
 							<hr>
 							<h3><b>Part A</b></h3> Automation Letters - 3.3 oz (0.2063 lbs.) or less
-							<table class="table table-bordered table-striped table-responsive">
+							<table style="font-size: 1.2em;" class="table table-bordered table-striped table-responsive">
 								<thead>
 									<tr>
 										<th>-</th>
@@ -114,7 +161,7 @@
 							</table>
 							<br>           
 							<h3><b>Part B</b></h3> NonAutomation Letters - 3.3 oz (0.2063 lbs.) or less
-							<table class="table table-bordered table-striped table-responsive">
+							<table style="font-size: 1.2em;" class="table table-bordered table-striped table-responsive">
 								<thead>
 									<tr>
 										<th>-</th>

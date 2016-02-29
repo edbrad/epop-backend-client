@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService'])
+        .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService', 'ui.bootstrap'])
         .controller('StatementsController', StatementsController);
         
     StatementsController.$inject = ['$q', 'MailOwner', 'EDocStatement', 'logger', '$scope', 'dialogsService', '$state', '$stateParams', '$timeout'];
@@ -32,23 +32,13 @@
             rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Statement_ID', displayName: 'Statement ID'},
+                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 200},
                 {name: 'Description', displayName: 'Description', width: "*"},
                 {name: 'MailDate', displayName: 'Mail Date', width: "*"},
                 {name: 'PermitNumber', displayName: 'Permit #', width: "*" },
                 {name: 'TotalPieceCount', displayName: 'Pieces', width: "*"},
-                {name: 'TotalPostage', displayName: 'Postage', width: "*" },
-                // append Edit & Delete buttons
-                {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
-                                                                       '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editStatement(row.entity.id)">' +
-                                                                       '	    <i class="fa fa-edit"></i>Edit' +
-                                                                       '  </button>' +
-                                                                       '</span>' +
-                                                                       '<span>'+
-                                                                       '	<button class="btn btn-danger" style="margin-top: 3px;" ng-click="grid.appScope.deleteStatement(row.entity.id)">' +
-                                                                       '		<i class="fa fa-trash"></i>Delete' +
-                                                                       '	</button>' +
-                                                                       '</span>', width: 173}
+                {name: 'TotalPostage', displayName: 'Postage', width: "*" }
+                
             ],
             enableGridMenu: true,
             enableFiltering: true,

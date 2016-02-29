@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService', 'ui.bootstrap'])
+        .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService'])
         .controller('StatementsController', StatementsController);
         
     StatementsController.$inject = ['$q', 'MailOwner', 'EDocStatement', 'logger', '$scope', 'dialogsService', '$state', '$stateParams', '$timeout'];
@@ -25,6 +25,43 @@
         
         // storage for date used in UI Grid Excel/CSV/PDF exporting
         var currentDate = new Date();
+        
+        //
+        vm.statementDateStart = currentDate;
+        vm.statementDateEnd = currentDate;
+        
+        vm.dateOptions = { showWeeks: false, };
+        
+        vm.openDateStart = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            vm.datePopupStart.opened = true;
+        };
+
+        vm.openDateEnd = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            vm.datePopupEnd.opened = true;
+        };
+
+        vm.setDate = function (month, day, year) {
+            vm.dt = new Date(month, day, year);
+        };
+
+        vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        vm.format = vm.formats[3];
+        vm.altInputFormats = ['M!/d!/yyyy'];
+
+        vm.datePopupStart = {
+            opened: false
+        };
+
+        vm.datePopupEnd = {
+            opened: false
+        };
+        
+        vm.filterStatements = function(){};
+
                     
         // initialize UI Grid layout/formatting options                            
         $scope.gridOptions = {
@@ -114,7 +151,8 @@
         
         // format Dates
         vm.dateFormat = function(date){
-            return moment(date).format('MMMM Do YYYY');
+            var refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
+            return moment(refmtDate).format('MMMM Do YYYY');
         };
         
     }

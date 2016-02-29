@@ -16,34 +16,23 @@
                         <div class="row col-lg-6 col-xs-12" style="margin-bottom: 15px; margin-left: 0px;">
                             <h1><b>{{(vm.eDocStatements | filter: search).length}} Statements found</b></h1>
                         </div>
-                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px;">
-                            <div class="col-sm-12 col-lg-8 col-xs-12">
-                                <span class="fa fa-search" style="position: absolute;top: 7px;left: 27px; color: gray; font-size: 1.5em;"></span>
-                                <input style="text-indent: 32px;" type="search" focus="true" class="form-control" ng-model="search.Statement_ID" placeholder="Search"/>
-                            </div>
+                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 5px; margin-left: 0px;">
+                            <h2><b>MAIL DATES:</b></h2>
+                        </div>
+                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px;">
+                            <label for="statementStartDate">
+                                Start Date:
+                                <input name="statementStartDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" is-open="vm.datePopupStart.opened" 
+                                ng-click="vm.openDateStart($event)" datepicker-options="vm.dateOptions" ng-model="vm.statementDateStart" />
+                            </label>
+                            <label for="statementEndDate">
+                                End Date:
+                                <input name="statementEndDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" is-open="vm.datePopupEnd.opened" 
+                                ng-click="vm.openDateEnd($event)" datepicker-options="vm.dateOptions" ng-model="vm.statementDateEnd" />
+                            </label>
+                            <button class="btn btn-primary" ng-click=""><i class="fa fa-filter"></i>Filter</button>
                         </div>
                         
-                        <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px;">
-                            <div class="col-md-4">
-                                <p class="input-group">
-                                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions"
-                                    ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                                    <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                                </p>
-                            </div>
-
-                            <div class="col-md-4">
-                                <p class="input-group">
-                                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions"
-                                    ng-required="true" close-text="Close" />
-                                    <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                                </p>
-                            </div>
-                        </div>
                         <div class="row col-lg-12 col-xs-12" style="margin-bottom: 10px; margin-left: 0px">
                             <hr>
                         </div>
@@ -53,7 +42,7 @@
                                 <div class="inner">
                                     <h4 style="text-overflow: ellipsis;"><a ui-sref="statementDetail({ id: s.id })" style="color: white;">{{s.Statement_ID}}</h4></a>
                                     <p>
-                                        Mail Date: <b>{{vm.dateFormat("2016-02-11")}}</b>
+                                        Mail Date: <b>{{vm.dateFormat(s.MailDate)}}</b>
                                         <br>Total Pieces: <b>{{vm.numberFormat(s.TotalPieceCount)}}</b>
                                         <br>Total Postage: <b>{{vm.currencyFormat(s.TotalPostage)}}</b>
                                     </p>

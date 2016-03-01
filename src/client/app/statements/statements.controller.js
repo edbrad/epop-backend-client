@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService'])
+        .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService', 'jkuri.datepicker'])
         .controller('StatementsController', StatementsController);
         
     StatementsController.$inject = ['$q', 'MailOwner', 'EDocStatement', 'logger', '$scope', 'dialogsService', '$state', '$stateParams', '$timeout'];
@@ -26,43 +26,33 @@
         // storage for date used in UI Grid Excel/CSV/PDF exporting
         var currentDate = new Date();
         
-        //
-        vm.statementDateStart = currentDate;
-        vm.statementDateEnd = currentDate;
+        // storage for statement date filter
+        var wrkDate = new Date();
+        var statementDate = wrkDate.getFullYear().toString() + "-" + zeroPad((wrkDate.getMonth() + 1).toString(), 2)  + "-" + zeroPad(wrkDate.getDate().toString(), 2);
+        logger.log("initial statement date: " + statementDate);
+        vm.statementDateStart = statementDate;
+        vm.statementDateEnd = statementDate;
+        vm.statementDateStartSearch = statementDate;
+        vm.statementDateEndSearch = statementDate;
         
-        vm.dateOptions = { showWeeks: false, };
-        
-        vm.openDateStart = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            vm.datePopupStart.opened = true;
+        // run new date-filtered query       
+        vm.filterStatementsByDate = function(){
+            logger.log("Start Date: " + vm.statementDateStart);
+            logger.log("End Date: " + vm.statementDateEnd);
+            
+            // remove dashes for searching
+            vm.statementDateStartSearch = vm.statementDateStart.replace(/-|\s/g, "");
+            vm.statementDateEndSearch = vm.statementDateEnd.replace(/-|\s/g, "");
+            
+            logger.log("New Start Date: " + vm.statementDateStartSearch);
+            logger.log("New End Date: " + vm.statementDateEndSearch);
+            
+            promises = [getEDocStatements()];
+            return $q.all(promises).then(function() {
+                logger.success('Successfully Filtered Statements!');
+            });
         };
-
-        vm.openDateEnd = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            vm.datePopupEnd.opened = true;
-        };
-
-        vm.setDate = function (month, day, year) {
-            vm.dt = new Date(month, day, year);
-        };
-
-        vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        vm.format = vm.formats[3];
-        vm.altInputFormats = ['M!/d!/yyyy'];
-
-        vm.datePopupStart = {
-            opened: false
-        };
-
-        vm.datePopupEnd = {
-            opened: false
-        };
-        
-        vm.filterStatements = function(){};
-
-                    
+                   
         // initialize UI Grid layout/formatting options                            
         $scope.gridOptions = {
             paginationPageSizes: [8, 32, 96],
@@ -119,23 +109,14 @@
             });
         }
         
-        // collect Statements from database
-        /*function getMailOwners() {
-            MailOwner.find(
-                function (result) {
-                    vm.mailOwners = result;
-                    console.log("mail owner count: " + vm.mailOwners.length);
-                    $scope.gridOptions.data = result;
-                });
-        }*/
-        
-        // collect eDoc Statements from database
+        // collect eDoc Statements from database (filtered by current date)
         function getEDocStatements(){
-            EDocStatement.find(
+            EDocStatement.find({filter: {where: {MailDate: {between: [vm.statementDateStartSearch,vm.statementDateEndSearch]}}}},
                 function (result) {
                     vm.eDocStatements = result;
                     console.log("Statement count: " + vm.eDocStatements.length);
                     $scope.gridOptions.data = result;
+                    
                 });
         }
         
@@ -154,6 +135,15 @@
             var refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
             return moment(refmtDate).format('MMMM Do YYYY');
         };
+        
+        // zero-padding
+        function zeroPad(num, size){
+            var s = num + "";
+            while(s.length < size){
+                s = "0" + s;
+            }
+            return s;
+        }
         
     }
             

@@ -105,6 +105,15 @@
         activate();
         
         function activate() {
+            logger.log("Start Date: " + vm.statementDateStart);
+            logger.log("End Date: " + vm.statementDateEnd);
+            
+            // remove dashes for searching
+            vm.statementDateStartSearch = vm.statementDateStart.replace(/-|\s/g, "");
+            vm.statementDateEndSearch = vm.statementDateEnd.replace(/-|\s/g, "");
+            
+            logger.log("New Start Date: " + vm.statementDateStartSearch);
+            logger.log("New End Date: " + vm.statementDateEndSearch);
             promises = [getEDocStatements()];
             return $q.all(promises).then(function() {
                 logger.info('Activated Statements View');
@@ -116,6 +125,7 @@
             logger.log("stateparams: " + $stateParams.view);
             switch ($stateParams.view)
             {
+                // do not filter grid view
                 case "grid":
                     EDocStatement.find(
                         function (result) {
@@ -124,6 +134,7 @@
                             $scope.gridOptions.data = result;
                         });
                 break;
+                // apply date filter to card view
                 case "card":
                     EDocStatement.find({ filter: { where: { MailDate: { between: [vm.statementDateStartSearch, vm.statementDateEndSearch] } } } },
                         function (result) {
@@ -131,6 +142,15 @@
                             console.log("Statement count: " + vm.eDocStatements.length);
                             $scope.gridOptions.data = result;
                         });
+                break;
+                // apply date filter (default - card view)
+                default:
+                    EDocStatement.find({ filter: { where: { MailDate: { between: [vm.statementDateStartSearch, vm.statementDateEndSearch] } } } },
+                            function (result) {
+                                vm.eDocStatements = result;
+                                console.log("Statement count: " + vm.eDocStatements.length);
+                                $scope.gridOptions.data = result;
+                            });
                 break;
             }
         }

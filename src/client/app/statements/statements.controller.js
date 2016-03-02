@@ -28,7 +28,9 @@
         
         // storage for statement date filter
         var wrkDate = new Date();
-        var statementDate = wrkDate.getFullYear().toString() + "-" + zeroPad((wrkDate.getMonth() + 1).toString(), 2)  + "-" + zeroPad(wrkDate.getDate().toString(), 2);
+        var statementDate = wrkDate.getFullYear().toString() + "-" + 
+            zeroPad((wrkDate.getMonth() + 1).toString(), 2)  + "-" + 
+            zeroPad(wrkDate.getDate().toString(), 2);
         logger.log("initial statement date: " + statementDate);
         vm.statementDateStart = statementDate;
         vm.statementDateEnd = statementDate;
@@ -111,13 +113,26 @@
         
         // collect eDoc Statements from database (filtered by current date)
         function getEDocStatements(){
-            EDocStatement.find({filter: {where: {MailDate: {between: [vm.statementDateStartSearch,vm.statementDateEndSearch]}}}},
-                function (result) {
-                    vm.eDocStatements = result;
-                    console.log("Statement count: " + vm.eDocStatements.length);
-                    $scope.gridOptions.data = result;
-                    
-                });
+            logger.log("stateparams: " + $stateParams.view);
+            switch ($stateParams.view)
+            {
+                case "grid":
+                    EDocStatement.find(
+                        function (result) {
+                            vm.eDocStatements = result;
+                            console.log("Statement count: " + vm.eDocStatements.length);
+                            $scope.gridOptions.data = result;
+                        });
+                break;
+                case "card":
+                    EDocStatement.find({ filter: { where: { MailDate: { between: [vm.statementDateStartSearch, vm.statementDateEndSearch] } } } },
+                        function (result) {
+                            vm.eDocStatements = result;
+                            console.log("Statement count: " + vm.eDocStatements.length);
+                            $scope.gridOptions.data = result;
+                        });
+                break;
+            }
         }
         
         // format numbers w/ comma's

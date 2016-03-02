@@ -17,7 +17,7 @@
                 // display all Statements (Grid View)
                 state: 'statements',
                 config: {
-                    url: '/statements',
+                    url: '/statements/:view',
                     templateUrl: 'app/statements/statements.html',
                     controller: 'StatementsController',
                     controllerAs: 'vm',
@@ -32,7 +32,7 @@
                 // display all Statements (Card/Mobile View)
                 state: 'statements_M',
                 config: {
-                    url: '/statements_M',
+                    url: '/statements_M/:view',
                     templateUrl: 'app/statements/statements_M.html',
                     controller: 'StatementsController',
                     controllerAs: 'vm',

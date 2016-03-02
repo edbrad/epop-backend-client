@@ -10,7 +10,7 @@
                                 <i class="ion ion-document-text"></i><strong> eDoc Statements</strong>
                             </div>
                             <div style="margin-bottom: 5px">
-                                <button style="margin-bottom: 10px; margin-left: 0px;" ui-sref="statements_M"class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Card/Mobile View</button></span>
+                                <button style="margin-bottom: 10px; margin-left: 0px;" ui-sref="statements_M({ view: 'card' })" class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i>Card/Mobile View</button></span>
                             </div>
                             <div ui-grid="gridOptions" ng-if="!refresh" external-scopes="gridModel" ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection ui-grid-exporter ui-grid-auto-resize class="grid"></div>
                         </div>

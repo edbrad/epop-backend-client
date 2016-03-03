@@ -26,38 +26,55 @@
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-lg-4 col-xs-12">
-                    <div class="widget wgreen">
-                    <div ht-widget-header title="CRID&#39s" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info">
-                            <p><i class="fa fa-database"></i><strong> USPS Registered CRID&#39s ({{vm.CRIDCount}})</strong></p>
-                            <div ui-grid="cridsGridOptions" class="grid short"></div>
+            <uib-accordion close-others="false">
+                <!--eDoc Statements-->
+                <uib-accordion-group is-open="true">
+                    <uib-accordion-heading>
+                        <b>eDoc Statements</b> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <div ui-grid="cridsEDocStatementsOptions" ng-if="!refresh" external-scopes="gridModel" 
+                    ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection 
+                    ui-grid-exporter ui-grid-auto-resize class="grid"></div>
+                </uib-accordion-group>
+                <!--CRID's Permits and Mailer ID's-->
+                <uib-accordion-group is-open="false">
+                    <uib-accordion-heading>
+                        <b>CRIDs / PERMITS / MAILER IDs</b> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <div class="row">
+                        <div class="col-lg-4 col-xs-12">
+                            <div class="widget wgreen">
+                                <div ht-widget-header title="CRID&#39s" allow-collapse="true"></div>
+                                <div class="widget-content text-left text-info">
+                                    <p><i class="fa fa-database"></i><strong> USPS Registered CRID&#39s ({{vm.CRIDCount}})</strong></p>
+                                    <div ui-grid="cridsGridOptions" class="grid short"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addCRID()"><i class="fa fa-plus"></i> Add New CRID </button>
+                        </div>
+                        <div class="col-lg-4 col-xs-12">
+                            <div class="widget worange">
+                                <div ht-widget-header title="Permits" allow-collapse="true"></div>
+                                <div class="widget-content text-left text-info">
+                                    <p><i class="fa fa-database"></i><strong> USPS Registered Permits ({{vm.permitCount}})</strong></p>
+                                    <div ui-grid="permitsGridOptions" class="grid short"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addPermit()"><i class="fa fa-plus"></i> Add New Permit </button>
+                        </div>
+                        <div class="col-lg-4 col-xs-12">
+                            <div class="widget wred">
+                                <div ht-widget-header title="Mailer ID&#39s" allow-collapse="true"></div>
+                                <div class="widget-content text-left text-info">
+                                    <p><i class="fa fa-database"></i><strong> USPS Registered Mailer ID&#39s ({{vm.mailerIdCount}})</strong></p>
+                                    <div ui-grid="mailerIdsGridOptions" class="grid short"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addMailerId()"><i class="fa fa-plus"></i> Add New Mailer ID </button>
                         </div>
                     </div>
-                    <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addCRID()"><i class="fa fa-plus"></i> Add New CRID </button>
-                </div>
-                <div class="col-lg-4 col-xs-12">
-                    <div class="widget worange">
-                    <div ht-widget-header title="Permits" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info">
-                            <p><i class="fa fa-database"></i><strong> USPS Registered Permits ({{vm.permitCount}})</strong></p>
-                            <div ui-grid="permitsGridOptions" class="grid short"></div>
-                        </div>
-                    </div>
-                    <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addPermit()"><i class="fa fa-plus"></i> Add New Permit </button>
-                </div>
-                <div class="col-lg-4 col-xs-12">
-                    <div class="widget wred">
-                    <div ht-widget-header title="Mailer ID&#39s" allow-collapse="true"></div>
-                        <div class="widget-content text-left text-info">
-                            <p><i class="fa fa-database"></i><strong> USPS Registered Mailer ID&#39s ({{vm.mailerIdCount}})</strong></p>
-                            <div ui-grid="mailerIdsGridOptions" class="grid short"></div>
-                        </div>
-                    </div>
-                    <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addMailerId()"><i class="fa fa-plus"></i> Add New Mailer ID </button>
-                </div>
-            </div>
+                </uib-accordion-group>
+            </uib-accordion>
         </div>
     </section>
 </section>

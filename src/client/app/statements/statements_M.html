@@ -37,10 +37,11 @@
                         <div class="col-lg-4 col-xs-12" ng-repeat="s in vm.eDocStatements | filter:search">
                             <!-- small box -->
                             <div class="small-box bg-purple" style="text-overflow: ellipsis;">
-                                <div class="inner">
+                                <div class="inner" style="text-overflow: ellipsis;">
                                     <h4 style="text-overflow: ellipsis;"><a ui-sref="statementDetail({ id: s.id })" style="color: white;">{{s.Statement_ID}}</h4></a>
                                     <p>
-                                        Mail Date: <b>{{vm.dateFormat(s.MailDate)}}</b>
+                                        <b>{{vm.truncateText(s.Description)}}</b>
+                                        <br>Mail Date: <b>{{vm.dateFormat(s.MailDate)}}</b>
                                         <br>Total Pieces: <b>{{vm.numberFormat(s.TotalPieceCount)}}</b>
                                         <br>Total Postage: <b>{{vm.currencyFormat(s.TotalPostage)}}</b>
                                     </p>

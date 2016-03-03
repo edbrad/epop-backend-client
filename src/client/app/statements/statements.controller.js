@@ -130,7 +130,7 @@
                     EDocStatement.find(
                         function (result) {
                             vm.eDocStatements = result;
-                            console.log("Statement count: " + vm.eDocStatements.length);
+                            logger.log("Statement count: " + vm.eDocStatements.length);
                             $scope.gridOptions.data = result;
                         });
                 break;
@@ -139,7 +139,7 @@
                     EDocStatement.find({ filter: { where: { MailDate: { between: [vm.statementDateStartSearch, vm.statementDateEndSearch] } } } },
                         function (result) {
                             vm.eDocStatements = result;
-                            console.log("Statement count: " + vm.eDocStatements.length);
+                            logger.log("Statement count: " + vm.eDocStatements.length);
                             $scope.gridOptions.data = result;
                         });
                 break;
@@ -148,7 +148,7 @@
                     EDocStatement.find({ filter: { where: { MailDate: { between: [vm.statementDateStartSearch, vm.statementDateEndSearch] } } } },
                             function (result) {
                                 vm.eDocStatements = result;
-                                console.log("Statement count: " + vm.eDocStatements.length);
+                                logger.log("Statement count: " + vm.eDocStatements.length);
                                 $scope.gridOptions.data = result;
                             });
                 break;
@@ -168,7 +168,17 @@
         // format Dates
         vm.dateFormat = function(date){
             var refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
-            return moment(refmtDate).format('MMMM Do YYYY');
+            return moment(refmtDate).format('MM/DD/YYYY');
+        };
+        
+        // truncate text (for description)
+        vm.truncateText = function(text){
+            if (text.length <= 25){
+                return text;
+            }
+            else{
+                return text.substring(0,25) + "...";
+            }    
         };
         
         // zero-padding

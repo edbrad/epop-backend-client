@@ -2,12 +2,13 @@
     'use strict';
 
     angular
-        .module('app.mailOwnerDetail', ['lbServices', 'app.dialogsService', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter'])
-        .controller('MailOwnerDetailController', MailOwnerDetailController);
+        .module('app.mailOwnerDetail', ['lbServices', 'app.dialogsService', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.autoResize', 'ui.grid.exporter'])
+        .controller('MailOwnerDetailController', MailOwnerDetailController)
+        .filter('DateReformatFilter', DateReformatFilter);
         
-    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'logger', '$scope', '$stateParams', 'dialogsService', 'maps', '$timeout'];
+    MailOwnerDetailController.$inject = ['$q', 'MailOwner', 'EDocStatement', 'logger', '$scope', '$stateParams', 'dialogsService', 'maps', '$timeout'];
     /* @ngInject */
-    function MailOwnerDetailController($q, MailOwner, logger, $scope, $stateParams, dialog, maps, $timeout) {
+    function MailOwnerDetailController($q, MailOwner, EDocStatement, logger, $scope, $stateParams, dialog, maps, $timeout) {
         // establish View Model
         var vm = this;
         
@@ -18,6 +19,10 @@
         vm.mailOwner = {};
         vm.mailOwnerAddress = "";
         
+        // storage for eDoc Statements (filterd for currrent Mail Owner)
+        vm.eDocStatements = [];
+        vm.CRIDs = [];
+               
         // storage for the asynchronous functions list (for $q)
         var promises = void[];
         
@@ -25,6 +30,9 @@
         vm.CRIDCount = 0;
         vm.permitCount = 0;
         vm.mailerIdCount = 0;
+        
+        // misc
+        var currentDate = new Date();
         
         // initialize map center/focus
         vm.map = {
@@ -63,6 +71,52 @@
         vm.hideMap = function(){
             vm.showMap = false;
             refreshMap();
+        };
+        
+        // initialize UI Grid layout/formatting/printing options for displaying related eDoc Statements
+        $scope.cridsEDocStatementsOptions = {
+            paginationPageSizes: [8, 32, 96],
+            rowHeight: 40,
+            columnDefs:[
+                {name: 'id', displayName: 'ID', visible: false },
+                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px;" ><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 175},
+                {field: 'Description', displayName: 'Description', width: 300},
+                {field: 'MailOwnerCRID', displayName: 'CRID', width: 75},
+                {field: 'MailDate', displayName: 'Mail Date', cellFilter: 'DateReformatFilter'},
+                {field: 'PermitNumber', displayName: 'Permit', width: 75, cellClass: 'colorCodePermit'}, // TODO: FIXME
+                {field: 'TotalPieceCount', displayName: 'Pieces', width: 100, cellFilter: 'number: 0'},
+                {field: 'TotalPostage', displayName: 'Gross Postage', cellFilter: 'currency:"$" : 3'},
+            ],
+            enableGridMenu: true,
+            enableFiltering: true,
+            enableSelectAll: true,
+            exporterCsvFilename: 'eDocStatements_' + '' +
+                                 (currentDate.getMonth()+1) + "-"
+                                 + currentDate.getDate() + "-"
+                                 + currentDate.getFullYear() + "-"  
+                                 + currentDate.getHours() + "-"  
+                                 + currentDate.getMinutes() + "-" 
+                                 + currentDate.getSeconds() 
+                                 + '.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: { text: "EMS EPOP Backend Client - Mail Owner Statements", style: 'headerStyle', alignment: 'center', margin: [2, 12] },
+            exporterPdfFooter: function ( currentPage, pageCount ) {
+                return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle', alignment: 'center' };
+            },
+            exporterPdfCustomFormatter: function ( docDefinition ) {
+                docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+                docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'landscape',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 620,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+                onRegisterApi: function(gridApi){
+                $scope.gridApi = gridApi;
+            }
         };
         
         // initialize UI Grid layout/formatting options for displaying related CRIDs
@@ -191,13 +245,41 @@
             });
         };
         
+        // collect eDoc Statements for the current MailOwner
+        function getEDocStatements() {
+            
+            // clear out any existing statements
+            vm.eDocStatements = [];
+            
+            logger.log("CRID Count: " + vm.CRIDCount);
+            
+            // get statements for each Mail Owner CRID
+            for (var i = 0; i < vm.CRIDCount; i++) {
+                logger.log("looking for statements w/ CRID: " + vm.CRIDs[i].CRID);
+                EDocStatement.find({ filter: { where: { MailOwnerCRID: vm.CRIDs[i].CRID }}},
+                function (result) {
+                    logger.log("Statement Results count: " + result.length);
+                    for (var i = 0; i < result.length; i++) {
+                        logger.log("Results [i]: " + JSON.stringify(result[i]));
+                        vm.eDocStatements.push(result[i]);
+                    }
+                    logger.log("Statement count: " + vm.eDocStatements.length);
+                    $scope.cridsEDocStatementsOptions.data = vm.eDocStatements;
+                });
+            }
+             
+        }
         
         // collect related CRID's for the Mail Owner from the database
         function getCRIDs() {
             MailOwner.CRIDs({id: $stateParams.id},
                 function (result) {
                     $scope.cridsGridOptions.data = result;
+                    // save the CRID's (for use in finding all related eDoc Statements)
+                    vm.CRIDs = result;
                     vm.CRIDCount = result.length;
+                    logger.log("MailOwner has " + vm.CRIDCount + " CRIDs")
+                    getEDocStatements();
                 });
         }
         
@@ -299,5 +381,94 @@
                 logger.success("Mailer ID Updated!");
             });
         };
+        
+        // format numbers w/ comma's
+        $scope.numberFormat = function(number){
+            return numeral(number).format('0,0');
+        };
+        
+        // format numbers as money
+        $scope.currencyFormat = function(number){
+            return numeral(number).format('$0,0.00');
+        };
+        
+        // format Dates
+        $scope.dateFormat = function(date){
+            var refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
+            return moment(refmtDate).format('MMMM Do YYYY');
+        };
+        
+        // TODO: FIXME     
+        function colorCodePermit(grid, row, col, rowRenderIndex, colRenderIndex) {
+            console.log("row entity: " + row.entity.FP_PI_PieceCount);
+            // For Profit
+            var statementType = "";
+            if (vm.statement.FP_PI_PieceCount > 0){
+                statementType = "FP_PI";
+            }
+            if (vm.statement.FP_MT_PieceCount > 0){
+                statementType = "FP_MT";
+            }
+            if (vm.statement.FP_ST_PieceCount > 0){
+                statementType = "FP_ST";
+            }
+            
+            // Non-Profit
+            if (vm.statement.NP_PI_PieceCount > 0){
+                statementType = "NP_PI";
+            }
+            if (vm.statement.NP_MT_PieceCount > 0){
+                statementType = "NP_MT";
+            }
+            if (vm.statement.NP_ST_PieceCount > 0){
+                statementType = "NP_ST";
+            }
+            
+            logger.log("Statement Type: " + statementType);
+            switch(statementType)
+            {               
+                // PROFIT / PERMIT IMPRINT
+                case "FP_PI":
+                    return "#00ff00"; 
+                break;
+                // PROFIT / METER
+                case "FP_MT":
+                return "#00ffff";
+                    
+                break;
+                // PROFIT / STAMP
+                case "FP_ST":
+                return "#ff9900";
+                    
+                break;
+                // NON-PROFIT / PERMIT IMPRINT
+                case "NP_PI":
+                return "#ffff00";
+                    
+                break;
+                // NON-PROFIT / METER
+                case "NP_MT":
+                return "#ff00ff";
+                    
+                break;
+                // NON-PROFIT / STAMP                     
+                case "NP_ST":
+                return "#cc99ff";
+                    
+                break;
+                default:
+                return "red";
+                    
+            }  
+        }
+                
+    }
+    
+    // FILTER - Date Reformat
+    function DateReformatFilter() {
+        return function(date){
+            var refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
+            return moment(refmtDate).format('MM/DD/YYYY');
+        }
     }
 })();

@@ -161,8 +161,8 @@
                             width: '40%',
                             stack:[
                                 { text: ' ' },
-                                { text: vm.rateType, bold: true, style: 'color'},
-                                { text: vm.statement.PermitNumber, bold: true}
+                                { text: vm.rateType, bold: true, style: getPostageTypeColor() },
+                                { text: vm.statement.PermitNumber, bold: true }
                             ]
                         },
                         {
@@ -357,6 +357,40 @@
             logger.log('pdfMake Postage Part B body: ' + JSON.stringify(body));
             return body;
         }
+        
+        // color code the postage type
+        function getPostageTypeColor(){
+            switch(statementType)
+                {               
+                    // PROFIT / PERMIT IMPRINT
+                    case "FP_PI":
+                        return {fontSize: 14, color: "#00ff00"};
+                    break;
+                    // PROFIT / METER
+                    case "FP_MT":
+                        return {fontSize: 14, color: "#00ffff"};
+                    break;
+                    // PROFIT / STAMP
+                    case "FP_ST":
+                        return {fontSize: 14, color: "#ff9900"};
+                    break;
+                    // NON-PROFIT / PERMIT IMPRINT
+                    case "NP_PI":
+                        return {fontSize: 14, color: "#ffff00"};
+                    break;
+                    // NON-PROFIT / METER
+                    case "NP_MT":
+                        return {fontSize: 14, color: "#ff00ff"};
+                    break;
+                    // NON-PROFIT / STAMP                     
+                    case "NP_ST":
+                        return {fontSize: 14, color: "#cc99ff"};
+                    break;
+                    default:
+                        return {fontSize: 14, color: "red"};
+                        
+                }  
+        }
             
 	    // activate/initialize view
         activate();
@@ -379,7 +413,7 @@
                     
                     // re-format Mail Date data into YYYY-MM-DD form for the momemntJS library
                     var refmtDate = vm.statement.MailDate.substring(0,4) + "-" + vm.statement.MailDate.substring(4,6) + "-" + vm.statement.MailDate.substring(6,8);
-                    vm.mailDate = moment(refmtDate).format('MMMM Do YYYY');
+                    vm.mailDate = moment(refmtDate).format('MM/DD/YYYY');
                     
                     // get filtered counts (greater than 0 pieces)
                     vm.postageDetails_A_Filtered = vm.postageDetails_A.filter(function(el){

@@ -2,164 +2,105 @@
     'use strict';
 
     angular
-        .module('app.admin', ['ngFileUpload'])
+        .module('app.admin', ['app.fileInputService'])
         .controller('AdminController', AdminController);
 
-    AdminController.$inject = ['logger', '$scope', '$timeout', '$http', 'Upload'];
+    AdminController.$inject = ['logger', '$scope', '$timeout', '$http', 'fileInputService', 'EDocStatement'];
     /* @ngInject */
-    function AdminController(logger, $scope, $timeout, $http, Upload) {
+    function AdminController(logger, $scope, $timeout, $http, fileInputService, EDocStatement) {
         var vm = this;
         vm.title = 'Admin';
+        
+        //
+        $scope.fileInputContent = "";
+        vm.statement = {};
+        vm.statements = [];
+        vm.totalPieces = 0;
+        vm.totalPostage = 0.0;
+        vm.strTOTALS = "";
+        vm.showInputStatements = false;
+        
+        //
+        $scope.onFileUpload = function (element) {
+            $scope.$apply(function (scope) {
+                var file = element.files[0];
+                fileInputService.readTextFileAsync(file).then(function (fileInputContent) {
+                    $scope.fileInputContent = fileInputContent;
+                    processStatementData($scope.fileInputContent);
+                });
+            });
+        }
 
         activate();
-
+        
+        //
         function activate() {
             logger.info('Activated Admin View');
         }
         
-        $scope.uploadPic = function (file) {
-            $scope.formUpload = true;
-            if (file != null) {
-                $scope.upload(file)
+        //
+        function processStatementData(json) {
+            var allTextLines = json.split(/\r\n|\n/);
+            vm.statements = [];
+            vm.totalPieces = 0;
+            vm.totalPostage = 0.0;
+            
+            for (var i = 0; i < (allTextLines.length - 1); i++) {
+                /*var JSONObj = JSON.parse(allTextLines[i]);*/
+                var JSONObj = angular.fromJson(allTextLines[i]);
+                vm.totalPieces += JSONObj.TotalPieceCount;
+                vm.totalPostage += JSONObj.TotalPostage;
+                vm.statements.push(JSONObj);
+            }
+            
+            vm.strTOTALS = "TOTALS";
+            vm.showInputStatements = true;
+        }
+        
+        //
+        vm.importStatements = function () {
+            for (var i = 0; i < (vm.statements.length - 1); i++) {
+                logger.log("checking for statement w/ID: " + vm.statements[i].Statement_ID);
+                EDocStatement.find({ where: { Statement_ID: vm.statements[i].Statement_ID }},
+                    function (result) {
+                        
+                            logger.log("Existing Statement Found: " + JSON.stringify(result));
+                        
+                })
             }
         };
         
-        $scope.upload = function (file, resumable) {
-            $scope.errorMsg = null;
-            if ($scope.howToSend === 1) {
-                uploadUsingUpload(file, resumable);
-            } else if ($scope.howToSend == 2) {
-                uploadUsing$http(file);
-            } else {
-                uploadS3(file);
+        //
+        vm.clearStatements = function(){
+            vm.statements = [];
+            $('#JSONInputFile').val('');
+            vm.strTOTALS = "";
+            vm.totalPieces = null;
+            vm.totalPostage = null;
+            vm.showInputStatements = false;
+        };
+        
+        //
+        vm.deleteImportStatement = function(id, pieces, postage){
+            logger.log("removing statement w/ ID: " + id);
+            vm.totalPieces -= pieces;
+            vm.totalPostage -= postage;
+            _.remove(vm.statements,{Statement_ID: id});
+            if (vm.statements.length == 0){
+                vm.showInputStatements = false;
+                $('#JSONInputFile').val('');
             }
         };
         
-        $scope.isResumeSupported = Upload.isResumeSupported();
-
-        $scope.restart = function (file) {
-            if (Upload.isResumeSupported()) {
-                $http.get('https://angular-file-upload-cors-srv.appspot.com/upload?restart=true&name=' + encodeURIComponent(file.name)).then(function () {
-                    $scope.upload(file, true);
-                });
-            } else {
-                $scope.upload(file);
-            }
+        // format numbers (piece counts) w/ comma's (numeralJS library)
+        vm.numberFormat = function(number){
+            return numeral(number).format('0,0');
         };
-
-        $scope.chunkSize = 100000;
-        function uploadUsingUpload(file, resumable) {
-            file.upload = Upload.upload({
-                url: 'https://angular-file-upload-cors-srv.appspot.com/upload' + $scope.getReqParams(),
-                resumeSizeUrl: resumable ? 'https://angular-file-upload-cors-srv.appspot.com/upload?name=' + encodeURIComponent(file.name) : null,
-                resumeChunkSize: resumable ? $scope.chunkSize : null,
-                headers: {
-                    'optional-header': 'header-value'
-                },
-                data: { username: $scope.username, file: file }
-            });
-
-            file.upload.then(function (response) {
-                $timeout(function () {
-                    file.result = response.data;
-                });
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            }, function (evt) {
-                // Math.min is to fix IE which reports 200% sometimes
-                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-            });
-
-            file.upload.xhr(function (xhr) {
-                // xhr.upload.addEventListener('abort', function(){console.log('abort complete')}, false);
-            });
-        }
-
-        function uploadUsing$http(file) {
-            file.upload = Upload.http({
-                url: 'https://angular-file-upload-cors-srv.appspot.com/upload' + $scope.getReqParams(),
-                method: 'POST',
-                headers: {
-                    'Content-Type': file.type
-                },
-                data: file
-            });
-
-            file.upload.then(function (response) {
-                file.result = response.data;
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            });
-
-            file.upload.progress(function (evt) {
-                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-            });
-        }
-
-        function uploadS3(file) {
-            file.upload = Upload.upload({
-                url: $scope.s3url,
-                method: 'POST',
-                data: {
-                    key: file.name,
-                    AWSAccessKeyId: $scope.AWSAccessKeyId,
-                    acl: $scope.acl,
-                    policy: $scope.policy,
-                    signature: $scope.signature,
-                    'Content-Type': file.type === null || file.type === '' ? 'application/octet-stream' : file.type,
-                    filename: file.name,
-                    file: file
-                }
-            });
-
-            file.upload.then(function (response) {
-                $timeout(function () {
-                    file.result = response.data;
-                });
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            });
-
-            file.upload.progress(function (evt) {
-                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-            });
-            storeS3UploadConfigInLocalStore();
-        }
-
-        $scope.generateSignature = function () {
-            $http.post('/s3sign?aws-secret-key=' + encodeURIComponent($scope.AWSSecretKey), $scope.jsonPolicy).
-                success(function (data) {
-                    $scope.policy = data.policy;
-                    $scope.signature = data.signature;
-                });
+        
+        // format numbers (postage) as money (numeralJS library)
+        vm.currencyFormat = function(number){
+            return numeral(number).format('$0,0.000');
         };
-
-        if (localStorage) {
-            $scope.s3url = localStorage.getItem('s3url');
-            $scope.AWSAccessKeyId = localStorage.getItem('AWSAccessKeyId');
-            $scope.acl = localStorage.getItem('acl');
-            $scope.success_action_redirect = localStorage.getItem('success_action_redirect');
-            $scope.policy = localStorage.getItem('policy');
-            $scope.signature = localStorage.getItem('signature');
-        }
-
-        $scope.success_action_redirect = $scope.success_action_redirect || window.location.protocol + '//' + window.location.host;
-        $scope.jsonPolicy = $scope.jsonPolicy || '{\n  "expiration": "2020-01-01T00:00:00Z",\n  "conditions": [\n    {"bucket": "angular-file-upload"},\n    ["starts-with", "$key", ""],\n    {"acl": "private"},\n    ["starts-with", "$Content-Type", ""],\n    ["starts-with", "$filename", ""],\n    ["content-length-range", 0, 524288000]\n  ]\n}';
-        $scope.acl = $scope.acl || 'private';
-
-        function storeS3UploadConfigInLocalStore() {
-            if ($scope.howToSend === 3 && localStorage) {
-                localStorage.setItem('s3url', $scope.s3url);
-                localStorage.setItem('AWSAccessKeyId', $scope.AWSAccessKeyId);
-                localStorage.setItem('acl', $scope.acl);
-                localStorage.setItem('success_action_redirect', $scope.success_action_redirect);
-                localStorage.setItem('policy', $scope.policy);
-                localStorage.setItem('signature', $scope.signature);
-            }
-        }
         
     }
 })();

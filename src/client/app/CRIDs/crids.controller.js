@@ -33,7 +33,7 @@
             columnDefs:[
                 {name: 'CRID', displayName: 'CRID'},
                 {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Mail Owner Name',
-                 cellTemplate: '<div style="padding: 5px;">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</div>'},
+                 cellTemplate: '<div class="ui-grid-cell-contents" tooltip-placement="bottom" uib-tooltip="View the Mail Owner Details" style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.mailOwnerId })">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</a></div>'},
                 // append Edit & Delete buttons
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
                                                                        '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editCRID(row.entity.id)">' +

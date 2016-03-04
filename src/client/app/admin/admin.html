@@ -7,33 +7,59 @@
                     <div class="widget-content text-left text-info" style="display:inline-block; width: 100%">
                         <div class="row" style="margin-bottom: 10px; margin-left: 0px;">
                             <div class="col-lg-12 col-xs-12">
-                                <div class="widget wviolet">
-                                    <div ht-widget-header title="Import/Export"></div>
-                                    <div class="widget-content text-left text-info">
-                                        <div>
-                                            <form name="importEdocStatementForm">
-                                                <fieldset>
-                                                    <legend>Import eDoc Statement File</legend>
-                                                    <b>File Path (JSON):</b>
-                                                    <br>    
-                                                    <!--<input ngf-select="" ng-model="vm.eDocFileName" name="eDocFileName" ngf-accept=".txt" required="" type="file">-->
-                                                    <input ngf-select="" ng-model="vm.eDocFileName" name="eDocFileName" required="" type="file">
-                                                    <i ng-show="importEdocStatementForm.file.$error.required">*required</i>
-                                                    <br>
-
-                                                    <!--<button ng-disabled="!importEdocStatementForm.$valid" ng-click="uploadPic(vm.eDocFileName)">Submit</button>-->
-                                                    <br>
-                                                    <button  ng-click="uploadPic(vm.eDocFileName)">Submit</button>
-                                                    
-                                                    <br>
-                                                    <span class="progress" ng-show="vm.eDocFileName.progress >= 0">
-                                                            <div class="ng-binding" style="width:{{vm.eDocFileName.progress}}%" ng-bind="vm.eDocFileName.progress + '%'"></div>
-                                                        </span>
-                                                    <span ng-show="vm.eDocFileName.result">Upload Successful</span>
-                                                </fieldset>
-                                            </form>
+                                <uib-accordion close-others="false">
+                                    <uib-accordion-group is-open="true">
+                                        <uib-accordion-heading>
+                                            <b>Import</b> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                        </uib-accordion-heading>
+                                        <form name="importEdocStatementForm">
+                                            <fieldset>
+                                                <legend>Import eDoc Statement File</legend>
+                                                <b>File Path (JSON):</b>
+                                                <br>
+                                                <input id="JSONInputFile" type="file" style="max-width: 500px;" onchange="angular.element(this).scope().onFileUpload(this)">
+                                            </fieldset>
+                                        </form> 
+                                        <div ng-show="vm.showInputStatements" class="col-lg-12 col-xs-12">
+                                        <h4> {{vm.statements.length}} Statement(s) Found: </h4>
+                                        <table style="font-size: 1.5em;" class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>Statement ID</th>
+                                                    <th>Permit</th>
+                                                    <th>Mail Owner</th>
+                                                    <th># of Pieces</th>
+                                                    <th>Gross Postage</th>
+                                                    <th>-</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="s in vm.statements">
+                                                    <td>{{s.Statement_ID}}</td>
+                                                    <td>{{s.PermitNumber}}</td>
+                                                    <td>{{s.MailOwnerName}}</td>
+                                                    <td>{{vm.numberFormat(s.TotalPieceCount)}}</td>
+                                                    <td>{{vm.currencyFormat(s.TotalPostage)}}</td>
+                                                    <td>
+                                                        <button class="btn btn-danger" style="margin-top: 3px;" ng-click="vm.deleteImportStatement(s.Statement_ID, s.TotalPieceCount, s.TotalPostage)"><i class="fa fa-trash"></i> Remove</button>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>{{vm.strTOTALS}}</th>
+                                                    <th>{{vm.numberFormat(vm.totalPieces)}}</th>
+                                                    <th>{{vm.currencyFormat(vm.totalPostage)}}</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <div class="row col-lg-12 col-xs-12">
+                                            <button style="margin-bottom: 10px; margin-left: 0px; margin-top: 10px;" ng-click="vm.importStatements()" class="btn btn-success"><i class="fa fa-upload"></i>Import Statement Data</button>
+                                            <button style="margin-bottom: 10px; margin-left: 0px; margin-top: 10px;" ng-click="vm.clearStatements()" class="btn btn-warning"><i class="fa fa-ban"></i>Clear</button>
                                         </div>
-                                    </div>
+                                    </uib-accordion-group>
+                                </uib-accordion>
                                 </div>
                             </div>
                         </div>

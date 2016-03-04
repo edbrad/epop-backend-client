@@ -33,7 +33,8 @@
             columnDefs:[
                 {name: 'PermitNumber', displayName: 'Permit #'},
                 {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Permit Holder / Mail Owner',
-                 cellTemplate: '<div style="padding: 5px;">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</div>'},
+                 cellTemplate: '<div class="ui-grid-cell-contents" tooltip-placement="bottom" uib-tooltip="View the Mail Owner Details" style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.mailOwnerId })">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</a></div>'},
+               
                 {name: 'PermitCity', displayName: 'Permit City'},
                 {name: 'PermitState', displayName: 'Permit State'},
                 {name: 'PermitZip5', displayName: 'Permit Zip'},

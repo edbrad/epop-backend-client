@@ -3,7 +3,8 @@
 
     angular
         .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService', 'jkuri.datepicker'])
-        .controller('StatementsController', StatementsController);
+        .controller('StatementsController', StatementsController)
+        .filter('DateReformatFilter', DateReformatFilter);;
         
     StatementsController.$inject = ['$q', 'MailOwner', 'EDocStatement', 'logger', '$scope', 'dialogsService', '$state', '$stateParams', '$timeout'];
     /* @ngInject */
@@ -63,10 +64,10 @@
                 {name: 'id', displayName: 'ID', visible: false },
                 {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 200},
                 {name: 'Description', displayName: 'Description', width: "*"},
-                {name: 'MailDate', displayName: 'Mail Date', width: "*"},
+                {name: 'MailDate', displayName: 'Mail Date', width: "*", cellFilter: 'DateReformatFilter'},
                 {name: 'PermitNumber', displayName: 'Permit #', width: "*" },
-                {name: 'TotalPieceCount', displayName: 'Pieces', width: "*"},
-                {name: 'TotalPostage', displayName: 'Postage', width: "*" }
+                {name: 'TotalPieceCount', displayName: 'Pieces', width: "*", cellFilter: 'number: 0'},
+                {name: 'TotalPostage', displayName: 'Postage', width: "*", cellFilter: 'currency:"$" : 3' }
                 
             ],
             enableGridMenu: true,
@@ -190,6 +191,14 @@
             return s;
         }
         
+    }
+    
+    // FILTER - Date Reformat
+    function DateReformatFilter() {
+        return function(date){
+            var refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
+            return moment(refmtDate).format('MM/DD/YYYY');
+        }
     }
             
 })();

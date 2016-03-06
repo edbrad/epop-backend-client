@@ -1,10 +1,10 @@
-/* jshint -W109, -W101, -W064, -W064, -W116, -W033 */
+/* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function(window, angular, undefined) {'use strict';
 
 //var urlBase = "/api";
 //var urlBase = "http://0.0.0.0:9000/api";
-var urlBase = "http://172.16.57.130:9000/api";
-//var urlBase = "http://192.168.1.80:9000/api";
+//var urlBase = "http://172.16.57.130:9000/api";
+var urlBase = "http://192.168.1.80:9000/api";
 var authHeader = 'authorization';
 
 /**

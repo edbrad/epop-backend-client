@@ -1,6 +1,29 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter">
-    <!-- Small boxes (Stat box) -->
+      <div class="row">
+            <div class="col-lg-12 col-xs-12">
+            <h3>{{vm.reformatDate(vm.currentDate)}}</h3>
+            <h1><b>EPOP Statistics</b></h1>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <h4><b>Postage Payment Distribution</b></h4>
+                <canvas id="pie" class="chart chart-pie" chart-legend="true" chart-data="vm.pieData" chart-labels="vm.pieLabels" chart-colours="vm.pieColors">
+                </canvas>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <h4><b>Monthly Piece Volume</b></h4>
+                <canvas id="line" class="chart chart-line" chart-data="vm.lineData" chart-labels="vm.lineLabels" chart-legend="true" chart-series="vm.lineSeries"
+                chart-click="onLineClick">
+                </canvas>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <h4><b>Monthly Scheme Volume</b></h4>
+                <canvas id="bar" class="chart chart-bar" chart-labels="vm.barLabels" chart-series="vm.barSeries" chart-legend="true" chart-data="vm.barData" chart-colours="vm.barColors">
+                </canvas>
+            </div>
+        </div>
+      <!-- Small boxes (Stat box) -->
+      <hr>
       <div class="row">
         <div class="col-lg-12 col-xs-12">
           <h1>USPS</h1>
@@ -69,22 +92,47 @@
       <hr>
       <div class="row">
         <div class="col-lg-12 col-xs-12">
-          <h1><b>EMS</b></h1>
+            <h1><b>EMS</b></h1>
         </div>
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-purple">
+        <!-- small box -->
+        <div class="small-box bg-purple">
             <div class="inner">
-              <h3>Statements</h3>
+                <h3>Statements</h3>
 
-              <p><b>{{vm.eDocStatements.length}} </b>eDoc Statements</p>
+                <p><b>{{vm.eDocStatements.length}} </b>eDoc Statements</p>
             </div>
             <div class="icon">
-              <i class="ion ion-document-text"></i>
+                <i class="ion ion-document-text"></i>
+                </div>
+                    <a ui-sref="statements_M({ view: 'card' })" class="small-box-footer">eDoc Statement List <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <a  ui-sref="statements_M({ view: 'card' })" class="small-box-footer">eDoc Statement List <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
         </div>
         <!-- ./col -->
+        <!-- /row -->
+        <hr>
+        <!--<div class="row">
+            <div class="col-lg-12 col-xs-12">
+            <h1>Full Service Statistics</h1>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <h4><b>Postage Payment Distribution</b></h4>
+                <canvas id="pie" class="chart chart-pie" chart-legend="true" chart-data="vm.pieData" chart-labels="vm.pieLabels" chart-colours="vm.pieColors">
+                </canvas>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <h4><b>Monthly Piece Volume</b></h4>
+                <canvas id="line" class="chart chart-line" chart-data="vm.lineData" chart-labels="vm.lineLabels" chart-legend="true" chart-series="vm.lineSeries"
+                chart-click="onLineClick">
+                </canvas>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <h4><b>Monthly Scheme Volume</b></h4>
+                <canvas id="bar" class="chart chart-bar" chart-labels="vm.barLabels" chart-series="vm.barSeries" chart-legend="true" chart-data="vm.barData" chart-colours="vm.barColors">
+                </canvas>
+            </div>
+        </div>-->
+        <!-- /.row -->
     </section>
 </section>

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.dashboard', ['lbServices'])
+        .module('app.dashboard', ['lbServices', 'chart.js'])
         .controller('DashboardController', DashboardController);
 
     DashboardController.$inject = ['$q', 'dataservice', 'MailOwner', 'CRID', 'Permit', 'MailerID','EDocStatement', 'logger'];
@@ -30,9 +30,39 @@
         vm.mailerIDCount = [];
         
         vm.eDocStatements =[];
+        
+        vm.currentDate = new Date();
 
         activate();
         
+        // Pie Chart
+        vm.pieLabels = ["Profit Permit Imprint", "Profit Stamp", "Profit Meter", "Non-Profit Permit Imprint", "Non-Profit Stamp", "Non-Profit Meter"];
+        vm.pieData = [300, 500, 100, 300, 500, 100];
+        vm.pieColors = ["#00ff00", "#ff9900", "#00ffff", "#ffff00", "#cc99ff", "#ff00ff"];
+        
+        // Line Chart
+        vm.lineLabels = ["January", "February", "March", "April", "May", "June", "July"];
+        vm.lineSeries = ['Pieces'];
+        vm.lineData = [
+            [10000000, 11004000, 9000000, 12000000, 11431000, 14000000, 13000000]
+        ];
+        vm.onLineClick = function (points, evt) {
+            console.log(points, evt);
+        }
+        
+        // Bar Chart
+        vm.barLabels = ["January", "February", "March", "April", "May", "June", "July"];
+        vm.barSeries = ['Schemes'];
+        vm.barData = [
+            [300, 320, 280, 400, 324, 380, 430]
+        ];
+        
+        vm.barColors = ["red"];
+        
+        vm.onBar2Click = function (points, evt) {
+            console.log(points, evt);
+        }
+            
         function activate() {
             var promises = [
                 getMessageCount(), 
@@ -104,5 +134,10 @@
                     vm.MailerIDCount = result;
                 });
         }
+        
+        vm.reformatDate = function(date){
+            return moment(date).format('dddd, MMMM Do, YYYY');
+        }
+        
     }
 })();

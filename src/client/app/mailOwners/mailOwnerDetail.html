@@ -30,11 +30,11 @@
                 <!--eDoc Statements-->
                 <uib-accordion-group is-open="true">
                     <uib-accordion-heading>
-                        <b>eDoc Statements</b> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <b>eDoc Statement History</b> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                     </uib-accordion-heading>
                     <div ui-grid="cridsEDocStatementsOptions" ng-if="!refresh" external-scopes="gridModel" 
                     ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection 
-                    ui-grid-exporter ui-grid-auto-resize class="grid"></div>
+                    ui-grid-exporter ui-grid-auto-resize class="grid short"></div>
                 </uib-accordion-group>
                 <!--CRID's Permits and Mailer ID's-->
                 <uib-accordion-group is-open="false">

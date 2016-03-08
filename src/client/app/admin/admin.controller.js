@@ -1,19 +1,44 @@
 /* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
-
+    
+    /**
+     * @class app.admin
+     * @memberOf app
+     * 
+     * @description
+     *
+     * The `admin` module provides administrative and utility functionality for the application.
+     * 
+     * @requires
+     *   - fileInputService: reads a file from the local file system
+     *
+     */
     angular
         .module('app.admin', ['app.fileInputService'])
+        /**
+         * @ngdoc controller
+         * @name app.admin.controller:AdminController
+         * @description
+         * 
+         * Controller for Admin View
+         * 
+         */
         .controller('AdminController', AdminController);
 
     AdminController.$inject = ['logger', '$scope', '$timeout', '$http', 'fileInputService', 
     'EDocStatement', '$q'];
+    
     /* @ngInject */
     function AdminController(logger, $scope, $timeout, $http, fileInputService, EDocStatement, $q) {
         // establish view model
         var vm = this;
+        
+        // work variables (internal)
+        var promises = void[];          // storage for the asyncronous function list (for $q)
+        
+        // view model properties
         vm.title = 'Admin';
-        // work variables (view model)
         vm.statement = {};              // storage for an eDoc statement
         vm.statements = [];             // storage for eDoc statement JSON text records
         vm.totalPieces = 0;             // storage for display of Total Pieces represented in JSON file
@@ -24,14 +49,16 @@
         vm.accordianGroupStatus = {     // to track accordian open/close status
             open: true
         }
-        // work variables (internal)
-        var promises = void[];          // storage for the asyncronous function list (for $q)
-        // work variables ($scope dependant)
-        $scope.fileInputContent = "";   // storage for input file contents
-         
+        vm.fileInputContent = "";       // storage for input file contents
+        
         /**
-         * Read input file from local file system, using the file input service
-         * @param {string} element The HTML element containing the type of file
+         * @ngdoc method
+         * @name onFileUpload
+         * @methodOf app.admin.AdminController
+         * @param {Object} element - The HTML5 element
+         * @description
+         * 
+         * Return a function that reads as input file from local file system, using the file input service
          */
         $scope.onFileUpload = function (element) {
             $scope.fileInputContent = null;
@@ -53,16 +80,104 @@
             });
         }
         /**
-         * Initialize view
+         * @ngdoc method
+         * @name importStatements
+         * @methodOf app.admin:AdminController 
+         * @description
+         * 
+         * Import statements into back-end Database (via LoopBack API)
          */
-        activate();
+        vm.importStatements = function () {
+            promises = [deleteExistingStatements(), addNewStatements()];
+            return $q.all(promises).then(function () {
+                logger.success(vm.statements.length + ' Statements Successfully Imported!');
+            });
+        };
+        
+        /**
+         * @ngdoc method
+         * @name clearStatements
+         * @methodOf app.admin:AdminController 
+         * @decription
+         * 
+         * Clear statement storage and tallied totals
+         */
+        vm.clearStatements = function(){
+            vm.statements = [];
+            $('#JSONInputFile').val('');
+            vm.strTOTALS = "";
+            vm.totalPieces = null;
+            vm.totalPostage = null;
+            vm.showInputStatements = false;
+            vm.inputFileName = "";
+        };
+        /**
+         * @ngdoc method
+         * @name deleteImportStatement 
+         * @methodOf app.admin:AdminController 
+         * @description
+         * 
+         * Delete a stored statement and deduct piece & postage counts from total
+         */
+        vm.deleteImportStatement = function(id, pieces, postage){
+            logger.log("removing statement w/ ID: " + id);
+            // deduct pieces and postage from total for imported file
+            vm.totalPieces -= pieces;
+            vm.totalPostage -= postage;
+            // remove statement from the the list (using lodash library: http://lodash.com)
+            _.remove(vm.statements,{Statement_ID: id});
+            // if removal results in no more statements, clear the display information altogther
+            if (vm.statements.length == 0){
+                vm.showInputStatements = false;
+                $('#JSONInputFile').val('');
+                vm.inputFileName = "";
+            }
+        };
+        /**
+         * @ngdoc method
+         * @name numberFormat 
+         * @methodOf app.admin:AdminController 
+         * @description
+         * 
+         * Format numbers (piece counts) w/ comma's (using numeralJS library: http://numeraljs.com)
+         */
+        vm.numberFormat = function(number){
+            return numeral(number).format('0,0');
+        };
+        /**
+         * @ngdoc method
+         * @name currencyFormat 
+         * @methodOf app.admin:AdminController
+         * @description
+         * 
+         * Format numbers (postage) as money (using numeralJS library: http://numeraljs.com)
+         */
+        vm.currencyFormat = function(number){
+            return numeral(number).format('$0,0.000');
+        };
+        
+        
         //
+        activate();
+         
+        /**
+         * @ngdoc method
+         * @name activate 
+         * @methodOf app.admin:AdminController
+         * @desription 
+         * 
+         * Initialize the view
+         */
         function activate() {
             logger.info('Activated Admin View');
         }
         /**
-         * Parse the input file statement
-         * @param {array} json The JSON file text content
+         * @ngdoc method
+         * @name processStatementData
+         * @methodOf app.admin:AdminController
+         * @description
+         * 
+         * Parse the input file's eDoc Statement JSON data into individual objects
          */
         function processStatementData(json) {
             // initialize variables
@@ -82,16 +197,13 @@
             vm.strTOTALS = "TOTALS";
             vm.showInputStatements = true;
         }
+        
         /**
-         * Import statements into back-end Database (via LoopBack API)
-         */
-        vm.importStatements = function () {
-            promises = [deleteExistingStatements(), addNewStatements()];
-            return $q.all(promises).then(function () {
-                logger.success(vm.statements.length + ' Statements Successfully Imported!');
-            });
-        };
-        /**
+         * @ngdoc method
+         * @name deleteExistingStatements 
+         * @methodOf app.admin:AdminController
+         * @description
+         * 
          * Delete any matching statements from the back-end Database (via LoopBack API)
          */
         function deleteExistingStatements(){
@@ -106,6 +218,11 @@
             }
         }
         /**
+         * @ngdoc method
+         * @name addNewStatements 
+         * @methodOf app.admin:AdminController
+         * @description
+         * 
          * Add new statements to the back-end Database (via LoopBack API)
          */
         function addNewStatements() {
@@ -113,47 +230,6 @@
                 EDocStatement.create(vm.statements[i]);
             }
         }
-        /**
-         * Clear statement storage and tallied totals
-         */
-        vm.clearStatements = function(){
-            vm.statements = [];
-            $('#JSONInputFile').val('');
-            vm.strTOTALS = "";
-            vm.totalPieces = null;
-            vm.totalPostage = null;
-            vm.showInputStatements = false;
-            vm.inputFileName = "";
-        };
-        /**
-         * Delete a stored statement and deduct piece & postage counts from total
-         */
-        vm.deleteImportStatement = function(id, pieces, postage){
-            logger.log("removing statement w/ ID: " + id);
-            vm.totalPieces -= pieces;
-            vm.totalPostage -= postage;
-            _.remove(vm.statements,{Statement_ID: id});
-            if (vm.statements.length == 0){
-                vm.showInputStatements = false;
-                $('#JSONInputFile').val('');
-                vm.inputFileName = "";
-            }
-        };
-        /**
-         * Format numbers (piece counts) w/ comma's (numeralJS library)
-         * @param {number} number The raw number to be formatted
-         * @returns {string} The input number reformatted with commas
-         */
-        vm.numberFormat = function(number){
-            return numeral(number).format('0,0');
-        };
-        /**
-         * Format numbers (postage) as money (numeralJS library)
-         * @param {number} number The raw number to be formatted
-         * @returns {string} The input number reformatted as US currency with $ commas and rounded decimal
-         */
-        vm.currencyFormat = function(number){
-            return numeral(number).format('$0,0.000');
-        };
+       
     }
 })();

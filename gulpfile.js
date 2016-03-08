@@ -187,6 +187,17 @@ gulp.task('build-specs', ['templatecache'], function(done) {
 });
 
 /**
+ * generate code documentation (ngDoc)
+ * @return {Stream}
+ */
+gulp.task('ngdocs',[], function(){
+    var gulpDocs = require('gulp-ngdocs');
+    return gulp.src(config.alljs)
+        .pipe(gulpDocs.process())
+        .pipe(gulp.dest('./docs'));
+});
+
+/**
  * Build everything
  * This is separate so we can run tests on
  * optimize before handling image or fonts

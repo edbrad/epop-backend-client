@@ -13,8 +13,7 @@
         // establish view model
         var vm = this;
         vm.title = 'Admin';
-        // work variables
-        $scope.fileInputContent = "";   // storage for input file contents
+        // work variables (view model)
         vm.statement = {};              // storage for an eDoc statement
         vm.statements = [];             // storage for eDoc statement JSON text records
         vm.totalPieces = 0;             // storage for display of Total Pieces represented in JSON file
@@ -22,14 +21,17 @@
         vm.strTOTALS = "";              // storage for literal
         vm.showInputStatements = false; // to toggle display of eDoc statement information
         vm.inputFileName = "";          // storage for input JSON file name
-        vm.accordianGroupStatus = {
+        vm.accordianGroupStatus = {     // to track accordian open/close status
             open: true
         }
-        //
-        var promises = void[];          // storage for the asyncronous function list (for $q) 
+        // work variables (internal)
+        var promises = void[];          // storage for the asyncronous function list (for $q)
+        // work variables ($scope dependant)
+        $scope.fileInputContent = "";   // storage for input file contents
+         
         /**
          * Read input file from local file system, using the file input service
-         * @param {element} the HTML element containing the type of file
+         * @param {string} element The HTML element containing the type of file
          */
         $scope.onFileUpload = function (element) {
             $scope.fileInputContent = null;
@@ -60,7 +62,7 @@
         }
         /**
          * Parse the input file statement
-         * @param {json} the JSON file text content
+         * @param {array} json The JSON file text content
          */
         function processStatementData(json) {
             // initialize variables
@@ -82,7 +84,6 @@
         }
         /**
          * Import statements into back-end Database (via LoopBack API)
-         * @param {json} the JSON file text content
          */
         vm.importStatements = function () {
             promises = [deleteExistingStatements(), addNewStatements()];
@@ -140,16 +141,16 @@
         };
         /**
          * Format numbers (piece counts) w/ comma's (numeralJS library)
-         * @param {number} raw number to be formatted
-         * @returns {string} the input number reformatted with commas
+         * @param {number} number The raw number to be formatted
+         * @returns {string} The input number reformatted with commas
          */
         vm.numberFormat = function(number){
             return numeral(number).format('0,0');
         };
         /**
          * Format numbers (postage) as money (numeralJS library)
-         * @param {number} raw number to be formatted
-         * @returns {string} the input number reformatted as US currency with $ commas and rounded decimal
+         * @param {number} number The raw number to be formatted
+         * @returns {string} The input number reformatted as US currency with $ commas and rounded decimal
          */
         vm.currencyFormat = function(number){
             return numeral(number).format('$0,0.000');

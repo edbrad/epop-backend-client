@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.admin')
+        .module('app.dailyruns')
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
@@ -15,16 +15,16 @@
     function getStates() {
         return [
             {
-                state: 'admin',
+                state: 'dailyruns',
                 config: {
-                    url: '/admin',
-                    templateUrl: 'app/admin/admin.html',
-                    controller: 'AdminController',
+                    url: '/dailyruns',
+                    templateUrl: 'app/dailyRuns/dailyruns.html',
+                    controller: 'DailyRunsController',
                     controllerAs: 'vm',
-                    title: 'Admin',
+                    title: 'Daily Runs',
                     settings: {
-                        nav: 99,
-                        content: '<i class="fa fa-2x fa-clipboard"></i> Admin'
+                        nav: 9,
+                        content: '<i class="fa fa-2x fa-calendar"></i> Daily Runs'
                     }
                 }
             }

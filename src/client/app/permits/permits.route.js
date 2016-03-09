@@ -25,7 +25,7 @@
                     title: 'Permits',
                     settings: {
                         //nav: 4,
-                        content: '<i class="ion ion-document-text"></i> Permits'
+                        content: '<i class="fa fa-2x fa-shield"></i> Permits'
                     }
                 }
             },
@@ -40,7 +40,7 @@
                     title: 'Permits',
                     settings: {
                         nav: 4,
-                        content: '<i class="ion ion-document-text"></i> Permits'
+                        content: '<i class="fa fa-2x fa-shield"></i> Permits'
                     }
                 }
             }

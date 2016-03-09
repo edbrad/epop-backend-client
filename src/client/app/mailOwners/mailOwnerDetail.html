@@ -30,7 +30,7 @@
                 <!--eDoc Statements-->
                 <uib-accordion-group is-open="true">
                     <uib-accordion-heading>
-                        <span ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open"><b>eDoc Statement History</b></span>
+                        <span ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open"><i class="fa fa-2x fa-file-text-o"></i><b> eDoc Statement History</b></span>
                         <i class="pull-right glyphicon" ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open" ng-class="{'glyphicon-chevron-down': vm.historyGroupStatus.open, 'glyphicon-chevron-right': !vm.historyGroupStatus.open}"></i>
                     </uib-accordion-heading>
                     <div style="font-size: 1.2em;" ui-grid="cridsEDocStatementsOptions" ng-if="!refresh" external-scopes="gridModel" 
@@ -40,7 +40,7 @@
                 <!--CRID's Permits and Mailer ID's-->
                 <uib-accordion-group is-open="false">
                     <uib-accordion-heading>
-                        <span ng-click="vm.cridPermitMidGroupStatus.open = !vm.cridPermitMidGroupStatus.open"><b>CRIDs / Permits / MIDs</b></span> 
+                        <span ng-click="vm.cridPermitMidGroupStatus.open = !vm.cridPermitMidGroupStatus.open"><i class="fa fa-2x fa-envelope-o"></i><b> CRIDs / Permits / MIDs</b></span> 
                         <i class="pull-right glyphicon" ng-click="vm.cridPermitMidGroupStatus.open = !vm.cridPermitMidGroupStatus.open" 
                         ng-class="{'glyphicon-chevron-down': vm.cridPermitMidGroupStatus.open, 'glyphicon-chevron-right': !vm.cridPermitMidGroupStatus.open}"></i>
                     </uib-accordion-heading>

@@ -25,7 +25,7 @@
                     title: 'Mail Owners',
                     settings: {
                         //nav: 2,
-                        content: '<i class="ion ion-android-drafts"></i> Mail Owners'
+                        content: '<i class="fa fa-2x fa-building-o"></i> Mail Owners'
                     }
                 }
             },
@@ -40,7 +40,7 @@
                     title: 'Mail Owners',
                     settings: {
                         nav: 2,
-                        content: '<i class="ion ion-android-drafts"></i> Mail Owners'
+                        content: '<i class="fa fa-2x fa-building-o"></i> Mail Owners'
                     }
                 }
             },

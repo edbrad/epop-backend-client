@@ -64,7 +64,7 @@
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
                 {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 130},
-                {name: 'Description', displayName: 'Description', width: 440},
+                {name: 'Description', displayName: 'Description', width: "*"},
                 {name: 'MailDate', displayName: 'Mail Date', width: 100, cellFilter: 'DateReformatFilter'},
                 {name: 'PermitNumber', displayName: 'Permit #', width: 90 },
                 {name: 'TotalPieceCount', displayName: 'Pieces', width: 120, cellFilter: 'number: 0'},

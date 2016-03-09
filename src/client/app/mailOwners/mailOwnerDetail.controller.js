@@ -86,13 +86,13 @@
             rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px;" ><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 175},
-                {field: 'Description', displayName: 'Description', width: 300},
-                {field: 'MailOwnerCRID', displayName: 'CRID', width: 75},
-                {field: 'MailDate', displayName: 'Mail Date', cellFilter: 'DateReformatFilter'},
-                {field: 'PermitNumber', displayName: 'Permit', width: 75, cellClass: 'colorCodePermit'}, // TODO: FIXME
+                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px;" ><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 150},
+                {field: 'Description', displayName: 'Description', width: "*"},
+                {field: 'MailOwnerCRID', displayName: 'CRID', width: 95},
+                {field: 'MailDate', displayName: 'Mail Date', width: 120, cellFilter: 'DateReformatFilter'},
+                {field: 'PermitNumber', displayName: 'Permit', width: 100, cellClass: 'colorCodePermit'}, // TODO: FIXME
                 {field: 'TotalPieceCount', displayName: 'Pieces', width: 100, cellFilter: 'number: 0'},
-                {field: 'TotalPostage', displayName: 'Gross Postage', cellFilter: 'currency:"$" : 3'},
+                {field: 'TotalPostage', displayName: 'Gross Postage', width: 170, cellFilter: 'currency:"$" : 3'},
             ],
             enableGridMenu: true,
             enableFiltering: true,

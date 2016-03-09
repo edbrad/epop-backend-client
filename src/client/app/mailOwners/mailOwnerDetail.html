@@ -30,16 +30,19 @@
                 <!--eDoc Statements-->
                 <uib-accordion-group is-open="true">
                     <uib-accordion-heading>
-                        <b>eDoc Statement History</b> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <span ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open"><b>eDoc Statement History</b></span>
+                        <i class="pull-right glyphicon" ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open" ng-class="{'glyphicon-chevron-down': vm.historyGroupStatus.open, 'glyphicon-chevron-right': !vm.historyGroupStatus.open}"></i>
                     </uib-accordion-heading>
-                    <div ui-grid="cridsEDocStatementsOptions" ng-if="!refresh" external-scopes="gridModel" 
+                    <div style="font-size: 1.2em;" ui-grid="cridsEDocStatementsOptions" ng-if="!refresh" external-scopes="gridModel" 
                     ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection 
-                    ui-grid-exporter ui-grid-auto-resize class="grid short"></div>
+                    ui-grid-exporter ui-grid-auto-resize class="grid"></div>
                 </uib-accordion-group>
                 <!--CRID's Permits and Mailer ID's-->
                 <uib-accordion-group is-open="false">
                     <uib-accordion-heading>
-                        <b>CRIDs / PERMITS / MAILER IDs</b> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <span ng-click="vm.cridPermitMidGroupStatus.open = !vm.cridPermitMidGroupStatus.open"><b>CRIDs / Permits / MIDs</b></span> 
+                        <i class="pull-right glyphicon" ng-click="vm.cridPermitMidGroupStatus.open = !vm.cridPermitMidGroupStatus.open" 
+                        ng-class="{'glyphicon-chevron-down': vm.cridPermitMidGroupStatus.open, 'glyphicon-chevron-right': !vm.cridPermitMidGroupStatus.open}"></i>
                     </uib-accordion-heading>
                     <div class="row">
                         <div class="col-lg-4 col-xs-12">
@@ -47,7 +50,7 @@
                                 <div ht-widget-header title="CRID&#39s" allow-collapse="true"></div>
                                 <div class="widget-content text-left text-info">
                                     <p><i class="fa fa-database"></i><strong> USPS Registered CRID&#39s ({{vm.CRIDCount}})</strong></p>
-                                    <div ui-grid="cridsGridOptions" class="grid short"></div>
+                                    <div ui-grid="cridsGridOptions" class="grid short" style="font-size: 1.2em;"></div>
                                 </div>
                             </div>
                             <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addCRID()"><i class="fa fa-plus"></i> Add New CRID </button>
@@ -57,7 +60,7 @@
                                 <div ht-widget-header title="Permits" allow-collapse="true"></div>
                                 <div class="widget-content text-left text-info">
                                     <p><i class="fa fa-database"></i><strong> USPS Registered Permits ({{vm.permitCount}})</strong></p>
-                                    <div ui-grid="permitsGridOptions" class="grid short"></div>
+                                    <div ui-grid="permitsGridOptions" class="grid short" style="font-size: 1.2em;"></div>
                                 </div>
                             </div>
                             <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addPermit()"><i class="fa fa-plus"></i> Add New Permit </button>
@@ -67,7 +70,7 @@
                                 <div ht-widget-header title="Mailer ID&#39s" allow-collapse="true"></div>
                                 <div class="widget-content text-left text-info">
                                     <p><i class="fa fa-database"></i><strong> USPS Registered Mailer ID&#39s ({{vm.mailerIdCount}})</strong></p>
-                                    <div ui-grid="mailerIdsGridOptions" class="grid short"></div>
+                                    <div ui-grid="mailerIdsGridOptions" class="grid short" style="font-size: 1.2em;"></div>
                                 </div>
                             </div>
                             <button class="btn btn-success" style="margin-left: 0px;" ng-click="vm.addMailerId()"><i class="fa fa-plus"></i> Add New Mailer ID </button>

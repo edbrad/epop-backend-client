@@ -74,6 +74,12 @@
             refreshMap();
         };
         
+        vm.historyGroupStatus = {     // to track accordian open/close status
+            open: true
+        }
+        vm.cridPermitMidGroupStatus = {     // to track accordian open/close status
+            open: false
+        }
         // initialize UI Grid layout/formatting/printing options for displaying related eDoc Statements
         $scope.cridsEDocStatementsOptions = {
             paginationPageSizes: [8, 32, 96],

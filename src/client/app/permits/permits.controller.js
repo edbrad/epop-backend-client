@@ -32,9 +32,9 @@
             paginationPageSizes: [8, 32, 96],
             rowHeight: 40,
             columnDefs:[
-                {name: 'PermitNumber', displayName: 'Permit #'},
+                {name: 'PermitNumber', displayName: 'Permit #', width: 100},
                 {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Permit Holder / Mail Owner',
-                 cellTemplate: '<div class="ui-grid-cell-contents" tooltip-placement="bottom" uib-tooltip="View the Mail Owner Details" style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.mailOwnerId })">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</a></div>'},
+                 cellTemplate: '<div class="ui-grid-cell-contents" tooltip-placement="bottom" uib-tooltip="View the Mail Owner Details" style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.mailOwnerId })">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</a></div>', width: 300},
                
                 {name: 'PermitCity', displayName: 'Permit City'},
                 {name: 'PermitState', displayName: 'Permit State'},

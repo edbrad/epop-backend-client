@@ -63,12 +63,12 @@
             rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 200},
-                {name: 'Description', displayName: 'Description', width: "*"},
-                {name: 'MailDate', displayName: 'Mail Date', width: "*", cellFilter: 'DateReformatFilter'},
-                {name: 'PermitNumber', displayName: 'Permit #', width: "*" },
-                {name: 'TotalPieceCount', displayName: 'Pieces', width: "*", cellFilter: 'number: 0'},
-                {name: 'TotalPostage', displayName: 'Postage', width: "*", cellFilter: 'currency:"$" : 3' }
+                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 130},
+                {name: 'Description', displayName: 'Description', width: 440},
+                {name: 'MailDate', displayName: 'Mail Date', width: 100, cellFilter: 'DateReformatFilter'},
+                {name: 'PermitNumber', displayName: 'Permit #', width: 90 },
+                {name: 'TotalPieceCount', displayName: 'Pieces', width: 120, cellFilter: 'number: 0'},
+                {name: 'TotalPostage', displayName: 'Postage', width: 120, cellFilter: 'currency:"$" : 3' }
                 
             ],
             enableGridMenu: true,
@@ -85,7 +85,7 @@
             exporterPdfDefaultStyle: {fontSize: 9},
             exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
             exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: { text: "EMS EPOP Backend Client - USPS Registered Mail Owners", style: 'headerStyle', alignment: 'center', margin: [2, 12] },
+            exporterPdfHeader: { text: "EMS EPOP Backend Client - eDoc Statements", style: 'headerStyle', alignment: 'center', margin: [2, 12] },
             exporterPdfFooter: function ( currentPage, pageCount ) {
                 return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle', alignment: 'center' };
             },

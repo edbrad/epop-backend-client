@@ -82,11 +82,11 @@
         }
         // initialize UI Grid layout/formatting/printing options for displaying related eDoc Statements
         $scope.cridsEDocStatementsOptions = {
-            paginationPageSizes: [8, 32, 96],
+            paginationPageSizes: [10, 20, 100],
             rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px;" ><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 150},
+                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" tooltip-append-to-body="true"  uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px;" ><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 150},
                 {field: 'Description', displayName: 'Description', width: "*"},
                 {field: 'MailOwnerCRID', displayName: 'CRID', width: 95},
                 {field: 'MailDate', displayName: 'Mail Date', width: 120, cellFilter: 'DateReformatFilter'},

@@ -26,11 +26,11 @@
                     
         // initialize UI Grid layout/formatting options                            
         $scope.gridOptions = {
-            paginationPageSizes: [8, 32, 96],
+            paginationPageSizes: [10, 20, 100],
             rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Name', displayName: 'Owner Name', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Mail Owner Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="mailOwnerDetail({ id: row.entity.id })">{{ row.entity.Name }}</a></div>', width: 200},
+                {field: 'Name', displayName: 'Owner Name', cellTemplate: '<div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Mail Owner Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="mailOwnerDetail({ id: row.entity.id })">{{ row.entity.Name }}</a></div>', width: 200},
                 {name: 'Address1', displayName: 'Address 1', width: "*"},
                 {name: 'Address2', displayName: 'Address 2', width: "*"},
                 {name: 'City', displayName: 'City', width: "*" },

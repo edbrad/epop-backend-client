@@ -59,11 +59,11 @@
                    
         // initialize UI Grid layout/formatting options                            
         $scope.gridOptions = {
-            paginationPageSizes: [8, 32, 96],
+            paginationPageSizes: [10, 20, 100],
             rowHeight: 40,
             columnDefs:[
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 130},
+                {field: 'Statement_ID', displayName: 'Statement ID', cellTemplate: '<div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Statement Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="statementDetail({ id: row.entity.id })">{{ row.entity.Statement_ID }}</a></div>', width: 130},
                 {name: 'Description', displayName: 'Description', width: "*"},
                 {name: 'MailDate', displayName: 'Mail Date', width: 100, cellFilter: 'DateReformatFilter'},
                 {name: 'PermitNumber', displayName: 'Permit #', width: 90 },

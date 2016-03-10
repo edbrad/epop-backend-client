@@ -26,12 +26,12 @@
         
         // initialize UI Grid layout/formatting options
         $scope.gridOptions = {
-            paginationPageSizes: [8, 32, 96],
+            paginationPageSizes: [10, 20, 100],
             rowHeight: 40,
             columnDefs:[
                 {name: 'MailerID', displayName: 'Mailer ID'},
-                {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Mail Owner Name',
-                 cellTemplate: '<div style="padding: 5px;">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</div>'},
+                {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Mail Owner',
+                 cellTemplate: '<div class="ui-grid-cell-contents" tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Mail Owner Details" style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.mailOwnerId })">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</a></div>', width: 300},
                 {name: 'MailerName', displayName: 'Mailer Name'},
                 {name: 'MailerAddress1', displayName: 'Mailer Address 1'},
                 {name: 'MailerAddress2', displayName: 'Mailer Address 2'},

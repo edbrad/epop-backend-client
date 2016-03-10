@@ -17,10 +17,10 @@
                                         <form name="importEdocStatementForm">
                                             <fieldset>
                                                 <legend>eDoc Statement File</legend>
-                                                <span class="btn btn-primary btn-file">
+                                                <span class="btn btn-primary btn-file" style="font-size:2em; margin-top: 10px; margin-left: 0px;">
                                                     Choose JSON File <input id="JSONInputFile" type="file" onchange="angular.element(this).scope().onFileUpload(this)">
                                                 </span>
-                                                <span ng-show="vm.inputFileName">CURRENT FILE: <b>{{vm.inputFileName}}</b></span>
+                                                <div style="font-size:2em; margin-top: 10px; margin-left: 0px;" ng-show="vm.inputFileName">CURRENT FILE: <b>{{vm.inputFileName}}</b></div>
                                             </fieldset>
                                         </form> 
                                         <div ng-show="vm.showInputStatements" class="col-lg-12 col-xs-12">

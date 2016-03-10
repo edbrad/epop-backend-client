@@ -5,9 +5,27 @@
                 <div class="widget wviolet">
                     <div ht-widget-header title="{{vm.title}}" allow-collapse="true"></div>
                     <div class="widget-content text-left text-info" style="display:inline-block; width: 100%">
-                       <div class="col-lg-4 col-xs-12" ng-repeat="r in vm.dailyRuns">
-                          {{r.Daily_ID}} 
-                    </div>
+                       
+                    <uib-accordion close-others="false">
+                        <!--Daily Run Summary-->
+                        <uib-accordion-group is-open="true">
+                            <uib-accordion-heading>
+                                <span ng-click="vm.summaryGroupStatus.open = !vm.summaryGroupStatus.open"><i class="fa fa-2x fa-calendar"></i><b> Daily Run Summary</b></span>
+                                <i class="pull-right glyphicon" ng-click="vm.summaryGroupStatus.open = !vm.summaryGroupStatus.open" ng-class="{'glyphicon-chevron-down': vm.summaryGroupStatus.open, 'glyphicon-chevron-right': !vm.summaryGroupStatus.open}"></i>
+                            </uib-accordion-heading>
+                            
+                        </uib-accordion-group>
+                        <!--Daily Run History-->
+                        <uib-accordion-group is-open="false">
+                            <uib-accordion-heading>
+                                <span ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open"><i class="fa fa-2x fa-history"></i><b> Daily Run History</b></span>
+                                <i class="pull-right glyphicon" ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open" ng-class="{'glyphicon-chevron-down': vm.historyGroupStatus.open, 'glyphicon-chevron-right': !vm.historyGroupStatus.open}"></i>
+                            </uib-accordion-heading>
+                            <div class="col-lg-4 col-xs-12" ng-repeat="r in vm.dailyRuns">
+                                {{r.Daily_ID}} 
+                            </div>
+                        </uib-accordion-group>
+                    </uib-accordion>
                 </div>
             </div>
         </div>

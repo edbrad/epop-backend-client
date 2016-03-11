@@ -5,7 +5,7 @@
     angular
         .module('app.statements', ['lbServices', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.autoResize', 'app.dialogsService', 'jkuri.datepicker'])
         .controller('StatementsController', StatementsController)
-        .filter('DateReformatFilter', DateReformatFilter);;
+        .filter('DateReformatFilter', DateReformatFilter);
         
     StatementsController.$inject = ['$q', 'MailOwner', 'EDocStatement', 'logger', '$scope', 'dialogsService', '$state', '$stateParams', '$timeout'];
     /* @ngInject */

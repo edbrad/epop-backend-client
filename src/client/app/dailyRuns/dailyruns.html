@@ -10,10 +10,39 @@
                         <!--Daily Run Summary-->
                         <uib-accordion-group is-open="true">
                             <uib-accordion-heading>
-                                <span ng-click="vm.summaryGroupStatus.open = !vm.summaryGroupStatus.open"><i class="fa fa-2x fa-calendar"></i><b> Daily Run Summary</b></span>
+                                <span ng-click="vm.summaryGroupStatus.open = !vm.summaryGroupStatus.open"><i class="fa fa-2x fa-calendar"></i><b> Daily Run Overview</b></span>
                                 <i class="pull-right glyphicon" ng-click="vm.summaryGroupStatus.open = !vm.summaryGroupStatus.open" ng-class="{'glyphicon-chevron-down': vm.summaryGroupStatus.open, 'glyphicon-chevron-right': !vm.summaryGroupStatus.open}"></i>
                             </uib-accordion-heading>
-                            
+                            <div class="col-lg-4 col-xs-12">
+                                <br>
+                                <table style="font-size: 1.5em;" class="table table-bordered table-striped table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Total Runs: </b></td>
+                                            <td><b>{{vm.numberFormat(vm.dailyRuns.length)}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Pieces:</td>
+                                            <td>{{vm.numberFormat(vm.allPieceCount)}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Avg. Pieces Per Day:</td>
+                                            <td>{{vm.numberFormat(vm.allPieceCount/vm.dailyRuns.length)}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Statements:</td>
+                                            <td>{{vm.numberFormat(vm.statements.length)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-lg-4 col-xs-12">
+                                <h4 style="text-align: center;"><b>Rate Type Distribution</b></h4>
+                                
+                                <canvas id="pie" class="chart chart-pie" chart-legend="false" chart-data="vm.pieData" chart-labels="vm.pieLabels" chart-colours="vm.pieColors", chart-options="vm.pieOptions">
+                                </canvas>
+                                
+                            </div>
                         </uib-accordion-group>
                         <!--Daily Run History-->
                         <uib-accordion-group is-open="false">
@@ -21,8 +50,12 @@
                                 <span ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open"><i class="fa fa-2x fa-history"></i><b> Daily Run History</b></span>
                                 <i class="pull-right glyphicon" ng-click="vm.historyGroupStatus.open = !vm.historyGroupStatus.open" ng-class="{'glyphicon-chevron-down': vm.historyGroupStatus.open, 'glyphicon-chevron-right': !vm.historyGroupStatus.open}"></i>
                             </uib-accordion-heading>
-                            <div class="col-lg-4 col-xs-12" ng-repeat="r in vm.dailyRuns">
+                            <!--<div class="col-lg-4 col-xs-12" ng-repeat="r in vm.dailyRuns">
                                 {{r.Daily_ID}} 
+                            </div>-->
+                            <div ui-grid="gridOptions" ng-if="!refresh" external-scopes="gridModel" 
+                            ui-grid-pagination  ui-grid-resize-columns ui-grid-move-columns ui-grid-selection 
+                            ui-grid-exporter ui-grid-auto-resize class="grid" style="font-size: 1.2em;">
                             </div>
                         </uib-accordion-group>
                     </uib-accordion>

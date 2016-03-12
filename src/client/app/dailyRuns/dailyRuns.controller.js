@@ -63,7 +63,9 @@
             paginationPageSizes: [10, 20, 100],
             rowHeight: 40,
             columnDefs:[
-                {name: 'Daily_ID', displayName: 'Daily Run ID', width: "*"},
+                
+                {name: 'id', displayName: 'ID', visible: false },
+                {field: 'Daily_ID', displayName: 'Daily Run ID', cellTemplate: '<div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Daily Run Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="dailyRunDetails({ id: row.entity.id })">{{ row.entity.Daily_ID }}</a></div>', width: "*"},
                 {name: 'StatementCount', displayName: '# of Statements', width: 150},
                 {name: 'MailDate', displayName: 'Mail Date', width: 110, cellFilter: 'DateReformatFilter'},
                 {name: 'TotalPieceCount', displayName: 'Pieces', width: 120, cellFilter: 'number: 0'},

@@ -8,6 +8,7 @@
         'app.admin',
         'app.dashboard',
         'app.dailyruns',
+        'app.dailyRunDetails',
         'app.mailOwnerDetail',
         'app.mailOwners',
         'app.CRIDs',

@@ -15,10 +15,11 @@
     function getStates() {
         return [
             {
+                // display Daily Run information
                 state: 'dailyruns',
                 config: {
                     url: '/dailyruns',
-                    templateUrl: 'app/dailyRuns/dailyruns.html',
+                    templateUrl: 'app/dailyRuns/dailyRuns.html',
                     controller: 'DailyRunsController',
                     controllerAs: 'vm',
                     title: 'Daily Runs',
@@ -26,6 +27,17 @@
                         nav: 9,
                         content: '<i class="fa fa-2x fa-calendar"></i> Daily Runs'
                     }
+                }
+            },
+            {
+                // display Daily Run details
+                state: 'dailyRunDetails',
+                config: {
+                    url: '/dailyRunDetails/:id',
+                    templateUrl: 'app/dailyRuns/dailyRunDetails.html',
+                    controller: 'DailyRunDetailsController',
+                    controllerAs: 'vm',
+                    title: 'Daily Run Details',
                 }
             }
         ];

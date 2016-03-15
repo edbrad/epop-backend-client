@@ -7,10 +7,10 @@
         .controller('DailyRunsController', DailyRunsController)
         .filter('DateReformatFilter', DateReformatFilter);
 
-    DailyRunsController.$inject = ['logger', '$scope', '$timeout', '$http',  '$q', 'EDocStatement'];
+    DailyRunsController.$inject = ['logger', '$scope', '$timeout', '$http',  '$q', 'EDocStatement', '$rootScope', '$state'];
     
     /* @ngInject */
-    function DailyRunsController(logger, $scope, $timeout, $http, $q, EDocStatement) {
+    function DailyRunsController(logger, $scope, $timeout, $http, $q, EDocStatement, $rootScope, $state) {
         // establish view model
         var vm = this;
         
@@ -29,7 +29,7 @@
             open: true
         }
         vm.historyGroupStatus = {     // to track accordian open/close status
-            open: false
+            open: true
         }
         
         vm.totalFP_PI_PieceCount = 0;
@@ -58,19 +58,27 @@
             
         };
         
+        $scope.showDailyRunDetails = function(dailyID, mailDate){
+            /*alert("Hello Details!");*/
+            $rootScope.dailyRun = {
+                'dailyID': dailyID,
+                'mailDate': mailDate
+            };
+            $state.go('dailyRunDetails');  
+        };
+        
         // initialize UI Grid layout/formatting options                            
         $scope.gridOptions = {
             paginationPageSizes: [10, 20, 100],
             rowHeight: 40,
             columnDefs:[
-                
                 {name: 'id', displayName: 'ID', visible: false },
-                {field: 'Daily_ID', displayName: 'Daily Run ID', cellTemplate: '<div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Daily Run Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="dailyRunDetails({ id: row.entity.id })">{{ row.entity.Daily_ID }}</a></div>', width: "*"},
+                /*{field: 'Daily_ID', displayName: 'Daily Run ID', cellTemplate: '<div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Daily Run Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ui-sref="dailyRunDetails({ id: row.entity.Daily_ID})">{{ row.entity.Daily_ID }}</a></div>', width: "*"},*/
+                {field: 'Daily_ID', displayName: 'Daily Run ID', cellTemplate: '<div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Daily Run Details" class="ui-grid-cell-contents" style="padding: 5px; a:hover{color:red; background-color:blue; text-decoration:underline};"><a ng-click="grid.appScope.showDailyRunDetails(row.entity.Daily_ID, row.entity.MailDate)">{{ row.entity.Daily_ID }}</a></div>', width: "*"},
                 {name: 'StatementCount', displayName: '# of Statements', width: 150},
                 {name: 'MailDate', displayName: 'Mail Date', width: 110, cellFilter: 'DateReformatFilter'},
                 {name: 'TotalPieceCount', displayName: 'Pieces', width: 120, cellFilter: 'number: 0'},
-                {name: 'TotalPostage', displayName: 'Postage', width: 120, cellFilter: 'currency:"$" : 3' }
-                
+                {name: 'TotalPostage', displayName: 'Postage', width: 120, cellFilter: 'currency:"$" : 3' }  
             ],
             enableGridMenu: true,
             enableFiltering: true,
@@ -126,13 +134,13 @@
                 });
         }
         
-        // build a list of unique Daily Runs
+        // build a list of unique Daily Runs // TODO: refactor into a Daily Run Service 
         function buildDailyRunsList(){
             vm.dailyRuns = [];
             var r = -1;
             for (var i = 0; i < (vm.statements.length); i++) {
                 // check if the Daily Run exists
-                r = lookupDailyID(vm.statements[i].Daily_ID);
+                r = lookupDailyID(vm.statements[i].Daily_ID, vm.statements[i].MailDate);
                 
                 // if not, create a new run
                 if (r === -1){
@@ -190,12 +198,15 @@
                     vm.totalNP_MT_PieceCount += vm.statements[i].NP_MT_PieceCount;
                 }
             }
-            logger.log("Unique Daily Runs: " + JSON.stringify(vm.dailyRuns)) 
+            logger.log("Unique Daily Runs: " + JSON.stringify(vm.dailyRuns))
+            
+            // save Daily Runs on the root scope for access from the dailyRunDetails Controller
+            $rootScope.dailyRuns = vm.dailyRuns;  
         }
         // search for a given Daily_ID. If found, return the index (-1 = not found)
-        function lookupDailyID(dailyId){
+        function lookupDailyID(dailyId, mailDate){
             for (var i = 0; i < vm.dailyRuns.length; i++) {
-                if (vm.dailyRuns[i].Daily_ID == dailyId) {
+                if ((vm.dailyRuns[i].Daily_ID == dailyId) && (vm.dailyRuns[i].MailDate == mailDate)) {
                     return i;
                 }
             }
@@ -205,12 +216,6 @@
         // collect data for charts
         function buildChartData(){
             vm.pieData = [];
-            /*vm.pieData.push(vm.totalFP_PI_PieceCount);
-            vm.pieData.push(vm.totalFP_ST_PieceCount);
-            vm.pieData.push(vm.totalFP_MT_PieceCount);
-            vm.pieData.push(vm.totalNP_PI_PieceCount);
-            vm.pieData.push(vm.totalNP_ST_PieceCount);
-            vm.pieData.push(vm.totalNP_MT_PieceCount);*/
             vm.allPieceCount = vm.totalFP_PI_PieceCount + vm.totalFP_ST_PieceCount + vm.totalFP_MT_PieceCount +
                                vm.totalNP_PI_PieceCount + vm.totalNP_ST_PieceCount + vm.totalNP_MT_PieceCount;
             vm.FP_PI_PieceCountPct = numeral(vm.totalFP_PI_PieceCount / vm.allPieceCount).format('0.000%').replace('%','');
@@ -225,7 +230,6 @@
             vm.pieData.push(vm.NP_PI_PieceCountPct);
             vm.pieData.push(vm.NP_ST_PieceCountPct);
             vm.pieData.push(vm.NP_MT_PieceCountPct);
-            
         }
         
         // format numbers (piece counts) w/ comma's (numeralJS library)

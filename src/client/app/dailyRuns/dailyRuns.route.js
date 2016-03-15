@@ -33,7 +33,7 @@
                 // display Daily Run details
                 state: 'dailyRunDetails',
                 config: {
-                    url: '/dailyRunDetails/:id',
+                    url: '/dailyRunDetails/',
                     templateUrl: 'app/dailyRuns/dailyRunDetails.html',
                     controller: 'DailyRunDetailsController',
                     controllerAs: 'vm',

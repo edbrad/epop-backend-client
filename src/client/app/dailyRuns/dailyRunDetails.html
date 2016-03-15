@@ -5,7 +5,204 @@
 			<hr>
 		</div> 
         <div class="container" id="dailyRunDetails">
-            
+            <div class="row" style="margin-bottom: 10px; margin-left: 0px;">
+                </div>
+                    <h1><b>Daily Run Details</b></h1>
+                    <h2>Daily Run ID: <b>{{vm.dailyRunId}}</b></h2>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row">
+                    <div class="col-lg-3 col-xs-12">
+                        <h3>Statement Count: <b>{{vm.statements.length}}</b></h3></span>
+                    </div>
+                    <div class="col-lg-9 col-xs-12" style="margin-bottom: 10px;">
+                        <div class="btn-group">
+                            <label class="btn" ng-class="{'btn-default' : vm.sortStatement, 'btn-warning' : !vm.sortStatement}" 
+                            ng-click="vm.setOrder('Statement_ID')" ng-model="radioModel" uib-btn-radio="'Order By Statment ID'" 
+                            uncheckable><i class="fa fa-sort-up" ng-show="vm.sortStatement"></i>Order By Statment ID</label>
+                            <label class="btn" ng-class="{'btn-default' : vm.sortDescription, 'btn-warning' : !vm.sortDescription}" 
+                            ng-click="vm.setOrder('Description')"ng-model="radioModel" uib-btn-radio="'Order By Customer/Scheme'" 
+                            uncheckable><i class="fa fa-sort-up" ng-show="vm.sortDescription"></i>Order By Customer/Scheme</label>
+                        </div>
+                    </div>
+                </div>
+                <uib-accordion close-others="false">
+                    <uib-accordion-group is-open="false" ng-repeat="s in vm.statements | orderBy: vm.order">
+                        <uib-accordion-heading ng-click="vm.getPostageDetails(s)">
+                            <i class="glyphicon" ng-click="s.accordionGroupStatus.open = !s.accordionGroupStatus.open" 
+                            ng-class="{'glyphicon-chevron-down': s.accordionGroupStatus.open, 'glyphicon-chevron-right': !s.accordionGroupStatus.open}"></i>
+                            <span ng-click="s.accordionGroupStatus.open = !s.accordionGroupStatus.open">Statement ID: <b>{{s.Statement_ID}}</b></span>
+                            <span ng-click="s.accordionGroupStatus.open = !s.accordionGroupStatus.open" class="pull-right">{{s.Description}}</b></span>
+                        </uib-accordion-heading>
+                        <div class="row">
+                            <div class="col-lg-4 col-xs-12">
+                                <div class="widget wblue">
+                                    <div ht-widget-header title="PERMIT HOLDER" allow-collapse="true"></div>
+                                    <div style="font-size: 1.2em;" class="widget-content text-left text-info">
+                                        <b>Permit Number: </b>{{s.PermitNumber}} <b>CRID: </b>{{s.PermitHolderCRID}}
+                                        <br>
+                                        <br><b>{{s.PermitHolderName}}</b>
+                                        <br>{{s.PermitHolderAddress1}}
+                                        <br>{{s.PermitHolderAddress2}}&nbsp
+                                        <br>{{s.PermitHolderCity}}, {{s.PermitHolderState}} {{s.PermitHolderZipCode}}
+                                        <br>{{s.PermitHolderPhone}}&nbsp
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-12">
+                                <div class="widget wblue">
+                                    <div ht-widget-header title="MAIL PREPARER" allow-collapse="true"></div>
+                                    <div style="font-size: 1.2em;" class="widget-content text-left text-info">
+                                        <b>CRID: </b>{{s.MailPreparerCRID}}
+                                        <br><b>{{s.MailPreparerName}}</b>
+                                        <br>{{s.MailPreparerAddress1}}
+                                        <br>{{s.MailPreparerAddress2}}&nbsp
+                                        <br>{{s.MailPreparerCity}}, {{s.MailPreparerState}} {{s.MailPreparerZipCode}}
+                                        <br>{{s.MailPreparerPhone}}&nbsp
+                                        <br>&nbsp
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-12">
+                                <div class="widget wblue">
+                                    <div ht-widget-header title="MAIL OWNER" allow-collapse="true"></div>
+                                    <div style="font-size: 1.2em;" class="widget-content text-left text-info">
+                                        <b>CRID: </b>{{s.MailOwnerCRID}}
+                                        <br><b>{{s.MailOwnerName}}</b>
+                                        <br>{{s.MailOwnerAddress1}}
+                                        <br>{{s.MailOwnerAddress2}}&nbsp
+                                        <br>{{s.MailOwnerCity}}, {{s.MailOwnerState}} {{s.MailOwnerZipCode}}
+                                        <br>{{s.MailOwnerPhone}}&nbsp
+                                        <br>&nbsp
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-xs-12">
+                                <div class="widget wblue">
+                                    <div ht-widget-header title="POSTAGE SUMMARY" allow-collapse="true"></div>
+                                    <div class="row widget-content text-left text-info">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xs-12">
+                                                <h2><b>Standard Mail</b></h2>
+                                                <table style="font-size: 1.5em;" class="table table-bordered table-striped table-responsive">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><b>Type of Postage:</b></td>
+                                                            <td ng-style="s.rateTypeStyle"><b>{{s.rateType}}</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Permit Number: </td>
+                                                            <td>{{s.PermitNumber}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-lg-6 col-xs-12">
+                                                <table style="font-size: 1.5em;" class="table table-bordered table-striped table-responsive">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><b>Total Pieces:</b></td>
+                                                            <td><b>{{vm.numberFormat(s.pieceTotal)}}</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Gross Postage:</td>
+                                                            <td>{{vm.currencyFormat(s.postageTotal)}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Full Service Pieces:</td>
+                                                            <td>{{vm.numberFormat(s.FullServicePieceCount)}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td><b>Net Postage:</b></td>
+                                                            <td><b>{{vm.currencyFormat(s.netPostage)}}</b></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3><b>Part A</b></h3> Automation Letters - 3.3 oz (0.2063 lbs.) or less
+                                        <table style="font-size: 1.2em;" class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>-</th>
+                                                    <th>Entry</th>
+                                                    <th>Price Category</th>
+                                                    <th>Price</th>
+                                                    <th># of Pieces</th>
+                                                    <th>Postage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="d in s.postageDetails_A_Filtered">
+                                                    <td>{{d.PS3602}}</td>
+                                                    <td>{{d.Entry}}</td>
+                                                    <td>{{d.Category}}</td>
+                                                    <td>{{vm.currencyFormat(d.Price)}}</td>
+                                                    <td>{{vm.numberFormat(d.Count)}}</td>
+                                                    <td>{{vm.currencyFormat(d.Postage)}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td height=30> </td>
+                                                    <td height=30> </td>
+                                                    <td height=30> </td>
+                                                    <td height=30><b>TOTALS</b></td>
+                                                    <td height=30><b>{{vm.numberFormat(s.pieceTotal_A)}}</b></td>
+                                                    <td height=30><b>{{vm.currencyFormat(s.postageTotal_A)}}</b></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <br>
+                                        <h3><b>Part B</b></h3> NonAutomation Letters - 3.3 oz (0.2063 lbs.) or less
+                                        <table style="font-size: 1.2em;" class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>-</th>
+                                                    <th>Entry</th>
+                                                    <th>Price Category</th>
+                                                    <th>Price</th>
+                                                    <th># of Pieces</th>
+                                                    <th>Postage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <tr ng-repeat="d in s.postageDetails_B_Filtered">
+                                                        <td>{{d.PS3602}}</td>
+                                                        <td>{{d.Entry}}</td>
+                                                        <td>{{d.Category}}</td>
+                                                        <td>{{vm.currencyFormat(d.Price)}}</td>
+                                                        <td>{{vm.numberFormat(d.Count)}}</td>
+                                                        <td>{{vm.currencyFormat(d.Postage)}}</td>
+                                                    </tr>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td height=30> </td>
+                                                    <td height=30> </td>
+                                                    <td height=30> </td>
+                                                    <td height=30><b>TOTALS</b></td>
+                                                    <td height=30><b>{{vm.numberFormat(s.pieceTotal_B)}}</b> </td>
+                                                    <td height=30><b>{{vm.currencyFormat(s.postageTotal_B)}}</b></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-accordion-group>
+                </uib-accordion>
+            </div>    
         </div>
     </section>
 </section>

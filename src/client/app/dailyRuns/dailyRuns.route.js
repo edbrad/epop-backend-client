@@ -25,7 +25,7 @@
                     title: 'Daily Runs',
                     settings: {
                         nav: 9,
-                        content: '<i class="fa fa-2x fa-calendar"></i> Daily Runs'
+                        content: '<i class="fa fa-2x fa-fw fa-calendar"></i> Daily Runs'
                     }
                 }
             },

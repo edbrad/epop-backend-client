@@ -24,7 +24,7 @@
                     title: 'Mailer Ids',
                     settings: {
                         //nav: 5,
-                        content: '<i class="fa fa-2x fa-envelope-o"></i> Mailer ID&#39s'
+                        content: '<i class="fa fa-2x fa-fw fa-envelope-o"></i> Mailer ID&#39s'
                     }
                 }
             },
@@ -39,7 +39,7 @@
                     title: 'Mailer Ids',
                     settings: {
                         nav: 5,
-                        content: '<i class="fa fa-2x fa-envelope-o"></i> Mailer ID&#39s'
+                        content: '<i class="fa fa-2x fa-fw fa-envelope-o"></i> Mailer ID&#39s'
                     }
                 }
             }

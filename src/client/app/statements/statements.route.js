@@ -25,7 +25,7 @@
                     title: 'eDoc Statements',
                     settings: {
                         //nav: 2,
-                        content: '<i class="fa fa-2x fa-file-text-o"></i> eDoc Statements'
+                        content: '<i class="fa fa-2x fa-fw fa-file-text-o"></i> eDoc Statements'
                     }
                 }
             },
@@ -40,7 +40,7 @@
                     title: 'eDoc Statements',
                     settings: {
                         nav: 6,
-                        content: '<i class="fa fa-2x fa-file-text-o"></i> eDoc Statements'
+                        content: '<i class="fa fa-2x fa-fw fa-file-text-o"></i> eDoc Statements'
                     }
                 }
             },

@@ -24,7 +24,7 @@
                     title: 'Admin',
                     settings: {
                         nav: 99,
-                        content: '<i class="fa fa-2x fa-clipboard"></i> Admin'
+                        content: '<i class="fa fa-2x fa-fw fa-clipboard"></i> Admin'
                     }
                 }
             }

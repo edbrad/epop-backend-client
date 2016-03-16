@@ -25,7 +25,7 @@
                     title: 'CRIDs',
                     settings: {
                         //nav: 3,
-                        content: '<i class="fa fa-2x fa-clone"></i> CRID&#39s'
+                        content: '<i class="fa fa-2x fa-fw fa-clone"></i> CRID&#39s'
                     }
                 }
             },
@@ -40,7 +40,7 @@
                     title: 'CRIDs',
                     settings: {
                         nav: 3,
-                        content: '<i class="fa fa-2x fa-clone"></i> CRID&#39s'
+                        content: '<i class="fa fa-2x fa-fw fa-clone"></i> CRID&#39s'
                     }
                 }
             }

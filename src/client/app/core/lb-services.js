@@ -3,8 +3,8 @@
 
 //var urlBase = "/api";
 //var urlBase = "http://0.0.0.0:9000/api";
-//var urlBase = "http://172.16.57.245:9000/api";
-var urlBase = "http://192.168.1.76:9000/api";
+var urlBase = "http://172.16.57.245:9000/api";
+//var urlBase = "http://192.168.1.76:9000/api";
 var authHeader = 'authorization';
 
 /**

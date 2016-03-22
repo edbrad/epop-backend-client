@@ -208,7 +208,7 @@
          */
         function deleteExistingStatements(){
             for (var i = 0; i < (vm.statements.length); i++) {
-                // delete any existing statements w/ the same Statement ID
+                // delete any existing statements w/ the same Statement ID & date
                 EDocStatement.find({ filter: { where: { and : [{Statement_ID: vm.statements[i].Statement_ID},{MailDate: vm.statements[i].MailDate} ] } } },
                     function (result) {
                         for (var x = 0; x < (result.length); x++) {

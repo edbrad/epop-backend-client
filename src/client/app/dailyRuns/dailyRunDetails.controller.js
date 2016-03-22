@@ -1,9 +1,29 @@
 /* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
-   
+    
+    /**
+     * @class app.dailRunDetails
+     * @memberOf app
+     * 
+     * @description
+     *
+     * The `dailRunDetails` module provides details for a given Daily EPOP Run.
+     * 
+     * @requires
+     *   - lbServices: provides access to the back-end database
+     *
+     */   
     angular
         .module('app.dailyRunDetails', ['lbServices'])
+        /**
+         * @ngdoc controller
+         * @name app.dailRunDetails.controller:DailyRunDetailsController
+         * @description
+         * 
+         * Controller for DailyRunDetails View
+         * 
+         */
         .controller('DailyRunDetailsController', DailyRunDetailsController);
 
     DailyRunDetailsController.$inject = ['logger', '$scope', '$timeout', '$http',  '$q', 'EDocStatement', '$stateParams'];
@@ -24,8 +44,8 @@
         vm.title = 'Daily Run Details';
         vm.dailyRun = {};
         vm.dailyRuns = [];
-        vm.dailyRunId = $scope.dailyRun.dailyID;
-        vm.dailyRunDate = $scope.dailyRun.mailDate;
+        vm.dailyRunId = $scope.dailyRun.dailyID;    // passed in via root scope
+        vm.dailyRunDate = $scope.dailyRun.mailDate; // passed in via root scope
         vm.statements = [];
         vm.statement = {};
         
@@ -46,10 +66,10 @@
         vm.netPostage = 0;
         vm.rateTypeStyle = "";
         
-        // full service discount
+        // current full service discount (standard class mail)
         var fullServiceDiscount = .001;
         
-        //
+        // work variables used for managing the sort order of statements in the View
         vm.order = "Statement_ID";
         vm.sortStatement = true;
         vm.sortDescription = false;
@@ -58,19 +78,125 @@
             vm.sortStatement = !vm.sortStatement;
             vm.sortDescription = !vm.sortDescription;
         };
-        
-        
-        vm.createPDF = function(){
-            
-        };
-        
-        // format numbers (piece counts) w/ comma's (numeralJS library)
+        /**
+         * @ngdoc method
+         * @name numberFormat
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @description
+         * 
+         * format numbers (piece counts) w/ comma's (numeralJS library)
+         */
         vm.numberFormat = function(number){
             return numeral(number).format('0,0');
         };
         
-        activate();
+        /**
+         * @ngdoc method
+         * @name numberFormat
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @description
+         * 
+         * format numbers (postage) as money (numeralJS library)
+         */ 
+        vm.currencyFormat = function(number){
+            return numeral(number).format('$0,0.000');
+        };
         
+        /**
+         * @ngdoc method
+         * @name dateFormat
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @param string date: the input date string (yyyymmdd)
+         * @return string date: the formatted date in MM/DD/YYYY format
+         * @description
+         * 
+         * format Dates
+         */ 
+        vm.dateFormat = function(date){
+            var refmtDate = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8);
+            return moment(refmtDate).format('MM/DD/YYYY');
+        };
+               
+        /**
+         * @ngdoc method
+         * @name createPDF
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @description
+         * 
+         * Generate a detailed PDF report of the selected Daily Run
+         */
+        vm.createPDF = function(){
+            // define the document layout
+            var docDefinition = {
+                // PDF meta data
+                info: {
+                    title:    'EMS EPOP Daily Run Detail Report : ' + vm.statement.Daily_ID,
+                    author:   'Executive Mailing Service - EPOP Backend Client',
+                    subject:  'EPOP Backend Client - EPOP Full Service Daily Run PDF',
+                    keywords: 'EPOP eDoc Statement Daily Run Full Service',
+                },
+                // PDF Page content
+                header:
+                    { text: 'EPOP Daily Full Service Run Report - USPS PostalOne Contingency Document', bold: true, alignment: 'center' },
+                content: [
+                    { text: ' '},
+                    { columns: [
+                       {
+                            width: '15%',
+                            stack:[  
+                                { text: 'Mail Date: ' },
+                                { text: 'Description: ' },
+                                { text: '  ' }
+                            ]
+                        },
+                        {
+                            width: '85%',
+                            stack:[
+                                { text: vm.dateFormat(vm.dailyRunDate), bold: true },
+                                { text: vm.dailyRunId, bold: true },
+                                { text: '  ' }
+                            ]
+                        }
+                    ],
+                        columnGap: 1
+                    },
+                ],
+                // PDF Page footer
+                footer: { 
+                    columns: [
+                        /*{ text: function(currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; }, alignment: 'right'}*/
+                        { text: '2016 - Executive Mailing Service', alignment: 'center' }
+                    ],
+                },
+                
+                // Global Document styles 
+                styles: {
+                    header: {
+                        fontSize: 22,
+                        bold: true
+                    },
+                    color: {
+                        fontSize: 14,
+                        color: "red"
+                    },
+                }
+            }
+            
+            // generate PDF output (from document definition object)
+            logger.log("docDefinition: " + JSON.stringify(docDefinition));
+            pdfMake.createPdf(docDefinition).open();
+            
+        };
+        
+        activate();
+        /**
+         * @ngdoc method
+         * @name activate 
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @desription 
+         * 
+         * Initialize the view
+         */
         function activate() {
             vm.dailyRunId = $scope.dailyRun.dailyID;
             vm.dailyRunDate = $scope.dailyRun.mailDate;
@@ -81,7 +207,15 @@
                 logger.info('Activated Daily Run Details View');*/
             });
         }
-        //
+        
+        /**
+         * @ngdoc method
+         * @name getDailyRun
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @desription 
+         * 
+         * Get the selected Daily Run
+         */
         function getDailyRun(){
             /*console.log("ID: " + $scope.dailyRun.dailyID);
             console.log("Date " + $scope.dailyRun.mailDate);*/
@@ -93,18 +227,14 @@
             }    
         }
         
-        // format numbers (piece counts) w/ comma's (numeralJS library)
-        vm.numberFormat = function(number){
-            return numeral(number).format('0,0');
-        };
-        
-        // format numbers (postage) as money (numeralJS library)
-        vm.currencyFormat = function(number){
-            return numeral(number).format('$0,0.000');
-        };
-        
-        
-        // get statements matching the Daily ID and Mail Date
+        /**
+         * @ngdoc method
+         * @name getEDocStatements 
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @desription 
+         * 
+         * get statements matching the Daily ID and Mail Date
+         */
         function getEDocStatements() {
             getDailyRun();
             /*console.log("daily run ID: " + $scope.dailyRun.dailyID);
@@ -171,17 +301,25 @@
                         console.log("appended statement: " + JSON.stringify(vm.statements[i]));
                     }
                     
-                    console.log("status: " + JSON.stringify(vm.statements[1].accordionGroupStatus));
+                    /*console.log("status: " + JSON.stringify(vm.statements[1].accordionGroupStatus)); */
                     logger.log("Statement count: " + vm.statements.length);
                 });
         }
         
-        // build postage details
+        /**
+         * @ngdoc method
+         * @name getPostageDetails 
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @param statement statement object containing the statement details
+         * @desription 
+         * 
+         * build postage details
+         */
         function getPostageDetails(statement){
-            
+            // store the statement object
             vm.statement = {};
             vm.statement = statement;
-            console.log("statement detail: " + JSON.stringify(statement));
+            /*console.log("statement detail: " + JSON.stringify(statement));*/
             // determine the type of statement (only counts for 1 statement type will be populated in the eDoc statement object)
             
             // For Profit
@@ -1228,7 +1366,7 @@
                 
                 break;
             }
-            
+            // return the appended statement
             return statement;
             
         }

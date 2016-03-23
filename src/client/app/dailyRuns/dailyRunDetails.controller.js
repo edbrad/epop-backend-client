@@ -53,6 +53,7 @@
         vm.mailDate = "";
         vm.rateType = "";
         vm.statementType ="";
+        vm.statementCount = 0;
         vm.postageDetails_A = [];
         vm.postageDetails_B = [];
         vm.postageDetails_A_Filtered = [];
@@ -78,6 +79,7 @@
             vm.sortStatement = !vm.sortStatement;
             vm.sortDescription = !vm.sortDescription;
         };
+        
         /**
          * @ngdoc method
          * @name numberFormat
@@ -129,6 +131,7 @@
             // define the document layout
             var docDefinition = {
                 // PDF meta data
+                pageOrientation: 'landscape',
                 info: {
                     title:    'EMS EPOP Daily Run Detail Report : ' + vm.statement.Daily_ID,
                     author:   'Executive Mailing Service - EPOP Backend Client',
@@ -137,7 +140,7 @@
                 },
                 // PDF Page content
                 header:
-                    { text: 'EPOP Daily Full Service Run Report - USPS PostalOne Contingency Document', bold: true, alignment: 'center' },
+                    { text: '\nEPOP Daily Full Service Run Report - USPS PostalOne Contingency Document', bold: true, alignment: 'center' },
                 content: [
                     { text: ' '},
                     { columns: [
@@ -146,7 +149,8 @@
                             stack:[  
                                 { text: 'Mail Date: ' },
                                 { text: 'Description: ' },
-                                { text: '  ' }
+                                { text: ' '},
+                                { text: 'Statement Count: ' }
                             ]
                         },
                         {
@@ -154,12 +158,35 @@
                             stack:[
                                 { text: vm.dateFormat(vm.dailyRunDate), bold: true },
                                 { text: vm.dailyRunId, bold: true },
-                                { text: '  ' }
+                                { text: ' '},
+                                { text: vm.numberFormat(vm.statementCount), bold: true }
                             ]
                         }
                     ],
                         columnGap: 1
                     },
+                    { text: '  ' },
+                    { canvas: [
+                            {
+                                type: 'line',
+                                x1: 0,
+                                y1: 5,
+                                x2: 770,
+                                y2: 5,
+                                lineWidth: 0.5
+                            }
+                        ]
+                    },
+                    { text: ' '},
+                    { table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            widths: [ '15%', '8%', '*', '12%', '15%', '10%' ],
+                            body: buildBody() 
+                        }
+                    },
+                    { text: ' '}
                 ],
                 // PDF Page footer
                 footer: { 
@@ -183,9 +210,8 @@
             }
             
             // generate PDF output (from document definition object)
-            logger.log("docDefinition: " + JSON.stringify(docDefinition));
-            pdfMake.createPdf(docDefinition).open();
-            
+            /*logger.log("docDefinition: " + JSON.stringify(docDefinition));*/
+            pdfMake.createPdf(docDefinition).open();           
         };
         
         activate();
@@ -229,6 +255,76 @@
         
         /**
          * @ngdoc method
+         * @name buildBody
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @desription 
+         * 
+         * Build details for report table
+         */
+        function buildBody(){
+            var header = [
+                { text: 'Statement ID', bold: true }, 
+                { text: 'Permit #', bold: true },
+                { text: 'Description', bold: true }, 
+                { text: 'Total Pieces', bold: true }, 
+                { text: 'Total Postage', bold: true }, 
+                { text: 'eInduction (Y/N)', bold: true }, 
+            ];
+            
+            // storage for statement detail table body content
+            var body = [];
+            
+            var footer = [ 
+                { text: '-', bold: true },
+                { text: '-', bold: true },
+                { text: 'TOTALS:', bold: true }, 
+                { text: vm.numberFormat(vm.pieceTotal), bold: true }, 
+                { text: vm.currencyFormat(vm.postageTotal), bold: true },
+                { text: '-', bold: true }
+            ];
+            
+            // add table header, statement details, & footer
+            body.push(header);
+            for (var i = 0; i < vm.statements.length; i++) {
+                body.push 
+                (
+                    [
+                        vm.statements[i].Statement_ID,
+                        vm.statements[i].PermitNumber,
+                        vm.statements[i].Description, 
+                        vm.numberFormat(vm.statements[i].TotalPieceCount),
+                        vm.currencyFormat(vm.statements[i].TotalPostage),
+                        "N"
+                    ]
+                );
+            }
+            body.push(footer);
+            /*logger.log('pdfMake Postage Part A body: ' + JSON.stringify(body));*/
+            return body;
+        }
+        
+        /**
+         * @ngdoc method
+         * @name sortBy 
+         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @desription 
+         * 
+         * generic JSON Array sort helper function
+         * source/reference: http://stackoverflow.com/questions/11099610/generic-way-of-sorting-json-array-by-attribute
+         */
+        function sortBy(prop) {
+            return function(a, b){
+                if( a[prop] > b[prop]){
+                    return 1;
+                }else if( a[prop] < b[prop]){
+                    return -1;
+                }
+                return 0;
+            }
+        }
+        
+        /**
+         * @ngdoc method
          * @name getEDocStatements 
          * @methodOf app.dailRunDetails.DailyRunDetailsController
          * @desription 
@@ -243,6 +339,16 @@
             EDocStatement.find({ filter: { where: { and: [{ Daily_ID: $scope.dailyRun.dailyID }, { MailDate: $scope.dailyRun.mailDate }] } } },
                 function(result) {
                     vm.statements = result;
+                    vm.statementCount = vm.statements.length;
+                    // sort the statements by id
+                    vm.statements.sort(sortBy("Statement_ID"));
+                    // sum the counts and postage
+                    vm.pieceTotal = 0;
+                    vm.postageTotal = 0;
+                    for (var i = 0; i < vm.statements.length; i++) {
+                        vm.pieceTotal += vm.statements[i].TotalPieceCount;
+                        vm.postageTotal += vm.statements[i].TotalPostage;
+                    }
                     // append accordion group status to each statement
                     for (var i = 0; i < vm.statements.length; i++) {
                         vm.statements[i].accordionGroupStatus = {
@@ -355,7 +461,7 @@
             vm.statement.postageTotal_B = 0;
             vm.statement.pieceTotal = 0;
             vm.statement.postageTotal = 0;
-            
+            //
             switch(vm.statement.statementType)
             {
                 // ------------------------------------------------------------------------------------------- 
@@ -1372,6 +1478,5 @@
         }
          
     }
-   
-   
+    
 })();

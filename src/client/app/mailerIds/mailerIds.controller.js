@@ -31,13 +31,13 @@
             columnDefs:[
                 {name: 'MailerID', displayName: 'Mailer ID'},
                 {field: 'mailOwnerId', name: 'mailOwnerId', displayName: 'Mail Owner',
-                 cellTemplate: '<div class="ui-grid-cell-contents" tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Mail Owner Details" style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.mailOwnerId })">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</a></div>', width: 300},
-                {name: 'MailerName', displayName: 'Mailer Name'},
+                 cellTemplate: '<div class="ui-grid-cell-contents" tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="View the Mail Owner Details" style="padding: 5px;"><a ui-sref="mailOwnerDetail({ id: row.entity.mailOwnerId })">{{grid.appScope.getMailOwnerName(row.entity.mailOwnerId)}}</a></div>', width: "*"},
+                /*{name: 'MailerName', displayName: 'Mailer Name'},
                 {name: 'MailerAddress1', displayName: 'Mailer Address 1'},
                 {name: 'MailerAddress2', displayName: 'Mailer Address 2'},
                 {name: 'MailerCity', displayName: 'Mailer City'},
                 {name: 'MailerState', displayName: 'Mailer State'},
-                {name: 'MailerZip5', displayName: 'Zip'},
+                {name: 'MailerZip5', displayName: 'Zip'},*/
                 {field: 'ACTION', displayname: 'ACTION', cellTemplate: '<span>' +
                                                                        '  <button class="btn btn-primary" style="margin-top: 3px;" ng-click="grid.appScope.editMailerId(row.entity.id)">' +
                                                                        '	    <i class="fa fa-edit"></i>Edit' +

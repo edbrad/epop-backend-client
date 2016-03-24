@@ -25,7 +25,7 @@
         var currentDate = new Date();
         // initialize UI Grid layout/formatting options
         $scope.gridOptions = {
-            paginationPageSizes: [8, 32, 96],
+            paginationPageSizes: [10, 20, 100],
             rowHeight: 40,
             columnDefs:[
                 {name: 'CRID', displayName: 'CRID'},

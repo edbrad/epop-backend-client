@@ -65,8 +65,6 @@
             
         function activate() {
             var promises = [
-                getMessageCount(), 
-                getPeople(), 
                 getMailOwners(), 
                 getMailOwnerCount(), 
                 getCRIDCount(), 
@@ -76,20 +74,6 @@
             ];
             return $q.all(promises).then(function() {
                 logger.info('Activated Dashboard View');
-            });
-        }
-
-        function getMessageCount() {
-            return dataservice.getMessageCount().then(function (data) {
-                vm.messageCount = data;
-                return vm.messageCount;
-            });
-        }
-
-        function getPeople() {
-            return dataservice.getPeople().then(function (data) {
-                vm.people = data;
-                return vm.people;
             });
         }
         
@@ -104,7 +88,32 @@
             EDocStatement.find(
                 function (result) {
                     vm.eDocStatements = result;
+                    buildPieChart();
                 });
+        }
+        
+        function buildPieChart(){
+            // initialize/define data fields
+            vm.pieData = [];
+            var FP_PI_Postage = 0.0;
+            var FP_ST_Postage = 0.0;
+            var FP_MT_Postage = 0.0;
+            var NP_PI_Postage = 0.0;
+            var NP_ST_Postage = 0.0;
+            var NP_MT_Postage = 0.0;
+            
+            // tally postage by rate type
+            for (var i=0; i < vm.eDocStatements.length; i++) {    
+                FP_PI_Postage += vm.eDocStatements[i].FP_PI_Postage;
+                FP_ST_Postage += vm.eDocStatements[i].FP_ST_Postage;
+                FP_MT_Postage += vm.eDocStatements[i].FP_MT_Postage;
+                NP_PI_Postage += vm.eDocStatements[i].NP_PI_Postage;
+                NP_ST_Postage += vm.eDocStatements[i].NP_ST_Postage;
+                NP_MT_Postage += vm.eDocStatements[i].NP_MT_Postage;
+            }
+            
+            // apply totals to  pie chart
+            vm.pieData = [FP_PI_Postage, FP_ST_Postage, FP_MT_Postage, NP_PI_Postage, NP_ST_Postage, NP_MT_Postage];
         }
         
         function getMailOwnerCount() {

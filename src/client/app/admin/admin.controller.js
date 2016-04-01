@@ -1,4 +1,3 @@
-/* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
     
@@ -26,8 +25,10 @@
          */
         .controller('AdminController', AdminController);
 
-    AdminController.$inject = ['logger', '$scope', '$timeout', '$http', 'fileInputService', 
-    'EDocStatement', '$q'];
+    AdminController.$inject = ['logger', '$scope', '$timeout', 
+                               '$http', 'fileInputService', 
+                               'EDocStatement', '$q'
+                              ];
     
     /* @ngInject */
     function AdminController(logger, $scope, $timeout, $http, fileInputService, EDocStatement, $q) {
@@ -43,13 +44,13 @@
         vm.statements = [];             // storage for eDoc statement JSON text records
         vm.totalPieces = 0;             // storage for display of Total Pieces represented in JSON file
         vm.totalPostage = 0.0;          // storage for display of Total Gross Postage represented in JSON file
-        vm.strTOTALS = "";              // storage for literal
+        vm.strTOTALS = '';              // storage for literal
         vm.showInputStatements = false; // to toggle display of eDoc statement information
-        vm.inputFileName = "";          // storage for input JSON file name
+        vm.inputFileName = '';          // storage for input JSON file name
         vm.accordianGroupStatus = {     // to track accordian open/close status
             open: true
-        }
-        vm.fileInputContent = "";       // storage for input file contents
+        };
+        vm.fileInputContent = '';       // storage for input file contents
         
         /**
          * @ngdoc method
@@ -63,22 +64,23 @@
         $scope.onFileUpload = function (element) {
             $scope.fileInputContent = null;
             vm.statements = [];
-            vm.strTOTALS = "";
+            vm.strTOTALS = '';
             vm.totalPieces = null;
             vm.totalPostage = null;
             vm.showInputStatements = false;
-            vm.inputFileName = "";
+            vm.inputFileName = '';
             $scope.$apply(function (scope) {
                 var file = element.files[0];
                 fileInputService.readTextFileAsync(file).then(function (fileInputContent) {
                     $scope.fileInputContent = fileInputContent;
                     processStatementData($scope.fileInputContent);
-                    var input = document.getElementById("JSONInputFile");
-                    var file = input.value.split("\\");
+                    var input = document.getElementById('JSONInputFile');
+                    var file = input.value.split('\\');
                     vm.inputFileName = file[file.length-1];
                 });
             });
-        }
+        };
+        
         /**
          * @ngdoc method
          * @name importStatements
@@ -104,13 +106,14 @@
          */
         vm.clearStatements = function(){
             vm.statements = [];
-            $('#JSONInputFile').val('');
-            vm.strTOTALS = "";
+            $('#JSONInputFile').val(''); // jshint ignore:line
+            vm.strTOTALS = '';
             vm.totalPieces = null;
             vm.totalPostage = null;
             vm.showInputStatements = false;
-            vm.inputFileName = "";
+            vm.inputFileName = '';
         };
+        
         /**
          * @ngdoc method
          * @name deleteImportStatement 
@@ -120,19 +123,20 @@
          * Delete a stored statement and deduct piece & postage counts from total
          */
         vm.deleteImportStatement = function(id, pieces, postage){
-            logger.log("removing statement w/ ID: " + id);
+            logger.log('removing statement w/ ID: ' + id);
             // deduct pieces and postage from total for imported file
             vm.totalPieces -= pieces;
             vm.totalPostage -= postage;
             // remove statement from the the list (using lodash library: http://lodash.com)
-            _.remove(vm.statements,{Statement_ID: id});
+            _.remove(vm.statements,{Statement_ID: id}); // jshint ignore:line
             // if removal results in no more statements, clear the display information altogther
-            if (vm.statements.length == 0){
+            if (vm.statements.length === 0){
                 vm.showInputStatements = false;
-                $('#JSONInputFile').val('');
-                vm.inputFileName = "";
+                $('#JSONInputFile').val(''); // jshint ignore:line
+                vm.inputFileName = '';
             }
         };
+        
         /**
          * @ngdoc method
          * @name numberFormat 
@@ -142,8 +146,9 @@
          * Format numbers (piece counts) w/ comma's (using numeralJS library: http://numeraljs.com)
          */
         vm.numberFormat = function(number){
-            return numeral(number).format('0,0');
+            return numeral(number).format('0,0'); // jshint ignore:line
         };
+        
         /**
          * @ngdoc method
          * @name currencyFormat 
@@ -153,9 +158,8 @@
          * Format numbers (postage) as money (using numeralJS library: http://numeraljs.com)
          */
         vm.currencyFormat = function(number){
-            return numeral(number).format('$0,0.000');
+            return numeral(number).format('$0,0.000'); // jshint ignore:line
         };
-        
         
         //
         activate();
@@ -171,6 +175,7 @@
         function activate() {
             logger.info('Activated Admin View');
         }
+        
         /**
          * @ngdoc method
          * @name processStatementData
@@ -194,7 +199,7 @@
                 vm.statements.push(JSONObj);
             }
             // display the summary in the view
-            vm.strTOTALS = "TOTALS";
+            vm.strTOTALS = 'TOTALS';
             vm.showInputStatements = true;
         }
         
@@ -209,14 +214,17 @@
         function deleteExistingStatements(){
             for (var i = 0; i < (vm.statements.length); i++) {
                 // delete any existing statements w/ the same Statement ID & date
-                EDocStatement.find({ filter: { where: { and : [{Statement_ID: vm.statements[i].Statement_ID},{MailDate: vm.statements[i].MailDate} ] } } },
-                    function (result) {
-                        for (var x = 0; x < (result.length); x++) {
-                            EDocStatement.deleteById({ id: result[x].id });
-                        }
-                    })
+                EDocStatement.find({ filter: { where: 
+                    { and : [{Statement_ID: vm.statements[i].Statement_ID},{MailDate: vm.statements[i].MailDate} ] } } // jshint ignore:line
+                },
+                function (result) {
+                    for (var x = 0; x < (result.length); x++) {
+                        EDocStatement.deleteById({ id: result[x].id });
+                    }
+                });
             }
         }
+        
         /**
          * @ngdoc method
          * @name addNewStatements 

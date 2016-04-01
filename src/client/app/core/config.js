@@ -1,4 +1,3 @@
-/* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
 
@@ -22,7 +21,8 @@
 
     core.config(configure);
 
-    configure.$inject = ['$logProvider', 'routerHelperProvider', 'exceptionHandlerProvider', 'uiGmapGoogleMapApiProvider'];
+    configure.$inject = ['$logProvider', 'routerHelperProvider', 
+                         'exceptionHandlerProvider', 'uiGmapGoogleMapApiProvider'];
     /* @ngInject */
     function configure($logProvider, routerHelperProvider, exceptionHandlerProvider, uiGmapGoogleMapApiProvider) {
         if ($logProvider.debugEnabled) {
@@ -31,6 +31,7 @@
         exceptionHandlerProvider.configure(config.appErrorPrefix);
         routerHelperProvider.configure({docTitle: config.appTitle + ': '});
         
+        // configure the AngularUI Google Maps API provider
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyBZt4TvdP5brTUhUdD_R7Kbnhz2pPg7YRE',
             v: '3.20',

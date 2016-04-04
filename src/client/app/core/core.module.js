@@ -27,6 +27,7 @@
         .module('app.core', [
             'ngAnimate', 'ngSanitize',
             'blocks.exception', 'blocks.logger', 'blocks.router',
-            'ui.router', 'ngplus', 'uiGmapgoogle-maps', 'app.FocusDirective', "ui.mask", 'app.PrintDirective', 'ui.bootstrap'
+            'ui.router', 'ngplus', 'uiGmapgoogle-maps', 'app.FocusDirective', 
+            'ui.mask', 'app.PrintDirective', 'ui.bootstrap'
         ]);
 })();

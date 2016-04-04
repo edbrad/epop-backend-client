@@ -11,7 +11,6 @@
      * 
      * @requires
      *   - fileInputService: reads a file from the local file system
-     *
      */
     angular
         .module('app.admin', ['app.fileInputService'])
@@ -21,7 +20,6 @@
          * @description
          * 
          * Controller for Admin View
-         * 
          */
         .controller('AdminController', AdminController);
 
@@ -56,7 +54,7 @@
          * @ngdoc method
          * @name onFileUpload
          * @methodOf app.admin.AdminController
-         * @param {Object} element - The HTML5 element
+         * @param {Object} element - The HTML5 element (<input>) containing the file to be read
          * @description
          * 
          * Return a function that reads as input file from local file system, using the file input service
@@ -117,10 +115,13 @@
         /**
          * @ngdoc method
          * @name deleteImportStatement 
-         * @methodOf app.admin:AdminController 
+         * @methodOf app.admin:AdminController
+         * @param string id - statement id (database key)
+         * @param number pieces - the total pieces represented in the statement
+         * @param number postage - the total postage represented in the statement 
          * @description
          * 
-         * Delete a stored statement and deduct piece & postage counts from total
+         * Delete a stored statement (by id/key) and deduct piece & postage counts from total
          */
         vm.deleteImportStatement = function(id, pieces, postage){
             logger.log('removing statement w/ ID: ' + id);
@@ -140,7 +141,8 @@
         /**
          * @ngdoc method
          * @name numberFormat 
-         * @methodOf app.admin:AdminController 
+         * @methodOf app.admin:AdminController
+         * @param number number - a number to be formatted
          * @description
          * 
          * Format numbers (piece counts) w/ comma's (using numeralJS library: http://numeraljs.com)
@@ -153,6 +155,7 @@
          * @ngdoc method
          * @name currencyFormat 
          * @methodOf app.admin:AdminController
+         * @param number number - a number to be formatted
          * @description
          * 
          * Format numbers (postage) as money (using numeralJS library: http://numeraljs.com)
@@ -180,6 +183,7 @@
          * @ngdoc method
          * @name processStatementData
          * @methodOf app.admin:AdminController
+         * @param {Object} json - a json array containing one or more statement objects
          * @description
          * 
          * Parse the input file's eDoc Statement JSON data into individual objects
@@ -209,7 +213,7 @@
          * @methodOf app.admin:AdminController
          * @description
          * 
-         * Delete any matching statements from the back-end Database (via LoopBack API)
+         * Delete any matching statements to be imported from the back-end Database (via LoopBack API)
          */
         function deleteExistingStatements(){
             for (var i = 0; i < (vm.statements.length); i++) {

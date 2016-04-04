@@ -68,7 +68,7 @@
         vm.rateTypeStyle = "";
         
         // current full service discount (standard class mail)
-        var fullServiceDiscount = .001;
+        var fullServiceDiscount = 0.001;
         
         // work variables used for managing the sort order of statements in the View
         vm.order = "Statement_ID";
@@ -83,7 +83,7 @@
         /**
          * @ngdoc method
          * @name numberFormat
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @description
          * 
          * format numbers (piece counts) w/ comma's (numeralJS library)
@@ -95,7 +95,7 @@
         /**
          * @ngdoc method
          * @name numberFormat
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @description
          * 
          * format numbers (postage) as money (numeralJS library)
@@ -107,9 +107,9 @@
         /**
          * @ngdoc method
          * @name dateFormat
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
-         * @param string date: the input date string (yyyymmdd)
-         * @return string date: the formatted date in MM/DD/YYYY format
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
+         * @param {string} date: the input date string (yyyymmdd)
+         * @return {string} date: the formatted date in MM/DD/YYYY format
          * @description
          * 
          * format Dates
@@ -122,7 +122,7 @@
         /**
          * @ngdoc method
          * @name createPDF
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @description
          * 
          * Generate a detailed PDF report of the selected Daily Run
@@ -218,7 +218,7 @@
         /**
          * @ngdoc method
          * @name activate 
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @desription 
          * 
          * Initialize the view
@@ -237,7 +237,7 @@
         /**
          * @ngdoc method
          * @name getDailyRun
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @desription 
          * 
          * Get the selected Daily Run
@@ -256,7 +256,7 @@
         /**
          * @ngdoc method
          * @name buildBody
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @desription 
          * 
          * Build details for report table
@@ -306,7 +306,7 @@
         /**
          * @ngdoc method
          * @name sortBy 
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @desription 
          * 
          * generic JSON Array sort helper function
@@ -326,7 +326,7 @@
         /**
          * @ngdoc method
          * @name getEDocStatements 
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
          * @desription 
          * 
          * get statements matching the Daily ID and Mail Date
@@ -350,13 +350,13 @@
                         vm.postageTotal += vm.statements[i].TotalPostage;
                     }
                     // append accordion group status to each statement
-                    for (var i = 0; i < vm.statements.length; i++) {
+                    for (i = 0; i < vm.statements.length; i++) {
                         vm.statements[i].accordionGroupStatus = {
                             open: false
                         };  
                     }
                     // append Postage Details to each statement object
-                    for (var i = 0; i < vm.statements.length; i++) {
+                    for (i = 0; i < vm.statements.length; i++) {
                         vm.statements[i] = getPostageDetails(vm.statements[i]);
                         // get filtered counts (greater than 0 pieces)
                         vm.statements[i].postageDetails_A_Filtered = vm.statements[i].postageDetails_A.filter(function(el){
@@ -415,8 +415,8 @@
         /**
          * @ngdoc method
          * @name getPostageDetails 
-         * @methodOf app.dailRunDetails.DailyRunDetailsController
-         * @param statement statement object containing the statement details
+         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
+         * @param {statement} statement object containing the statement details
          * @desription 
          * 
          * build postage details

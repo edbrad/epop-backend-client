@@ -53,7 +53,7 @@
         /**
          * @ngdoc method
          * @name onFileUpload
-         * @methodOf app.admin.AdminController
+         * @methodOf app.admin.controller:AdminController
          * @param {Object} element - The HTML5 element (<input>) containing the file to be read
          * @description
          * 
@@ -82,7 +82,7 @@
         /**
          * @ngdoc method
          * @name importStatements
-         * @methodOf app.admin:AdminController 
+         * @methodOf app.admin.controller:AdminController 
          * @description
          * 
          * Import statements into back-end Database (via LoopBack API)
@@ -97,7 +97,7 @@
         /**
          * @ngdoc method
          * @name clearStatements
-         * @methodOf app.admin:AdminController 
+         * @methodOf app.admin.controller:AdminController 
          * @decription
          * 
          * Clear statement storage and tallied totals
@@ -115,10 +115,10 @@
         /**
          * @ngdoc method
          * @name deleteImportStatement 
-         * @methodOf app.admin:AdminController
-         * @param string id - statement id (database key)
-         * @param number pieces - the total pieces represented in the statement
-         * @param number postage - the total postage represented in the statement 
+         * @methodOf app.admin.controller:AdminController 
+         * @param {string} id - statement id (database key)
+         * @param {number} pieces - the total pieces represented in the statement
+         * @param {number} postage - the total postage represented in the statement 
          * @description
          * 
          * Delete a stored statement (by id/key) and deduct piece & postage counts from total
@@ -141,8 +141,8 @@
         /**
          * @ngdoc method
          * @name numberFormat 
-         * @methodOf app.admin:AdminController
-         * @param number number - a number to be formatted
+         * @methodOf app.admin.controller:AdminController 
+         * @param {number} number - a number to be formatted
          * @description
          * 
          * Format numbers (piece counts) w/ comma's (using numeralJS library: http://numeraljs.com)
@@ -154,8 +154,8 @@
         /**
          * @ngdoc method
          * @name currencyFormat 
-         * @methodOf app.admin:AdminController
-         * @param number number - a number to be formatted
+         * @methodOf app.admin.controller:AdminController 
+         * @param {number} number - a number to be formatted
          * @description
          * 
          * Format numbers (postage) as money (using numeralJS library: http://numeraljs.com)
@@ -170,7 +170,7 @@
         /**
          * @ngdoc method
          * @name activate 
-         * @methodOf app.admin:AdminController
+         * @methodOf app.admin.controller:AdminController 
          * @desription 
          * 
          * Initialize the view
@@ -182,7 +182,7 @@
         /**
          * @ngdoc method
          * @name processStatementData
-         * @methodOf app.admin:AdminController
+         * @methodOf app.admin.controller:AdminController 
          * @param {Object} json - a json array containing one or more statement objects
          * @description
          * 
@@ -210,7 +210,7 @@
         /**
          * @ngdoc method
          * @name deleteExistingStatements 
-         * @methodOf app.admin:AdminController
+         * @methodOf app.admin.controller:AdminController 
          * @description
          * 
          * Delete any matching statements to be imported from the back-end Database (via LoopBack API)
@@ -232,7 +232,7 @@
         /**
          * @ngdoc method
          * @name addNewStatements 
-         * @methodOf app.admin:AdminController
+         * @methodOf app.admin.controller:AdminController 
          * @description
          * 
          * Add new statements to the back-end Database (via LoopBack API)

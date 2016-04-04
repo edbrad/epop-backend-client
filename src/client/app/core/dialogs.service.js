@@ -17,8 +17,8 @@
     angular
         .module('app.dialogsService',['ui.bootstrap'])
         /**
-         * @ngdoc factory
-         * @name app.dialogsService.factory:dialogsService
+         * @ngdoc service
+         * @name app.dialogsService.service:dialogsService
          * @description
          * 
          * Factory for the Dialogs Service
@@ -54,10 +54,10 @@
         /**
          * @ngdoc method
          * @name confirm
-         * @methodOf app.dialogsService.dialogsService
-         * @param string message - Modal window message text
-         * @param string title - Modal window title text
-         * @param string[] buttons - array of Modal button text
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} message - Modal window message text
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
          * @description
          * 
          * generic confirm Modal Window
@@ -85,9 +85,9 @@
 		 /**
          * @ngdoc method
          * @name addMailOwner
-         * @methodOf app.dialogsService.dialogsService
-         * @param string title - Modal window title text
-         * @param string[] buttons - array of Modal button text
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
          * @description
          * 
          * add Mail Owner Modal Window
@@ -114,11 +114,11 @@
          /**
          * @ngdoc method
          * @name deleteMailOwner
-         * @methodOf app.dialogsService.dialogsService
-         * @param string title - Modal window title text
-         * @param string message - Modal window title text
-         * @param string[] buttons - array of Modal button text
-         * @param string id - Mailer Owner Database ID (unique key)
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {string} message - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * delete Mail Owner Modal Window
@@ -147,10 +147,10 @@
          /**
          * @ngdoc method
          * @name editMailOwner
-         * @methodOf app.dialogsService.dialogsService
-         * @param string title - Modal window title text
-         * @param string[] buttons - array of Modal button text
-         * @param string id - Mailer Owner Database ID (unique key)
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * edit Mail Owner Modal Window
@@ -178,9 +178,9 @@
          /**
          * @ngdoc method
          * @name addCRID
-         * @methodOf app.dialogsService.dialogsService
-         * @param string title - Modal window title text
-         * @param string[] message - array of Modal button text
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} message - array of Modal button text
          * @description
          * 
          * add CRID Modal Window
@@ -207,11 +207,11 @@
          /**
          * @ngdoc method
          * @name deleteCRID
-         * @methodOf app.dialogsService.dialogsService
-         * @param string title - Modal window title text
-         * @param string message - Modal window message text
-         * @param string[] buttons - array of Modal button text
-         * @param string id - Mailer Owner Database ID (unique key)
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {string} message - Modal window message text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * delete CRID Modal Window
@@ -240,7 +240,10 @@
 		 /**
          * @ngdoc method
          * @name editCRID
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * edit CRID Modal Window
@@ -268,7 +271,10 @@
          /**
          * @ngdoc method
          * @name addCRIDToMailOwner
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * add CRID to Current Mail Owner Modal Window
@@ -296,7 +302,9 @@
          /**
          * @ngdoc method
          * @name addPermit
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
          * @description
          * 
          * add Permit Modal Window
@@ -323,7 +331,11 @@
          /**
          * @ngdoc method
          * @name deletePermit
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {string} message - Modal window message text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * delete Permit Modal Window
@@ -352,7 +364,10 @@
          /**
          * @ngdoc method
          * @name editPermit
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * edit Permit Modal Window
@@ -380,7 +395,10 @@
          /**
          * @ngdoc method
          * @name addPermitToMailOwner
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * add Permit to Current Mail Owner Modal Window
@@ -408,7 +426,9 @@
          /**
          * @ngdoc method
          * @name addMailerId
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
          * @description
          * 
          * add Mailer Id Modal Window
@@ -435,7 +455,11 @@
          /**
          * @ngdoc method
          * @name deleteMailerId
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {string} message - Modal window message text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * delete Mailer Id Modal Window
@@ -464,7 +488,10 @@
          /**
          * @ngdoc method
          * @name editMailerId
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * edit Mailer Id Modal Window
@@ -492,7 +519,10 @@
          /**
          * @ngdoc method
          * @name addMailerIdToMailOwner
-         * @methodOf app.dialogsService.dialogsService
+         * @methodOf app.dialogsService.service:dialogsService
+         * @param {string} title - Modal window title text
+         * @param {array} buttons - array of Modal button text
+         * @param {string} id - Mailer Owner Database ID (unique key)
          * @description
          * 
          * add Mailer Id to Current Mail Owner Modal Window

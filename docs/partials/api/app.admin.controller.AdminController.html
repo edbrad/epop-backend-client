@@ -1,0 +1,71 @@
+<h1><code ng:non-bindable="">AdminController</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">app.admin</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="app-admin-controller-page app-admin-controller-admincontroller-page"><p>Controller for Admin View</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_activate">activate()</h3>
+<div class="activate"></div>
+</li>
+<li><h3 id="methods_addnewstatements">addNewStatements()</h3>
+<div class="addnewstatements"><div class="addnewstatements-page"><p>Add new statements to the back-end Database (via LoopBack API)</p>
+</div></div>
+</li>
+<li><h3 id="methods_clearstatements">clearStatements()</h3>
+<div class="clearstatements"></div>
+</li>
+<li><h3 id="methods_currencyformat">currencyFormat(number)</h3>
+<div class="currencyformat"><div class="currencyformat-page"><p>Format numbers (postage) as money (using numeralJS library: <a href="http://numeraljs.com">http://numeraljs.com</a>)</p>
+</div><h5 id="methods_currencyformat_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>number</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="currencyformat-page"><ul>
+<li>a number to be formatted</li>
+</ul>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_deleteexistingstatements">deleteExistingStatements()</h3>
+<div class="deleteexistingstatements"><div class="deleteexistingstatements-page"><p>Delete any matching statements to be imported from the back-end Database (via LoopBack API)</p>
+</div></div>
+</li>
+<li><h3 id="methods_deleteimportstatement">deleteImportStatement(id, pieces, postage)</h3>
+<div class="deleteimportstatement"><div class="deleteimportstatement-page"><p>Delete a stored statement (by id/key) and deduct piece &amp; postage counts from total</p>
+</div><h5 id="methods_deleteimportstatement_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>id</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="deleteimportstatement-page"><ul>
+<li>statement id (database key)</li>
+</ul>
+</div></td></tr><tr><td>pieces</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="deleteimportstatement-page"><ul>
+<li>the total pieces represented in the statement</li>
+</ul>
+</div></td></tr><tr><td>postage</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="deleteimportstatement-page"><ul>
+<li>the total postage represented in the statement</li>
+</ul>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_importstatements">importStatements()</h3>
+<div class="importstatements"><div class="importstatements-page"><p>Import statements into back-end Database (via LoopBack API)</p>
+</div></div>
+</li>
+<li><h3 id="methods_numberformat">numberFormat(number)</h3>
+<div class="numberformat"><div class="numberformat-page"><p>Format numbers (piece counts) w/ comma&#39;s (using numeralJS library: <a href="http://numeraljs.com">http://numeraljs.com</a>)</p>
+</div><h5 id="methods_numberformat_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>number</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="numberformat-page"><ul>
+<li>a number to be formatted</li>
+</ul>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_onfileupload">onFileUpload(element)</h3>
+<div class="onfileupload"><div class="onfileupload-page"><p>Return a function that reads as input file from local file system, using the file input service</p>
+</div><h5 id="methods_onfileupload_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="onfileupload-page"><ul>
+<li>The HTML5 element (<input>) containing the file to be read</li>
+</ul>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_processstatementdata">processStatementData(json)</h3>
+<div class="processstatementdata"><div class="processstatementdata-page"><p>Parse the input file&#39;s eDoc Statement JSON data into individual objects</p>
+</div><h5 id="methods_processstatementdata_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>json</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="processstatementdata-page"><ul>
+<li>a json array containing one or more statement objects</li>
+</ul>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+</div>

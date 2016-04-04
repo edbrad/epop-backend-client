@@ -5,6 +5,51 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
+      "id": "app.admin.controller:AdminController",
+      "shortName": "AdminController",
+      "type": "controller",
+      "moduleName": "app.admin",
+      "shortDescription": "Controller for Admin View",
+      "keywords": "activate add addnewstatements admin api app array back-end clear clearstatements comma controller counts currencyformat data database deduct delete deleteexistingstatements deleteimportstatement edoc element file format formatted function html5 http import imported importstatements individual initialize input json key library local loopback matching method money number numberformat numbers numeraljs objects onfileupload parse piece pieces postage processstatementdata read reads represented return service statement statements storage stored system tallied total totals view"
+    },
+    {
+      "section": "api",
+      "id": "app.admin.controller:ConfirmModalController",
+      "shortName": "ConfirmModalController",
+      "type": "controller",
+      "moduleName": "app.admin",
+      "shortDescription": "Controller for &quot;Confirm&quot; modal View",
+      "keywords": "admin api app confirm controller modal view"
+    },
+    {
+      "section": "api",
+      "id": "app.dailRunDetails.controller:DailyRunDetailsController",
+      "shortName": "DailyRunDetailsController",
+      "type": "controller",
+      "moduleName": "app.dailRunDetails",
+      "shortDescription": "Controller for DailyRunDetails View",
+      "keywords": "activate api app array build buildbody comma controller counts createpdf dailrundetails daily dailyrundetails dateformat dates detailed details format formatted function generate generic getdailyrun getedocstatements getpostagedetails helper http initialize input json library mail matching method mm money numberformat numbers object pdf postage report selected sort sortby source statement statements string table view"
+    },
+    {
+      "section": "api",
+      "id": "app.dialogsService.service:dialogsService",
+      "shortName": "dialogsService",
+      "type": "service",
+      "moduleName": "app.dialogsService",
+      "shortDescription": "Factory for the Dialogs Service",
+      "keywords": "add addcrid addcridtomailowner addmailerid addmaileridtomailowner addmailowner addpermit addpermittomailowner api app array button buttons confirm crid current database delete deletecrid deletemailerid deletemailowner deletepermit dialogs dialogsservice edit editcrid editmailerid editmailowner editpermit factory generic key mail mailer message method modal owner permit service text title window"
+    },
+    {
+      "section": "api",
+      "id": "app.fileInputService.service:fileInputService",
+      "shortName": "fileInputService",
+      "type": "service",
+      "moduleName": "app.fileInputService",
+      "shortDescription": "Factory for the fileInputService Service",
+      "keywords": "api app factory fileinputservice service"
+    },
+    {
+      "section": "api",
       "id": "lbServices",
       "shortName": "lbServices",
       "type": "overview",

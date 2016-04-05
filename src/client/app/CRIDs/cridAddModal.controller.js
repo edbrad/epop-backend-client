@@ -2,8 +2,25 @@
 (function () {
     'use strict';
 
+    /**
+     * @class app.CRIDAddModal
+     * @memberOf app
+     * 
+     * @description
+     *
+     * The `CRIDAddModal` module provides a controller for a modal window to add a USPS CRID.
+     *
+     */
     angular
         .module('app.CRIDAddModal', ['lbServices'])
+        /**
+         * @ngdoc controller
+         * @name app.admin.controller:CRIDAddModalController
+         * @description
+         * 
+         * Controller for modal View to add USPS CRID
+         * 
+         */
         .controller('CRIDAddModalController', CRIDAddModalController);
 
     CRIDAddModalController.$inject = ['$scope', '$modalInstance',
@@ -30,7 +47,15 @@
             vm.mailOwner = {};
             $modalInstance.dismiss();
         };
-        // perform 'ADD' processing (Add CRID data to the database, then close the dialog)
+        
+        /**
+         * @ngdoc method
+         * @name add
+         * @methodOf app.admin.controller:CRIDAddModalController
+         * @description
+         * 
+         * perform 'ADD' processing (Add CRID data to the database, then close the dialog)
+         */
         vm.add = function () {
             vm.submitted = true;
             if ($scope.addCRIDForm.$valid) {
@@ -45,7 +70,15 @@
                 });
             }
         };
-        // collect all available Mail Owners, to select which is to be associated with the new CRID
+        
+        /**
+         * @ngdoc method
+         * @name getMailOwners
+         * @methodOf app.admin.controller:CRIDAddModalController
+         * @description
+         * 
+         * collect all available Mail Owners, to select which is to be associated with the new CRID
+         */
         getMailOwners();
         function getMailOwners() {
             MailOwner.find(

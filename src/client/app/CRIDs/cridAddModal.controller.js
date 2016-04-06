@@ -16,8 +16,18 @@
         /**
          * @ngdoc controller
          * @name app.admin.controller:CRIDAddModalController
-         * @description
+         * @param {object} $scope: Angular Scope object
+         * @param {object} $modalInstance: Angular Bootsrap modal instance object
+         * @param {object} logger: Internal Logging Service 
+         * @param {array} data: Genertic data (button text)
+         * @param {object} MailOwner: Selected Mail Owner
+         * @param {object} CRID: Selected CRID
          * 
+         * @requires
+         * 
+         * - lbServices: Loopback API service
+         * 
+         * @description
          * Controller for modal View to add USPS CRID
          * 
          */
@@ -40,7 +50,15 @@
         vm.mailOwners = [];
         // error checking flag
         vm.submitted = false;
-        // perform 'CANCEL' processing (dismiss the Modal)
+        
+        /**
+         * @ngdoc method
+         * @name cancel
+         * @methodOf app.admin.controller:CRIDAddModalController
+         * @description
+         * 
+         * perform 'CANCEL' processing (dismiss the Modal)
+         */
         vm.cancel = function () {
             logger.warning('CRID Add Modal: cancel/dismiss');
             vm.newCRID = {};

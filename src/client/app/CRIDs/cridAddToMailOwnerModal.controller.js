@@ -2,8 +2,36 @@
 (function () {
     'use strict';
 
+    /**
+     * @class app.CRIDAddModal
+     * @memberOf app
+     * 
+     * @description
+     *
+     * The `CRIDAddModal` module provides a controller for a modal window to add a USPS CRID
+     * to a given Mail Owner.
+     *
+     */
     angular
         .module('app.CRIDAddToMailOwnerModal', ['lbServices'])
+        /**
+         * @ngdoc controller
+         * @name app.admin.controller:CRIDAddToMailOwnerModal
+         * @param {object} $scope: Angular Scope object
+         * @param {object} $modalInstance: Angular Bootsrap modal instance object
+         * @param {object} logger: Internal Logging Service 
+         * @param {array} data: Genertic data (button text)
+         * @param {object} MailOwner: Selected Mail Owner
+         * @param {object} CRID: Selected CRID
+         * 
+         * @requires
+         * 
+         * - lbServices: Loopback API service
+         * 
+         * @description
+         * Controller for modal View to add USPS CRID to a given Mail Owner
+         * 
+         */
         .controller('CRIDAddToMailOwnerModalController', CRIDAddToMailOwnerModalController);
 
     CRIDAddToMailOwnerModalController.$inject = ['$scope', '$modalInstance',
@@ -21,14 +49,30 @@
         vm.mailOwner = {};
         // error checking flag
         vm.submitted = false;
-        // perform 'CANCEL' processing (dismiss the Modal)
+        
+        /**
+         * @ngdoc method
+         * @name cancel
+         * @methodOf app.admin.controller:CRIDAddToMailOwnerModal
+         * @description
+         * 
+         * perform 'CANCEL' processing (dismiss the Modal)
+         */
         vm.cancel = function () {
             logger.warning('CRID Add Modal: cancel/dismiss');
             vm.newCRID = {};
             vm.mailOwner = {};
             $modalInstance.dismiss();
         };
-        // perform 'ADD' processing (Add CRID data to the database, then close the dialog)
+        
+        /**
+         * @ngdoc method
+         * @name add
+         * @methodOf app.admin.controller:CRIDAddToMailOwnerModal
+         * @description
+         * 
+         * perform 'ADD' processing (Add CRID data to the database, then close the dialog)
+         */
         vm.add = function () {
             vm.submitted = true;
             if ($scope.addCRIDForm.$valid) {
@@ -43,7 +87,15 @@
                 });
             }
         };
-        // collect current Mail Owner, which is to be associated with the new CRID
+        
+        /**
+         * @ngdoc method
+         * @name getMailOwners
+         * @methodOf app.admin.controller:CRIDAddModalController
+         * @description
+         * 
+         * collect all available Mail Owners, to select which is to be associated with the new CRID
+         */
         getMailOwner();
         function getMailOwner() {
             MailOwner.findById({id: vm.properties.id},

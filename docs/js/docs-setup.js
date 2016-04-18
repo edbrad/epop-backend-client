@@ -14,21 +14,84 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "app.admin.controller:ConfirmModalController",
+      "id": "app.core.controller:ConfirmModalController",
       "shortName": "ConfirmModalController",
       "type": "controller",
-      "moduleName": "app.admin",
+      "moduleName": "app.core",
       "shortDescription": "Controller for &quot;Confirm&quot; modal View",
-      "keywords": "admin api app confirm controller modal view"
+      "keywords": "api app confirm controller core modal view"
     },
     {
       "section": "api",
-      "id": "app.dailRunDetails.controller:DailyRunDetailsController",
+      "id": "app.CRIDs.controller:CRIDAddModalController",
+      "shortName": "CRIDAddModalController",
+      "type": "controller",
+      "moduleName": "app.CRIDs",
+      "shortDescription": "Controller for modal View to add USPS CRID",
+      "keywords": "$modalinstance $scope add angular api app associated bootsrap cancel close collect controller crid crids data database dialog genertic getmailowners instance internal lbservices logger logging mail mailowner method modal object owner owners perform processing scope select selected service text usps view"
+    },
+    {
+      "section": "api",
+      "id": "app.CRIDs.controller:CRIDAddToMailOwnerModal",
+      "shortName": "CRIDAddToMailOwnerModal",
+      "type": "controller",
+      "moduleName": "app.CRIDs",
+      "shortDescription": "Controller for modal View to add USPS CRID to a given Mail Owner",
+      "keywords": "add api app cancel close controller crid crids data database dialog lbservices mail method modal owner perform processing service usps view"
+    },
+    {
+      "section": "api",
+      "id": "app.CRIDs.controller:CRIDDeleteModal",
+      "shortName": "CRIDDeleteModal",
+      "type": "controller",
+      "moduleName": "app.CRIDs",
+      "shortDescription": "Controller for modal View to add USPS CRID",
+      "keywords": "$modalinstance $scope add angular api app bootsrap controller crid crids data genertic instance internal lbservices logger logging modal object scope selected service text usps view"
+    },
+    {
+      "section": "api",
+      "id": "app.CRIDs.controller:CRIDEditModal",
+      "shortName": "CRIDEditModal",
+      "type": "controller",
+      "moduleName": "app.CRIDs",
+      "shortDescription": "Controller for modal View to add USPS CRID to a given Mail Owner",
+      "keywords": "$modalinstance $q $scope add angular api app asociated associated asychronous bootsrap cancel close collect controller crid crids data database dialog display edit form genertic getcrid getmailowners instance internal lbservices logger logging mail mailowner method modal object owner owners perform process processing scope select selected service text update usps view"
+    },
+    {
+      "section": "api",
+      "id": "app.CRIDs.controller:CRIDsController",
+      "shortName": "CRIDsController",
+      "type": "controller",
+      "moduleName": "app.CRIDs",
+      "shortDescription": "Controller for modal View to add USPS CRID",
+      "keywords": "$modalinstance $scope add angular api app bootsrap controller crid crids data genertic instance internal lbservices logger logging mail mailowner modal object owner scope selected service text usps view"
+    },
+    {
+      "section": "api",
+      "id": "app.dailyRunDetails.controller:DailyRunDetailsController",
       "shortName": "DailyRunDetailsController",
       "type": "controller",
-      "moduleName": "app.dailRunDetails",
+      "moduleName": "app.dailyRunDetails",
       "shortDescription": "Controller for DailyRunDetails View",
-      "keywords": "activate api app array build buildbody comma controller counts createpdf dailrundetails daily dailyrundetails dateformat dates detailed details format formatted function generate generic getdailyrun getedocstatements getpostagedetails helper http initialize input json library mail matching method mm money numberformat numbers object pdf postage report selected sort sortby source statement statements string table view"
+      "keywords": "$http $q $scope $stateparams $timeout activate angular api app array asyncronus body build buildbody client comma controller counts createpdf daily dailyrundetails dateformat dates detailed details edoc edocstatement format formatted function generate generic getdailyrun getedocstatements getpostagedetails helper http initialize input internal json library logger logging mail matching method mm money number numberformat numbers object pdf postage report routing scope selected sort sortby source statement statements string table timming view"
+    },
+    {
+      "section": "api",
+      "id": "app.dailyruns.controller:DailyRunsController",
+      "shortName": "DailyRunsController",
+      "type": "controller",
+      "moduleName": "app.dailyruns",
+      "shortDescription": "Controller for DailyRuns View",
+      "keywords": "$q $rootscope $scope $state $timeout activate aguluar angular api app asyncronous build buildchartdata builddailyrunslist charts collect comma controller counts daily daily_id dailyruns data database edoc edocstatement execution format formatted getedocstatements global group initalize internal json library list logger logging lookupdailyid method number numberformat numbers object refactor return routing runs scope search service statement statements support timming todo unique variable view"
+    },
+    {
+      "section": "api",
+      "id": "app.dashboard.controller:DashboardController",
+      "shortName": "DashboardController",
+      "type": "controller",
+      "moduleName": "app.dashboard",
+      "shortDescription": "Controller for Dashboard View",
+      "keywords": "$q $scope activate angular api app asyncronous build buildpiechart chart controller count crid crids dashboard dataservice edoc edocstatement execution formatted getcridcount getedocstatements getmaileridcount getmailowner getmailownercount getpermitcount initalize internal logging logpger mail mailer mailerid mailowner method object owner owners permit permits pie reformat reformatdate remove scope statement statements support todo view"
     },
     {
       "section": "api",

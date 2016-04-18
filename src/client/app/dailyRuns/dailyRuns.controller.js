@@ -1,9 +1,37 @@
-/* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
-   
+    
+    /**
+     * @class app.dailyruns
+     * @memberOf app
+     * 
+     * @description
+     *
+     * The `dailyruns` module provides an overview of Daily EPOP Runs.
+     * 
+     * @requires
+     *   
+     * lbServices (Loopback API service)
+     * chart.js (charting library)
+     *
+     */   
     angular
         .module('app.dailyruns', ['lbServices', 'chart.js'])
+        /**
+         * @ngdoc controller
+         * @name app.dailyruns.controller:DailyRunsController
+         * @param {object} logger: Internal Logging Service 
+         * @param {object} $scope: Angular Scope object
+         * @param {object} $timeout: Angular timming object
+         * @param {object} $q: Angular Asyncronous execution support
+         * @param {object} EDocStatement: eDoc statement JSON object
+         * @param {object} $rootScope: Aguluar global scope variable
+         * @param {object} $state: Routing state 
+         * @description
+         * 
+         * Controller for DailyRuns View
+         * 
+         */
         .controller('DailyRunsController', DailyRunsController)
         .filter('DateReformatFilter', DateReformatFilter);
 
@@ -113,7 +141,14 @@
         };
         
         activate();
-         
+        /**
+         * @ngdoc method
+         * @name activate
+         * @methodOf app.dailyruns.controller:DailyRunsController
+         * @description
+         * 
+         * initalize the view
+         */ 
         function activate() {
             promises = [getEDocStatements()];
             return $q.all(promises).then(function() {
@@ -121,7 +156,14 @@
             });
         }
         
-        // collect eDoc Statements from database and Group into a Daily Run list
+        /**
+         * @ngdoc method
+         * @name getEDocStatements
+         * @methodOf app.dailyruns.controller:DailyRunsController
+         * @description
+         * 
+         * collect eDoc Statements from database and Group into a Daily Run list
+         */ 
         function getEDocStatements() {
             EDocStatement.find(
                 function(result) {
@@ -134,7 +176,14 @@
                 });
         }
         
-        // build a list of unique Daily Runs // TODO: refactor into a Daily Run Service 
+        /**
+         * @ngdoc method
+         * @name buildDailyRunsList
+         * @methodOf app.dailyruns.controller:DailyRunsController
+         * @description
+         * 
+         * build a list of unique Daily Runs // TODO: refactor into a Daily Run Service
+         */ 
         function buildDailyRunsList(){
             vm.dailyRuns = [];
             var r = -1;
@@ -203,7 +252,15 @@
             // save Daily Runs on the root scope for access from the dailyRunDetails Controller
             $rootScope.dailyRuns = vm.dailyRuns;  
         }
-        // search for a given Daily_ID. If found, return the index (-1 = not found)
+        /**
+         * @ngdoc method
+         * @name lookupDailyID
+         * @methodOf app.dailyruns.controller:DailyRunsController
+         * @returns {number} the index of the Daily ID
+         * @description
+         * 
+         * search for a given Daily_ID. If found, return the index (-1 = not found)
+         */ 
         function lookupDailyID(dailyId, mailDate){
             for (var i = 0; i < vm.dailyRuns.length; i++) {
                 if ((vm.dailyRuns[i].Daily_ID == dailyId) && (vm.dailyRuns[i].MailDate == mailDate)) {
@@ -213,7 +270,14 @@
             return -1;
         } 
         
-        // collect data for charts
+        /**
+         * @ngdoc method
+         * @name buildChartData
+         * @methodOf app.dailyruns.controller:DailyRunsController
+         * @description
+         * 
+         * collect data for charts
+         */ 
         function buildChartData(){
             vm.pieData = [];
             vm.allPieceCount = vm.totalFP_PI_PieceCount + vm.totalFP_ST_PieceCount + vm.totalFP_MT_PieceCount +
@@ -232,7 +296,15 @@
             vm.pieData.push(vm.NP_MT_PieceCountPct);
         }
         
-        // format numbers (piece counts) w/ comma's (numeralJS library)
+        /**
+         * @ngdoc method
+         * @name numberFormat
+         * @methodOf app.dailyruns.controller:DailyRunsController
+         * @returns {string} number formatted with comma's
+         * @description
+         * 
+         * format numbers (piece counts) w/ comma's (numeralJS library)
+         */ 
         vm.numberFormat = function(number){
             return numeral(number).format('0,0');
         }; 

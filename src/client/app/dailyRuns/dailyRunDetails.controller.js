@@ -3,22 +3,31 @@
     'use strict';
     
     /**
-     * @class app.dailRunDetails
+     * @class app.dailyRunDetails
      * @memberOf app
      * 
      * @description
      *
-     * The `dailRunDetails` module provides details for a given Daily EPOP Run.
+     * The `dailyRunDetails` module provides details for a given Daily EPOP Run.
      * 
      * @requires
-     *   - lbServices: provides access to the back-end database
+     *   
+     * lbServices (Loopback API service)
      *
      */   
     angular
         .module('app.dailyRunDetails', ['lbServices'])
         /**
          * @ngdoc controller
-         * @name app.dailRunDetails.controller:DailyRunDetailsController
+         * @name app.dailyRunDetails.controller:DailyRunDetailsController
+         * @param {object} logger: Internal Logging Object
+         * @param {object} $scope: Angular Scope
+         * @param {object} $timeout: Angular timming
+         * @param {object} $http: Angular http client
+         * @param {object} $q: Angular Asyncronus 
+         * @param {object} EDocStatement: eDoc Statement
+         * @param {object} $stateParams: Routing information
+         * 
          * @description
          * 
          * Controller for DailyRunDetails View
@@ -83,7 +92,8 @@
         /**
          * @ngdoc method
          * @name numberFormat
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
+         * @return {string} number: formatted number w/ comma's
          * @description
          * 
          * format numbers (piece counts) w/ comma's (numeralJS library)
@@ -95,7 +105,9 @@
         /**
          * @ngdoc method
          * @name numberFormat
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
+         * @return {string} number: the number formatted as money
+         * 
          * @description
          * 
          * format numbers (postage) as money (numeralJS library)
@@ -107,7 +119,7 @@
         /**
          * @ngdoc method
          * @name dateFormat
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
          * @param {string} date: the input date string (yyyymmdd)
          * @return {string} date: the formatted date in MM/DD/YYYY format
          * @description
@@ -122,7 +134,7 @@
         /**
          * @ngdoc method
          * @name createPDF
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
          * @description
          * 
          * Generate a detailed PDF report of the selected Daily Run
@@ -218,8 +230,8 @@
         /**
          * @ngdoc method
          * @name activate 
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
-         * @desription 
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
+         * @description 
          * 
          * Initialize the view
          */
@@ -237,8 +249,8 @@
         /**
          * @ngdoc method
          * @name getDailyRun
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
-         * @desription 
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
+         * @description 
          * 
          * Get the selected Daily Run
          */
@@ -256,8 +268,9 @@
         /**
          * @ngdoc method
          * @name buildBody
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
-         * @desription 
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
+         * @return {object} body: the report body as a JSON object
+         * @description 
          * 
          * Build details for report table
          */
@@ -306,8 +319,8 @@
         /**
          * @ngdoc method
          * @name sortBy 
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
-         * @desription 
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
+         * @description 
          * 
          * generic JSON Array sort helper function
          * source/reference: http://stackoverflow.com/questions/11099610/generic-way-of-sorting-json-array-by-attribute
@@ -326,8 +339,8 @@
         /**
          * @ngdoc method
          * @name getEDocStatements 
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
-         * @desription 
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
+         * @description 
          * 
          * get statements matching the Daily ID and Mail Date
          */
@@ -415,7 +428,7 @@
         /**
          * @ngdoc method
          * @name getPostageDetails 
-         * @methodOf app.dailRunDetails.controller:DailyRunDetailsController
+         * @methodOf app.dailyRunDetails.controller:DailyRunDetailsController
          * @param {statement} statement object containing the statement details
          * @desription 
          * 

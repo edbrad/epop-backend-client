@@ -14,7 +14,7 @@
         .module('app.confirmModal',[])
         /**
          * @ngdoc controller
-         * @name app.admin.controller:ConfirmModalController
+         * @name app.core.controller:ConfirmModalController
          * @description
          * 
          * Controller for "Confirm" modal View

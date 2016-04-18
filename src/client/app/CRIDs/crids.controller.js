@@ -1,11 +1,48 @@
-/* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
-
+    
+    /**
+     * @class app.CRIDs
+     * @memberOf app
+     * 
+     * @requires
+     * 
+     * lbServices (Loopback API service)
+     * ui.grid (AngularUI - Grid) 
+     * ui.grid.pagination (AngularUI - Grid Pagination)
+     * ui.grid.resizeColumns (AngularUI - Grid Pagination)
+     * ui.grid.moveColumns (AngularUI - Grid Move Columns)
+     * ui.grid.selection (AngularUI Grid - Select Row(s))
+     * ui.grid.exporter (AngularUI Grid - Export Grid Data (Excel, CSV, PDF))
+     * app.dialogsService (Generic Modal Dialog Service)
+     * 
+     * @description
+     *
+     * The `CRIDs` module provides a controller for CRIDs View
+     *
+     */
     angular
         .module('app.CRIDs', ['lbServices', 'ui.grid', 'ui.grid.pagination',
         'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.selection', 'ui.grid.exporter',
         'app.dialogsService'])
+        /**
+         * @ngdoc controller
+         * @name app.CRIDs.controller:CRIDsController
+         * @param {object} $scope: Angular Scope object
+         * @param {object} $modalInstance: Angular Bootsrap modal instance object
+         * @param {object} logger: Internal Logging Service 
+         * @param {array} data: Genertic data (button text)
+         * @param {object} MailOwner: Selected Mail Owner
+         * @param {object} CRID: Selected CRID
+         *
+         * @requires
+         * 
+         * lbServices (Loopback API service)
+         * 
+         * @description
+         * Controller for modal View to add USPS CRID
+         * 
+         */
         .controller('CRIDsController', CRIDsController);
 
     CRIDsController.$inject = ['$q', 'CRID', 'MailOwner', 'logger', '$scope', 'dialogsService'];

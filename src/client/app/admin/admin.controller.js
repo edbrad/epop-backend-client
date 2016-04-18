@@ -10,7 +10,7 @@
      * The `admin` module provides administrative and utility functionality for the application.
      * 
      * @requires
-     *   - fileInputService: reads a file from the local file system
+     *   fileInputService: reads a file from the local file system
      */
     angular
         .module('app.admin', ['app.fileInputService'])

@@ -1,4 +1,3 @@
-/* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
 
@@ -16,17 +15,11 @@
         .module('app.CRIDAddToMailOwnerModal', ['lbServices'])
         /**
          * @ngdoc controller
-         * @name app.admin.controller:CRIDAddToMailOwnerModal
-         * @param {object} $scope: Angular Scope object
-         * @param {object} $modalInstance: Angular Bootsrap modal instance object
-         * @param {object} logger: Internal Logging Service 
-         * @param {array} data: Genertic data (button text)
-         * @param {object} MailOwner: Selected Mail Owner
-         * @param {object} CRID: Selected CRID
+         * @name app.CRIDs.controller:CRIDAddToMailOwnerModal
          * 
          * @requires
          * 
-         * - lbServices: Loopback API service
+         * lbServices (Loopback API service)
          * 
          * @description
          * Controller for modal View to add USPS CRID to a given Mail Owner
@@ -53,7 +46,7 @@
         /**
          * @ngdoc method
          * @name cancel
-         * @methodOf app.admin.controller:CRIDAddToMailOwnerModal
+         * @methodOf app.CRIDs.controller:CRIDAddToMailOwnerModal
          * @description
          * 
          * perform 'CANCEL' processing (dismiss the Modal)
@@ -68,7 +61,7 @@
         /**
          * @ngdoc method
          * @name add
-         * @methodOf app.admin.controller:CRIDAddToMailOwnerModal
+         * @methodOf app.CRIDs.controller:CRIDAddToMailOwnerModal
          * @description
          * 
          * perform 'ADD' processing (Add CRID data to the database, then close the dialog)
@@ -91,7 +84,7 @@
         /**
          * @ngdoc method
          * @name getMailOwners
-         * @methodOf app.admin.controller:CRIDAddModalController
+         * @methodOf app.CRIDs.controller:CRIDAddModalController
          * @description
          * 
          * collect all available Mail Owners, to select which is to be associated with the new CRID

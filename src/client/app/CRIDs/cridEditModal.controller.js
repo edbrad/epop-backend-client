@@ -1,9 +1,36 @@
-/* jshint -W109, -W101, -W064, -W064, -W116, -W033, -W106, -W109, -W117, -W032, -W014, -W027, -W033 */
 (function () {
     'use strict';
 
+    /**
+     * @class app.CRIDEditModal
+     * @memberOf app
+     * 
+     * @description
+     *
+     * The `CRIDEditModal` module provides a controller for a modal window to edit a USPS CRID
+     *
+     */
     angular
         .module('app.CRIDEditModal', ['lbServices'])
+        /**
+         * @ngdoc controller
+         * @name app.CRIDs.controller:CRIDEditModal
+         * @param {object} $q: Angular asychronous process object
+         * @param {object} $scope: Angular Scope object
+         * @param {object} $modalInstance: Angular Bootsrap modal instance object
+         * @param {object} logger: Internal Logging Service 
+         * @param {array} data: Genertic data (button text)
+         * @param {object} CRID: Selected CRID
+         * @param {object} MailOwner: Selected Mail Owner
+         * 
+         * @requires
+         * 
+         * lbServices (Loopback API service)
+         * 
+         * @description
+         * Controller for modal View to add USPS CRID to a given Mail Owner
+         * 
+         */
         .controller('CRIDEditModalController', CRIDEditModalController);
 
     CRIDEditModalController.$inject = ['$q', '$scope', '$modalInstance', 'logger',
@@ -24,14 +51,30 @@
         vm.mailOwners = [];
         // error checking flag
         vm.submitted = false;
-        // perform 'CANCEL' processing (dismiss the Modal)
+        
+        /**
+         * @ngdoc method
+         * @name cancel
+         * @methodOf app.CRIDs.controller:CRIDEditModal
+         * @description
+         * 
+         * perform 'CANCEL' processing (dismiss the Modal)
+         */
         vm.cancel = function () {
             logger.warning('CRID Edit Modal: cancel/dismiss');
             vm.CRID = {}
             vm.mailOwner = {};
             $modalInstance.dismiss();
         };
-        // perform 'UPDATE' processing (update the CRID in the database, then close the dialog)
+        
+        /**
+         * @ngdoc method
+         * @name update
+         * @methodOf app.CRIDs.controller:CRIDEditModal
+         * @description
+         * 
+         * perform 'UPDATE' processing (update the CRID in the database, then close the dialog)
+         */
         vm.update = function () {
             vm.submitted = true;
             if ($scope.editCRIDForm.$valid) {
@@ -44,7 +87,15 @@
                 });
             }
         };
-        // collect selected CRID and asociated Mail Owner from database to display in edit form
+        
+        /**
+         * @ngdoc method
+         * @name getCRID
+         * @methodOf app.CRIDs.controller:CRIDEditModal
+         * @description
+         * 
+         * collect selected CRID and asociated Mail Owner from database to display in edit form
+         */
         getCRID();
         function getCRID() {
             CRID.findById({id: vm.properties.id},
@@ -64,7 +115,15 @@
                         });
                 });
         }
-        // collect all available Mail Owners, to select which is to be associated with the new CRID
+        
+        /**
+         * @ngdoc method
+         * @name getMailOwners
+         * @methodOf app.CRIDs.controller:CRIDEditModal
+         * @description
+         * 
+         * collect all available Mail Owners, to select which is to be associated with the new CRID
+         */
         getMailOwners();
         function getMailOwners() {
             MailOwner.find(

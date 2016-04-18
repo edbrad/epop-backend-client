@@ -1,0 +1,48 @@
+<h1><code ng:non-bindable="">DailyRunsController</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">app.dailyruns</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>Controller for DailyRuns View</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">DailyRunsController(logger:, $scope:, $timeout:, $q:, EDocStatement:, $rootScope:, $state:);</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>logger:</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>Internal Logging Service</p>
+</div></td></tr><tr><td>$scope:</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>Angular Scope object</p>
+</div></td></tr><tr><td>$timeout:</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>Angular timming object</p>
+</div></td></tr><tr><td>$q:</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>Angular Asyncronous execution support</p>
+</div></td></tr><tr><td>EDocStatement:</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>eDoc statement JSON object</p>
+</div></td></tr><tr><td>$rootScope:</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>Aguluar global scope variable</p>
+</div></td></tr><tr><td>$state:</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="app-dailyruns-controller-page app-dailyruns-controller-dailyrunscontroller-page"><p>Routing state</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_activate">activate()</h3>
+<div class="activate"><div class="activate-page"><p>initalize the view</p>
+</div></div>
+</li>
+<li><h3 id="methods_buildchartdata">buildChartData()</h3>
+<div class="buildchartdata"><div class="buildchartdata-page"><p>collect data for charts</p>
+</div></div>
+</li>
+<li><h3 id="methods_builddailyrunslist">buildDailyRunsList()</h3>
+<div class="builddailyrunslist"><div class="builddailyrunslist-page"><p>build a list of unique Daily Runs // TODO: refactor into a Daily Run Service</p>
+</div></div>
+</li>
+<li><h3 id="methods_getedocstatements">getEDocStatements()</h3>
+<div class="getedocstatements"><div class="getedocstatements-page"><p>collect eDoc Statements from database and Group into a Daily Run list</p>
+</div></div>
+</li>
+<li><h3 id="methods_lookupdailyid">lookupDailyID()</h3>
+<div class="lookupdailyid"><div class="lookupdailyid-page"><p>search for a given Daily_ID. If found, return the index (-1 = not found)</p>
+</div><h5 id="methods_lookupdailyid_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="lookupdailyid-page"><p>the index of the Daily ID</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_numberformat">numberFormat()</h3>
+<div class="numberformat"><div class="numberformat-page"><p>format numbers (piece counts) w/ comma&#39;s (numeralJS library)</p>
+</div><h5 id="methods_numberformat_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="numberformat-page"><p>number formatted with comma&#39;s</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+</div>

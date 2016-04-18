@@ -21,10 +21,10 @@
          * @param {array} data: Genertic data (button text)
          * @param {object} MailOwner: Selected Mail Owner
          * @param {object} CRID: Selected CRID
-         * 
+         *
          * @requires
          * 
-         * - lbServices: Loopback API service
+         * lbServices (Loopback API service)
          * 
          * @description
          * Controller for modal View to add USPS CRID

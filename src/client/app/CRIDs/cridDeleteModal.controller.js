@@ -2,10 +2,10 @@
     'use strict';
     /**
      * @class app.CRIDDeleteModal
-     * 
+     *
      * @description
      *
-     * The `CRIDDeleteModalController` module provides a controller for a modal window 
+     * The `CRIDDeleteModalController` module provides a controller for a modal window
      * to delete a USPS CRID.
      *
      */
@@ -16,17 +16,17 @@
          * @name app.CRIDs.controller:CRIDDeleteModal
          * @param {object} $scope: Angular Scope object
          * @param {object} $modalInstance: Angular Bootsrap modal instance object
-         * @param {object} logger: Internal Logging Service 
+         * @param {object} logger: Internal Logging Service
          * @param {array} data: Genertic data (button text)
          * @param {object} CRID: Selected CRID
-         * 
+         *
          * @requires
-         * 
+         *
          * lbServices (Loopback API service)
-         * 
+         *
          * @description
          * Controller for modal View to add USPS CRID
-         * 
+         *
          */
         .controller('CRIDDeleteModalController', CRIDDeleteModalController);
 
@@ -48,7 +48,7 @@
             // delete the CRID
             CRID.deleteById({id: id}).$promise.then(function () {
                 logger.log('Deleted CRID');
-                $modalInstance.close()
+                $modalInstance.close();
             });
         };
     }

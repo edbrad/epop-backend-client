@@ -4,7 +4,7 @@
     /**
      * @class app.CRIDAddModal
      * @memberOf app
-     * 
+     *
      * @description
      *
      * The `CRIDAddModal` module provides a controller for a modal window to add a USPS CRID
@@ -16,14 +16,14 @@
         /**
          * @ngdoc controller
          * @name app.CRIDs.controller:CRIDAddToMailOwnerModal
-         * 
+         *
          * @requires
-         * 
+         *
          * lbServices (Loopback API service)
-         * 
+         *
          * @description
          * Controller for modal View to add USPS CRID to a given Mail Owner
-         * 
+         *
          */
         .controller('CRIDAddToMailOwnerModalController', CRIDAddToMailOwnerModalController);
 
@@ -42,13 +42,13 @@
         vm.mailOwner = {};
         // error checking flag
         vm.submitted = false;
-        
+
         /**
          * @ngdoc method
          * @name cancel
          * @methodOf app.CRIDs.controller:CRIDAddToMailOwnerModal
          * @description
-         * 
+         *
          * perform 'CANCEL' processing (dismiss the Modal)
          */
         vm.cancel = function () {
@@ -57,13 +57,13 @@
             vm.mailOwner = {};
             $modalInstance.dismiss();
         };
-        
+
         /**
          * @ngdoc method
          * @name add
          * @methodOf app.CRIDs.controller:CRIDAddToMailOwnerModal
          * @description
-         * 
+         *
          * perform 'ADD' processing (Add CRID data to the database, then close the dialog)
          */
         vm.add = function () {
@@ -75,18 +75,18 @@
                 CRID.create(vm.newCRID).$promise.then(function () {
                     logger.log('CRID Add Modal: close/ok');
                     vm.newCRID = {};
-                    vm.mailOwner = {}
-                    $modalInstance.close()
+                    vm.mailOwner = {};
+                    $modalInstance.close();
                 });
             }
         };
-        
+
         /**
          * @ngdoc method
          * @name getMailOwners
          * @methodOf app.CRIDs.controller:CRIDAddModalController
          * @description
-         * 
+         *
          * collect all available Mail Owners, to select which is to be associated with the new CRID
          */
         getMailOwner();

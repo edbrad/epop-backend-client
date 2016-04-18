@@ -21,7 +21,7 @@
 
     core.config(configure);
 
-    configure.$inject = ['$logProvider', 'routerHelperProvider', 
+    configure.$inject = ['$logProvider', 'routerHelperProvider',
                          'exceptionHandlerProvider', 'uiGmapGoogleMapApiProvider'];
     /* @ngInject */
     function configure($logProvider, routerHelperProvider, exceptionHandlerProvider, uiGmapGoogleMapApiProvider) {
@@ -30,7 +30,7 @@
         }
         exceptionHandlerProvider.configure(config.appErrorPrefix);
         routerHelperProvider.configure({docTitle: config.appTitle + ': '});
-        
+
         // configure the AngularUI Google Maps API provider
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyBZt4TvdP5brTUhUdD_R7Kbnhz2pPg7YRE',

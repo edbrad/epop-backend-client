@@ -35,7 +35,7 @@
      *   app.MailerIdDeleteModal
      *   app.MailerIdEditModal
      *   app.MailerIdAddToMailOwnerModal
-     * 
+     *
      * @description
      *
      * EPOP Backend Client Application

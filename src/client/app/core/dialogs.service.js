@@ -58,7 +58,7 @@
          * @param {string} title - Modal window title text
          * @param {array} buttons - array of Modal button text
          * @description
-         * 
+         *
          * generic confirm Modal Window
          */
 		function confirm(message, title, buttons) {
@@ -88,7 +88,7 @@
 		* @param {string} title - Modal window title text
 		* @param {array} buttons - array of Modal button text
 		* @description
-		* 
+		*
 		* add Mail Owner Modal Window
 		*/
 		function addMailOwner(title, buttons) {
@@ -119,7 +119,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* delete Mail Owner Modal Window
 		*/
 		function deleteMailOwner(title, message, buttons, id) {
@@ -151,7 +151,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* edit Mail Owner Modal Window
 		*/
 		function editMailOwner(title, buttons, id) {
@@ -181,7 +181,7 @@
 		* @param {string} title - Modal window title text
 		* @param {array} message - array of Modal button text
 		* @description
-		* 
+		*
 		* add CRID Modal Window
 		*/
 		function addCRID(title, buttons) {
@@ -212,7 +212,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* delete CRID Modal Window
 		*/
 		function deleteCRID(title, message, buttons, id) {
@@ -244,7 +244,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* edit CRID Modal Window
 		*/
 		function editCRID(title, buttons, id) {
@@ -275,7 +275,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* add CRID to Current Mail Owner Modal Window
 		*/
 		function addCRIDToMailOwner(title, buttons, id) {
@@ -305,7 +305,7 @@
 		* @param {string} title - Modal window title text
 		* @param {array} buttons - array of Modal button text
 		* @description
-		* 
+		*
 		* add Permit Modal Window
 		*/
 		function addPermit(title, buttons) {
@@ -336,7 +336,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* delete Permit Modal Window
 		*/
 		function deletePermit(title, message, buttons, id) {
@@ -368,7 +368,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* edit Permit Modal Window
 		*/
 		function editPermit(title, buttons, id) {
@@ -399,7 +399,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* add Permit to Current Mail Owner Modal Window
 		*/
 		function addPermitToMailOwner(title, buttons, id) {
@@ -429,7 +429,7 @@
 		* @param {string} title - Modal window title text
 		* @param {array} buttons - array of Modal button text
 		* @description
-		* 
+		*
 		* add Mailer Id Modal Window
 		*/
 		function addMailerId(title, buttons) {
@@ -460,7 +460,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* delete Mailer Id Modal Window
 		*/
 		function deleteMailerId(title, message, buttons, id) {
@@ -492,7 +492,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* edit Mailer Id Modal Window
 		*/
 		function editMailerId(title, buttons, id) {
@@ -523,7 +523,7 @@
 		* @param {array} buttons - array of Modal button text
 		* @param {string} id - Mailer Owner Database ID (unique key)
 		* @description
-		* 
+		*
 		* add Mailer Id to Current Mail Owner Modal Window
 		*/
 		function addMailerIdToMailOwner(title, buttons, id) {

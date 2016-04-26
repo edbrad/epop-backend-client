@@ -1,10 +1,10 @@
 (function () {
     'use strict';
-    
+
     /**
      * @class app.fileInputService
      * @memberOf app
-     * 
+     *
      * @description
      *
      * The fileInput Service provides local file input functionality for the application.
@@ -16,7 +16,7 @@
          * @ngdoc service
          * @name app.fileInputService.service:fileInputService
          * @description
-         * 
+         *
          * Factory for the fileInputService Service
          */
         .factory('fileInputService', fileInputService);
@@ -28,9 +28,9 @@
         var service = {
 			readTextFileAsync: readTextFileAsync
 		};
-		
+
 		return service;
-		
+
 		function readTextFileAsync(file) {
 			var deferred = $q.defer(),
 				fileReader = new FileReader(),

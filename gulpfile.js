@@ -79,7 +79,7 @@ gulp.task('fonts', ['clean-fonts'], function() {
     log('Copying fonts');
 
     return gulp
-        .src(config.fonts)
+        .src(config.fonts, config.fonts2)
         .pipe(gulp.dest(config.build + 'fonts'));
 });
 
@@ -190,7 +190,7 @@ gulp.task('build-specs', ['templatecache'], function(done) {
  * generate code documentation (ngDoc)
  * @return {Stream}
  */
-gulp.task('ngdocs',[], function(){
+gulp.task('ngdocs', [], function () {
     var gulpDocs = require('gulp-ngdocs');
     return gulp.src(config.alljs)
         .pipe(gulpDocs.process())
@@ -220,7 +220,7 @@ gulp.task('build', ['optimize', 'images', 'fonts'], function() {
  * and inject them into the new index.html
  * @return {Stream}
  */
-gulp.task('optimize', ['inject', 'test'], function() {
+gulp.task('optimize', ['inject'], function() {
     log('Optimizing the js, css, and html');
 
     var assets = $.useref.assets({searchPath: './'});

@@ -1,5 +1,5 @@
 {
-    "excludeFiles": ["node_modules/**", "bower_components/**"],
+    "excludeFiles": ["node_modules/**", "bower_components/**", "src/client/app/**"],
 
     "requireCurlyBraces": [
         "if",
@@ -16,8 +16,7 @@
       "allowComments": true,
       "allowRegex": true
     },
-    "validateIndentation": 4,
-    "validateQuoteMarks": "'",
+    
 
     "disallowMultipleLineStrings": true,
     "disallowMixedSpacesAndTabs": true,
